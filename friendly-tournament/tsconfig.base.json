@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@friendly-tournament/data/models": ["libs/data/models/src/index.ts"],
       "@friendly-tournament/ui/components": ["libs/ui/components/src/index.ts"]
     }
   },

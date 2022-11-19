@@ -1,1 +1,147 @@
-<p>tournament-edit works!</p>
+<div class="component">
+    <p>tournament-edit works!</p>
+    <form
+      #tournamentEditForm="ngForm"
+      name="form"
+      (ngSubmit)="tournamentEditForm.form.valid && onSubmit()"
+      novalidate
+    >
+      <div class="form-row">
+        <!-- Movie Title -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="tournamentName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="tournament.Name"
+            name="tournamentName"
+            #tournamentName="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (tournamentName.invalid && tournamentName.touched) ||
+                (existingTournamentTitle$ | async)
+            }"
+            required
+            minlength="3"
+            id="tournamentName"
+            placeholder="The name of the tournament"
+          />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="tournamentName.invalid && tournamentName.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="tournamentName.errors?.['required']">
+              Tournament name is vereist.
+            </div>
+            <div *ngIf="tournamentName.errors?.['minlength']">
+              Min name lenght is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Release Year -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="tournamentGame">Tournament Game</label>
+          <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="tournament.Game"
+          name="tournamentGame"
+          #tournamentGame="ngModel"
+          [ngClass]="{
+            'is-invalid':
+              (tournamentGame.invalid && tournamentGame.touched) ||
+              (existingTournamentTitle$ | async)
+          }"
+          required
+          minlength="3"
+          id="tournamentGame"
+          placeholder="The game of the tournament"
+        />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="tournamentName.invalid && tournamentName.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="tournamentName.errors?.['required']">
+              Tournament name is vereist.
+            </div>
+            <div *ngIf="tournamentName.errors?.['minlength']">
+              Min name lenght is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Movie Studio -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="tournamendRewardPrice">tournamendRewardPrice</label>
+          <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="tournament.RewardPrice"
+          name="tournamendRewardPrice"
+          #tournamendRewardPrice="ngModel"
+          [ngClass]="{
+            'is-invalid':
+              (tournamendRewardPrice.invalid && tournamendRewardPrice.touched) ||
+              (existingTournamentTitle$ | async)
+          }"
+          required
+          min=10
+          id="tournamendRewardPrice"
+          placeholder="The RewardPrice of the tournament"
+        />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="tournamendRewardPrice.invalid && tournamendRewardPrice.dirty"
+            class="invalid-feedback"
+          >
+          Minimum is 10.
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Movie Age Category -->
+        <div class="form-group col-sm-12 col-lg-4">
+            <label for="tournamentDate">Tournament date</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="tournament.Date"
+              name="tournamentDate"
+              #tournamentDate="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  (tournamentDate.invalid && tournamentDate.touched) ||
+                  (existingTournamentTitle$ | async)
+              }"
+              required
+              id="tournamentDate"
+              placeholder="The date of the tournament"
+            />
+            <!-- Show invalidity message -->
+            <div
+              *ngIf="tournamentDate.invalid && tournamentDate.touched"
+              class="invalid-feedback"
+            >
+                <!-- ToDo insert Validation Date is not before today -->
+            </div>
+        </div>
+  
+        <!-- Submit buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!tournamentEditForm.valid"
+        >
+          Save
+        </button>
+        <button type="submit" class="btn btn-secondary me-1" routerLink="..">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>

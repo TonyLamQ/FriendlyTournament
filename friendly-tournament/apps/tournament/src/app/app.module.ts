@@ -7,7 +7,9 @@ import { appRoutes } from './app.routes';
 import { NavbarComponent } from './Shared/navbar/navbar.component';
 import { GroupListComponent } from './Pages/group-list/group-list.component';
 import { MainLayoutComponent } from './Layouts/main-layout/main-layout.component';
-import { TournamentListComponent } from './Pages/tournament-list/tournament-list.component';
+import { AppRoutingModule } from './app.routes';
+import { HttpClientModule } from '@angular/common/http';
+import { AboutComponent } from './Pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { TournamentListComponent } from './Pages/tournament-list/tournament-list
     NavbarComponent,
     GroupListComponent,
     MainLayoutComponent,
-    TournamentListComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],
   providers: [],

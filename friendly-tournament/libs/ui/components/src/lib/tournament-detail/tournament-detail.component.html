@@ -1,0 +1,9 @@
+<div class="component">
+    <p>tournament-detail works!</p>
+    <ul class="list-group" *ngIf="tournament$ | async as tournament">
+      <li class="list-group-item active">{{ tournament.Date }}</li>
+      <li class="list-group-item">Game: {{ tournament.Game }}</li>
+      <li class="list-group-item">Name: {{ tournament.Name }}</li>
+      <li class="list-group-item">RewardPrice: {{ tournament.RewardPrice }}</li>
+    </ul>
+  </div>
