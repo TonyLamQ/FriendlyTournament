@@ -77,9 +77,9 @@ export class TournamentService {
 
     delete(tournamentId: Number): Observable<any> {
             this.tournamentList.forEach(t => {
-                if(this.tournament != null && t.id == tournamentId){
+                if(t.id == tournamentId){
                     this.tournamentList.splice(this.tournamentId-1, 1)
-                }
+                } 
             });
             console.log(`tournament met ID ${this.tournament?.id} deleted`);
             return of({

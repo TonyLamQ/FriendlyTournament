@@ -10,6 +10,7 @@ import { MainLayoutComponent } from './Layouts/main-layout/main-layout.component
 import { AppRoutingModule } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutComponent } from './Pages/about/about.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AboutComponent } from './Pages/about/about.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    TooltipModule.forRoot(),
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],
   providers: [],
