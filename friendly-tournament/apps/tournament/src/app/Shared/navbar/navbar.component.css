@@ -25,3 +25,8 @@
     background-color: burlywood;
     color: white;
   }
+
+  .topnav a.active:hover {
+    background-color: #9E8360;
+    color: white;
+  }
