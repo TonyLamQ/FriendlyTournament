@@ -63,11 +63,7 @@ export class TournamentService {
     console.log('tournament update aangeroepen');
     // TO DO: movieList updaten
     this.tournament = { ...tournament };
-        this.tournamentList.forEach(t => {
-            if(this.tournament != null && t.id == this.tournament.id){
-                this.tournamentList.splice(this.tournamentId-1, 1, this.tournament)
-            }
-        });
+    this.tournamentList.splice(this.tournamentList.findIndex(t => t.id ===tournament.id),1, this.tournament)
         console.log(`tournament met ID ${this.tournament?.id} geüpdatet`);
         return of({
           status: 201,
