@@ -8,7 +8,7 @@ import { TournamentService } from '../../../../../../apps/data-api/src/app/tourn
   templateUrl: './tournament-detail.component.html',
   styleUrls: ['./tournament-detail.component.css'],
 })
-export class TournamentDetailComponent implements OnInit {
+export class TournamentDetailComponent implements OnInit, OnDestroy {
   subscription?: Subscription;
   tournamentId: number | undefined;
   tournament$: Observable<ITournament> | undefined;

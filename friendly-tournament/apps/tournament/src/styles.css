@@ -3,3 +3,14 @@ body {
     margin: 0;
     background-color:darkgrey;
 }
+
+.btn-second{
+    background: #AB8E68;
+}
+.btn-second:hover{
+    background: #91724A;
+}
+
+.btn:hover{
+    background: burlywood;
+}

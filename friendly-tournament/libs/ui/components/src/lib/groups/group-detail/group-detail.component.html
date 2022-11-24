@@ -1,0 +1,8 @@
+<div class="component">
+    <p>group-detail works!</p>
+    <ul class="list-group" *ngIf="group$ | async as group">
+      <li class="list-group-item active">Created on: {{ group.CreatedDate }}</li>
+      <li class="list-group-item">Name: {{ group.Name }}</li>
+      <li class="list-group-item">Total Members: {{ group.TotalPlayers }}</li>
+    </ul>
+  </div>

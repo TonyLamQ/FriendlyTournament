@@ -1,6 +1,11 @@
 import { RouterModule, Route, Routes } from '@angular/router';
 import { MainLayoutComponent } from './Layouts/main-layout/main-layout.component';
-import { TournamentEditComponent, TournamentListComponent, TournamentDetailComponent } from '@friendly-tournament/ui/components';
+import { TournamentEditComponent,
+         TournamentListComponent,
+         TournamentDetailComponent,
+         GroupListComponent,
+         GroupDetailComponent,
+         GroupEditComponent } from '@friendly-tournament/ui/components';
 
 
 import { NgModule } from '@angular/core';
@@ -17,6 +22,12 @@ export const appRoutes: Route[] = [  {
       { path: 'tournaments/new', pathMatch: 'full', component: TournamentEditComponent },
       { path: 'tournaments/:id', pathMatch: 'full', component: TournamentDetailComponent },
       { path: 'tournaments/:id/edit', pathMatch: 'full', component: TournamentEditComponent },
+
+      { path: 'groups', pathMatch: 'full', component: GroupListComponent },
+      { path: 'groups/new', pathMatch: 'full', component: GroupEditComponent },
+      { path: 'groups/:id', pathMatch: 'full', component: GroupDetailComponent },
+      { path: 'groups/:id/edit', pathMatch: 'full', component: GroupEditComponent },
+
       {path:"about", pathMatch:'full', component:AboutComponent}
     //   { path: 'about', pathMatch: 'full', component: AboutComponent },
     //   {
