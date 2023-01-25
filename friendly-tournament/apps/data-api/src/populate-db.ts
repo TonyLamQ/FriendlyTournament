@@ -28,7 +28,7 @@
 // const MONGODB_CONNECTION_URL = 'mongodb+srv://nestjs-admin:itI5KG8cSFI9GIjb@cluster0.pgfvopw.mongodb.net/?retryWrites=true&w=majority';
 
 // // Database Name
-// const dbName = 'nestjs-course';
+// const dbName = 'FriendlyTournament';
 
 
 

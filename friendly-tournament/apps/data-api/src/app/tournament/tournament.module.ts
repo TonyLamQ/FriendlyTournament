@@ -7,7 +7,7 @@ import { TournamentService } from "./tournament.service";
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Tournament.name, schema: TournamentSchema }
+      { name: 'Tournament', schema: TournamentSchema }
     ]),
   ],
   controllers: [TournamentController],

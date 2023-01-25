@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ITournament } from '../../../../../libs/data/models/src/lib/ITournament';
-
-@Injectable({
-  providedIn: 'root',
-})
+import { ITournament } from '@friendly-tournament/data/models';
+// import { Tournament, TournamentDocument } from './tournament.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+@Injectable()
 export class TournamentService {
   private tournament?: ITournament;
   private tournamentList: ITournament[] = [
@@ -47,7 +47,7 @@ export class TournamentService {
 
   tournamentId: number = this.tournamentList.length;
 
-  constructor() {}
+  // constructor(@InjectModel('Tournament') private tournamentModel: Model<TournamentDocument>) {}
 
   getList(): Observable<ITournament[]> {
     console.log('ITournament getList aangeroepen');
