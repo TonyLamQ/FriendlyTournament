@@ -1,58 +1,64 @@
-import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ITournament } from '@friendly-tournament/data/models';
-// import { Tournament, TournamentDocument } from './tournament.schema';
+import { Tournament, TournamentDocument } from './tournament.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
+
 @Injectable()
 export class TournamentService {
+  constructor(@InjectModel('Tournament') private tournamentModel: Model<ITournament>) {
+
+  }
   private tournament?: ITournament;
   private tournamentList: ITournament[] = [
-    {
-      id: 1,
-      Name: 'Champions',
-      Game: 'Valorant',
-      RewardPrice: 10.00,
-      Date: new Date(2023,4,21),
-    },
-    {
-      id: 2,
-      Name: 'Repeat.gg',
-      Game: 'Overwatch2',
-      RewardPrice: 10.00,
-      Date: new Date(2023,4,21),
-    },
-    {
-      id: 3,
-      Name: 'Battlefy',
-      Game: 'CS:GO',
-      RewardPrice: 10.00,
-      Date: new Date(2023,4,21),
-    },
-    {
-      id: 4,
-      Name: 'Owayo',
-      Game: 'Unturned',
-      RewardPrice: 10.00,
-      Date: new Date(2023,4,21),
-    },
-    {
-      id: 5,
-      Name: 'Community Gaming',
-      Game: 'Minecraft',
-      RewardPrice: 10.00,
-      Date: new Date(2023,4,21),
-    },
+    // {
+    //   id: 1,
+    //   Name: 'Champions',
+    //   Game: 'Valorant',
+    //   RewardPrice: 10.00,
+    //   Date: new Date(2023,4,21),
+    // },
+    // {
+    //   id: 2,
+    //   Name: 'Repeat.gg',
+    //   Game: 'Overwatch2',
+    //   RewardPrice: 10.00,
+    //   Date: new Date(2023,4,21),
+    // },
+    // {
+    //   id: 3,
+    //   Name: 'Battlefy',
+    //   Game: 'CS:GO',
+    //   RewardPrice: 10.00,
+    //   Date: new Date(2023,4,21),
+    // },
+    // {
+    //   id: 4,
+    //   Name: 'Owayo',
+    //   Game: 'Unturned',
+    //   RewardPrice: 10.00,
+    //   Date: new Date(2023,4,21),
+    // },
+    // {
+    //   id: 5,
+    //   Name: 'Community Gaming',
+    //   Game: 'Minecraft',
+    //   RewardPrice: 10.00,
+    //   Date: new Date(2023,4,21),
+    // },
   ];
 
   tournamentId: number = this.tournamentList.length;
-
-  // constructor(@InjectModel('Tournament') private tournamentModel: Model<TournamentDocument>) {}
 
   getList(): Observable<ITournament[]> {
     console.log('ITournament getList aangeroepen');
     console.log(this.tournamentList);
     return of(this.tournamentList);
+  }
+
+  async findAll(): Promise<ITournament[]> {
+    return this.tournamentModel.find();
   }
 
   getById(id: number): Observable<ITournament> {

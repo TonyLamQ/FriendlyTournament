@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 // import { Punch, PunchSchema } from '../punch/punch.schema';
 // import { User } from '../user/user.schema';
+import * as mongoose from 'mongoose';
 
 export type TournamentDocument = HydratedDocument<Tournament>;
 
@@ -16,9 +17,6 @@ export class Tournament {
     @Prop({ type: Number, required: true })
     RewardPrize: Number;
 
-    @Prop({ type: Number, required: false })
-    resultCount: Number;
-
     @Prop({ type: Date, required: false })
     Date: Date;
 }
@@ -26,9 +24,8 @@ export class Tournament {
 export const TournamentSchema = SchemaFactory.createForClass(Tournament);
 
 // export const TournamentSchema = new mongoose.Schema({
-//     Name: { type: String, required: true },
-//     Game: { type: String, required: true },
-//     RewardPrize: { type: Number, required: true },
-//     resultCount: { type: Number, required: false },
-//     Date: { type: Date, required: false },
+//     Name: String,
+//     Game: String,
+//     RewardPrize: Number,
+//     Date: Date,
 // });
