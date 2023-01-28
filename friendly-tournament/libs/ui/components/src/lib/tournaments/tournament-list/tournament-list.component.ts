@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ITournament } from '@friendly-tournament/data/models';
-import {TournamentService} from '../../../../../../apps/data-api/src/app/tournament/tournament.service';
+import { TournamentService } from 'apps/data-api/src/app/tournament/tournament.service';
 
 @Component({
   selector: 'friendly-tournament-tournament-list',

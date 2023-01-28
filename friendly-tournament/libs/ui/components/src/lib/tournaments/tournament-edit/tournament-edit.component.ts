@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { ITournament } from '@friendly-tournament/data/models'
-import { TournamentService } from '../../../../../../apps/data-api/src/app/tournament/tournament.service';
+import { TournamentService } from 'apps/data-api/src/app/tournament/tournament.service';
 
 @Component({
   selector: 'friendly-tournament-tournament-edit',
