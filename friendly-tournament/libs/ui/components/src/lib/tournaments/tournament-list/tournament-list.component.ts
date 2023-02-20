@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ITournament } from '@friendly-tournament/data/models';
-import { TournamentService } from 'apps/data-api/src/app/tournament/tournament.service';
+import { TournamentService } from '../tournament.service';
 
 @Component({
   selector: 'friendly-tournament-tournament-list',
@@ -18,10 +18,10 @@ export class TournamentListComponent implements OnInit {
   constructor(private tournamentService:TournamentService ) {}
 
   ngOnInit(): void {
-    this.tournaments$= this.tournamentService.getList();
+    this.tournaments$= this.tournamentService.getTournaments();
   }
 
   onDelete(tournamentId: number): void {
-    this.tournamentService.delete(tournamentId);
+    this.tournamentService.deleteTournament(tournamentId);
   }
 }
