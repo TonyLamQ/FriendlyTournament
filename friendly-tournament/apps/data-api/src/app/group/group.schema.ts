@@ -9,6 +9,12 @@ export type GroupDocument = HydratedDocument<Group>;
 export class Group {
     @Prop({ type: String, required: true })
     Name: String;
+
+    @Prop({ type: Number, required: false })
+    TotalPlayers: Number;
+
+    @Prop({ type: Date, required: true })
+    CreatedDate: Date;
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

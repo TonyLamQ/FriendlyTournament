@@ -22,10 +22,3 @@ export class Tournament {
 }
 
 export const TournamentSchema = SchemaFactory.createForClass(Tournament);
-
-// export const TournamentSchema = new mongoose.Schema({
-//     Name: String,
-//     Game: String,
-//     RewardPrize: Number,
-//     Date: Date,
-// });

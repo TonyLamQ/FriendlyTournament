@@ -12,7 +12,7 @@ import { TournamentService } from "./tournament.service";
   ],
   controllers: [TournamentController],
   providers: [TournamentService],
-  exports: [TournamentService],
+  // exports: [TournamentService],
 })
 export class TournamentModule {
 }

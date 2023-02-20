@@ -14,7 +14,7 @@ export class TournamentController{
         return this.tournamentService.findAll();
     }
 
-    @Get('find/:id')
+    @Get(':id')
     async findById(@Param('id') id:string) : Promise<ITournament>{
         return this.tournamentService.findById(id);
     }

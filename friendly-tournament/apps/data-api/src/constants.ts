@@ -1,1 +1,2 @@
 export const MONGO_CONNECTION='mongodb+srv://nestjs-admin:itI5KG8cSFI9GIjb@cluster0.pgfvopw.mongodb.net/FriendlyTournament?retryWrites=true&w=majority';
+export const JWT_KEY='eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY3NDk5MDA4NSwiaWF0IjoxNjc0OTkwMDg1fQ.5f5hqnj9CKPYIVesHWqRsv-1zHiqPESBD0arS3HAAt8';
