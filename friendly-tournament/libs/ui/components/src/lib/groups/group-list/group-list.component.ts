@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { IGroup } from '@friendly-tournament/data/models';
-import {GroupService} from '../../../../../../../apps/data-api/src/app/group/group.service';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'friendly-tournament-group-list',
@@ -18,10 +18,12 @@ export class GroupListComponent implements OnInit {
   constructor(private groupService:GroupService ) {}
 
   ngOnInit(): void {
-    this.groups$= this.groupService.getList();
+    this.groups$= this.groupService.getGroups();
   }
 
-  onDelete(groupId: number): void {
-    this.groupService.delete(groupId);
+  onDelete(groupId: string): void {
+    this.groupService.deleteGroup(groupId).subscribe(()=> {
+      window.location.reload();
+    });
   }
 }

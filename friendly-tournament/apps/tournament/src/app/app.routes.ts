@@ -18,15 +18,15 @@ export const appRoutes: Route[] = [  {
     component: MainLayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'about' },
-      // { path: 'tournaments', pathMatch: 'full', component: TournamentListComponent },
-      // { path: 'tournaments/new', pathMatch: 'full', component: TournamentEditComponent },
-      // { path: 'tournaments/:id', pathMatch: 'full', component: TournamentDetailComponent },
-      // { path: 'tournaments/:id/edit', pathMatch: 'full', component: TournamentEditComponent },
+      { path: 'tournaments', pathMatch: 'full', component: TournamentListComponent },
+      { path: 'tournaments/new', pathMatch: 'full', component: TournamentEditComponent },
+      { path: 'tournaments/:id', pathMatch: 'full', component: TournamentDetailComponent },
+      { path: 'tournaments/:id/edit', pathMatch: 'full', component: TournamentEditComponent },
 
-      // { path: 'groups', pathMatch: 'full', component: GroupListComponent },
-      // { path: 'groups/new', pathMatch: 'full', component: GroupEditComponent },
-      // { path: 'groups/:id', pathMatch: 'full', component: GroupDetailComponent },
-      // { path: 'groups/:id/edit', pathMatch: 'full', component: GroupEditComponent },
+      { path: 'groups', pathMatch: 'full', component: GroupListComponent },
+      { path: 'groups/new', pathMatch: 'full', component: GroupEditComponent },
+      { path: 'groups/:id', pathMatch: 'full', component: GroupDetailComponent },
+      { path: 'groups/:id/edit', pathMatch: 'full', component: GroupEditComponent },
 
       {path:"about", pathMatch:'full', component:AboutComponent}
     //   { path: 'about', pathMatch: 'full', component: AboutComponent },

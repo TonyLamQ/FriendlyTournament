@@ -9,32 +9,32 @@
       <div class="form-row">
         <!-- Movie Title -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="tournamentName">Name</label>
+          <label for="Name">Name</label>
           <input
             type="text"
             class="form-control"
             [(ngModel)]="tournament.Name"
-            name="tournamentName"
-            #tournamentName="ngModel"
+            name="Name"
+            #Name="ngModel"
             [ngClass]="{
               'is-invalid':
-                (tournamentName.invalid && tournamentName.touched) ||
+                (Name.invalid && Name.touched) ||
                 (existingTournamentTitle$ | async)
             }"
             required
             minlength="3"
-            id="tournamentName"
+            id="Name"
             placeholder="The name of the tournament"
           />
           <!-- Show invalidity message -->
           <div
-            *ngIf="tournamentName.invalid && tournamentName.touched"
+            *ngIf="Name.invalid && Name.touched"
             class="invalid-feedback"
           >
-            <div *ngIf="tournamentName.errors?.['required']">
+            <div *ngIf="Name.errors?.['required']">
               Tournament name is vereist.
             </div>
-            <div *ngIf="tournamentName.errors?.['minlength']">
+            <div *ngIf="Name.errors?.['minlength']">
               Min name lenght is 3
             </div>
           </div>
@@ -43,32 +43,32 @@
         <br />
         <!-- Release Year -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="tournamentGame">Tournament Game</label>
+          <label for="Game">Tournament Game</label>
           <input
           type="text"
           class="form-control"
           [(ngModel)]="tournament.Game"
-          name="tournamentGame"
-          #tournamentGame="ngModel"
+          name="Game"
+          #Game="ngModel"
           [ngClass]="{
             'is-invalid':
-              (tournamentGame.invalid && tournamentGame.touched) ||
+              (Game.invalid && Game.touched) ||
               (existingTournamentTitle$ | async)
           }"
           required
           minlength="3"
-          id="tournamentGame"
+          id="Game"
           placeholder="The game of the tournament"
         />
           <!-- Show invalidity message -->
           <div
-            *ngIf="tournamentName.invalid && tournamentName.touched"
+            *ngIf="Game.invalid && Game.touched"
             class="invalid-feedback"
           >
-            <div *ngIf="tournamentName.errors?.['required']">
-              Tournament name is vereist.
+            <div *ngIf="Game.errors?.['required']">
+              Tournament game is vereist.
             </div>
-            <div *ngIf="tournamentName.errors?.['minlength']">
+            <div *ngIf="Game.errors?.['minlength']">
               Min name lenght is 3
             </div>
           </div>
@@ -77,26 +77,26 @@
         <br />
         <!-- Movie Studio -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="tournamendRewardPrice">tournamendRewardPrice</label>
+          <label for="RewardPrize">RewardPrize</label>
           <input
           type="number"
           class="form-control"
-          [(ngModel)]="tournament.RewardPrice"
-          name="tournamendRewardPrice"
-          #tournamendRewardPrice="ngModel"
+          [(ngModel)]="tournament.RewardPrize"
+          name="RewardPrize"
+          #RewardPrize="ngModel"
           [ngClass]="{
             'is-invalid':
-              (tournamendRewardPrice.invalid && tournamendRewardPrice.touched) ||
+              (RewardPrize.invalid && RewardPrize.touched) ||
               (existingTournamentTitle$ | async)
           }"
           required
           min=10
-          id="tournamendRewardPrice"
-          placeholder="The RewardPrice of the tournament"
+          id="RewardPrize"
+          placeholder="The RewardPrize of the tournament"
         />
           <!-- Show invalidity message -->
           <div
-            *ngIf="tournamendRewardPrice.invalid && tournamendRewardPrice.dirty"
+            *ngIf="RewardPrize.invalid && RewardPrize.dirty"
             class="invalid-feedback"
           >
           Minimum is 10.
@@ -106,25 +106,25 @@
         <br />
         <!-- Movie Age Category -->
         <div class="form-group col-sm-12 col-lg-4">
-            <label for="tournamentDate">Tournament date</label>
+            <label for="Date">Tournament date</label>
             <input
               type="datetime-local"
               class="form-control"
               [(ngModel)]="tournament.Date"
-              name="tournamentDate"
-              #tournamentDate="ngModel"
+              name="Date"
+              #Date="ngModel"
               [ngClass]="{
                 'is-invalid':
-                  (tournamentDate.invalid && tournamentDate.touched) ||
+                  (Date.invalid && Date.touched) ||
                   (existingTournamentTitle$ | async)
               }"
               required
-              id="tournamentDate"
+              id="Date"
               placeholder="The date of the tournament"
             />
             <!-- Show invalidity message -->
             <div
-              *ngIf="tournamentDate.invalid && tournamentDate.touched"
+              *ngIf="Date.invalid && Date.touched"
               class="invalid-feedback"
             >
                 <!-- ToDo insert Validation Date is not before today -->

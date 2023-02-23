@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { IGroup } from '@friendly-tournament/data/models'
-import { GroupService } from '../../../../../../../apps/data-api/src/app/group/group.service';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'friendly-tournament-group-detail',
@@ -11,16 +11,16 @@ import { GroupService } from '../../../../../../../apps/data-api/src/app/group/g
 })
 export class GroupDetailComponent implements OnInit, OnDestroy {
   subscription?: Subscription;
-  groupId: number | undefined;
+  groupId: string | undefined;
   group$: Observable<IGroup> | undefined;
 
   constructor(private route: ActivatedRoute, private groupService: GroupService) {}
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap.subscribe((params) => {
-      this.groupId = Number(params.get('id'));
+      this.groupId = params.get('id')!.toString();
       console.log(`This is the tournament ID ${this.groupId}`)
-      this.group$ = this.groupService.getById(this.groupId);
+      this.group$ = this.groupService.getGroup(this.groupId);
     })
   }
   ngOnDestroy(): void {

@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 import { ITournament } from '@friendly-tournament/data/models';
 import { TournamentService } from '../tournament.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'friendly-tournament-tournament-list',
@@ -10,18 +12,24 @@ import { TournamentService } from '../tournament.service';
   styleUrls: ['./tournament-list.component.css'],
 })
 export class TournamentListComponent implements OnInit {
-  tournaments: ITournament[] | undefined;
+  // tournaments: ITournament[];
   tournaments$: Observable<ITournament[]> | undefined;
-
-  tournament = new ITournament();
   tournament$: Observable<ITournament> | undefined;
-  constructor(private tournamentService:TournamentService ) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
+    private tournamentService: TournamentService,
+    ) {}
 
   ngOnInit(): void {
     this.tournaments$= this.tournamentService.getTournaments();
   }
 
-  onDelete(tournamentId: number): void {
-    this.tournamentService.deleteTournament(tournamentId);
+  onDelete(tournamentId: string): void {
+    console.log(tournamentId)
+    this.tournamentService.deleteTournament(tournamentId).subscribe(()=> {
+      window.location.reload();
+    });
   }
 }

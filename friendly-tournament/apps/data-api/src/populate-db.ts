@@ -1,5 +1,3 @@
-// import {findAllCourses, findAllUsers, findLessonsForCourse} from './db-data';
-
 // const util = require('util');
 
 // const password = require('password-hash-and-salt');
@@ -25,7 +23,7 @@
 // *
 // *****************************************************************************************************/
 
-// const MONGODB_CONNECTION_URL = 'mongodb+srv://nestjs-admin:itI5KG8cSFI9GIjb@cluster0.pgfvopw.mongodb.net/?retryWrites=true&w=majority';
+// const MONGODB_CONNECTION_URL ='mongodb+srv://nestjs-admin:RBSDWzSIXNkdGfWG@cluster0.rrk0ygc.mongodb.net/FriendlyTournament?retryWrites=true&w=majority';
 
 // // Database Name
 // const dbName = 'FriendlyTournament';

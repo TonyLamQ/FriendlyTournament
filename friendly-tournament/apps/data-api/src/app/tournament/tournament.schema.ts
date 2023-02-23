@@ -15,7 +15,7 @@ export class Tournament {
     Game: string;
 
     @Prop({ type: Number, required: true })
-    RewardPrize: Number;
+    RewardPrize: number;
 
     @Prop({ type: Date, required: false })
     Date: Date;

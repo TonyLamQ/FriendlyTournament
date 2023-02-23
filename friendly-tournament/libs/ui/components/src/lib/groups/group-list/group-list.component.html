@@ -36,7 +36,7 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-secondary"
-                      routerLink="{{group.id}}"
+                      routerLink="{{group._id}}"
                     >
                       View
                     </button>
@@ -44,14 +44,14 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-secondary"
-                      routerLink="./{{ group.id }}/edit"
+                      routerLink="./{{ group._id }}/edit"
                     >
                       Edit
                     </button>
                     <button
                     type="button"
                     class="btn btn-sm btn-outline-secondary"
-                    (click)="onDelete(group.id!)"
+                    (click)="onDelete(group._id!)"
                     >
                     
                       Delete

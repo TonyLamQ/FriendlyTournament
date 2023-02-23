@@ -36,7 +36,7 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-secondary"
-                      routerLink="{{tournament.id}}"
+                      routerLink="{{tournament._id}}"
                     >
                       View
                     </button>
@@ -44,16 +44,15 @@
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-secondary"
-                      routerLink="./{{ tournament.id }}/edit"
+                      routerLink="./{{ tournament._id }}/edit"
                     >
                       Edit
                     </button>
                     <button
                     type="button"
                     class="btn btn-sm btn-outline-secondary"
-                    (click)="onDelete(tournament.id!)"
+                    (click)="onDelete(tournament._id!)"
                     >
-                    
                       Delete
                     </button>
                   </div>

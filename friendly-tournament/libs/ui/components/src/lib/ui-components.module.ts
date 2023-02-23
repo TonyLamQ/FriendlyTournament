@@ -10,7 +10,7 @@ import { UiTournamentModule } from './tournaments/tournament.module';
     CommonModule,
     RouterModule,
     FormsModule,
-    UiGroupModule,
+    // UiGroupModule,
     UiTournamentModule
   ],
   declarations: [

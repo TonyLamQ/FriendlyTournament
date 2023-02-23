@@ -58,10 +58,12 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "tournament:build:production"
+          "browserTarget": "tournament:build:production",
+          "proxyConfig": "apps/tournament/proxy.conf.prod.json"
         },
         "development": {
-          "browserTarget": "tournament:build:development"
+          "browserTarget": "tournament:build:development",
+          "proxyConfig": "apps/tournament/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
