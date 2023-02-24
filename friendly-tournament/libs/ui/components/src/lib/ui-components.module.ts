@@ -4,14 +4,16 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UiGroupModule } from './groups/group.module';
 import { UiTournamentModule } from './tournaments/tournament.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    // UiGroupModule,
-    UiTournamentModule
+    UiGroupModule,
+    UiTournamentModule,
+    LoginModule
   ],
   declarations: [
   ],

@@ -13,5 +13,5 @@ import { UserService } from "./user.service";
   controllers: [UserController],
   providers: [UserService]
 })
-export class TournamentModule {
+export class UserModule {
 }

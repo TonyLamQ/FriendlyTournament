@@ -7,3 +7,5 @@ export * from './lib/tournaments/tournament-edit/tournament-edit.component'
 export * from './lib/groups/group-detail/group-detail.component'
 export * from './lib/groups/group-list/group-list.component'
 export * from './lib/groups/group-edit/group-edit.component'
+
+export * from './lib/login/login-form/login-form.component'

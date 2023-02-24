@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { GroupModule } from './group/group.module';
 import { TournamentModule } from './tournament/tournament.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -14,6 +15,8 @@ import { TournamentModule } from './tournament/tournament.module';
     TournamentModule,
     GroupModule,
     AuthModule,
+    AuthModule,
+    UserModule
     ],
   controllers: [AppController],
   providers: [AppService],
