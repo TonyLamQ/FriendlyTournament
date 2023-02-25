@@ -4,7 +4,6 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { catchError, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { ITournament } from '@friendly-tournament/data/models'
 import { TournamentService } from '../tournament.service';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'friendly-tournament-tournament-edit',

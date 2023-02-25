@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+  key: string |null
+  constructor() {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      this.key = localStorage.getItem('authJwtToken');
+  }
 }

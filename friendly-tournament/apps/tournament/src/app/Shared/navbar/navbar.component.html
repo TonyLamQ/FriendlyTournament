@@ -5,7 +5,9 @@
     <a class="nav-link" routerLink="groups">Groups</a>
     <a routerLink="about">About</a>
     <div class="topnav">
-      <a class="nav-link" style="float:right" routerLink="login">Login</a>
+      <a *ngIf="key === null" class="nav-link" style="float:right" routerLink="login">Login</a>
+      <a *ngIf="key !== null" class="nav-link" style="float:right" onclick="logout()">Logout</a>
+      <a *ngIf="key ===null" class="nav-link" style="float:right" routerLink="register">Register</a>
     </div>
   </div>
 </div>

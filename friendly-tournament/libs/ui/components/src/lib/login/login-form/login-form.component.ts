@@ -1,36 +1,55 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'apps/data-api/src/app/auth/auth.service'
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'friendly-tournament-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css'],
 })
-  export class LoginFormComponent implements OnInit, OnDestroy {
+  export class LoginFormComponent implements OnInit {
 
-    form:FormGroup
+    form!:FormGroup
   
     constructor(
-      private fb:FormBuilder,
+      private formBuilder:FormBuilder,
       private auth:AuthService,
       private router:Router,
+      private location: Location
     ) {
-      this.form = fb.group({
-        email: ['gebruiker@email.com', [Validators.required]],
-        password: ['test', [Validators.required]]
-      })
+
     }
 
     ngOnInit(): void {
-        
+      this.form = this.formBuilder.group({
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required])
+      })
     }
-    onSubmit(){
 
+    login(){
+        const values = this.form.value;
+        this.auth.login(values.email, values.password)
+        .subscribe(
+          (reply:any)=> {
+
+            localStorage.setItem("authJwtToken", reply.authJwtToken)
+
+            this.location.back()
+          },
+          err => {
+            console.log("Login Failed: ", err);
+            alert('login Failed.');
+          }
+        );
     }
 
-    ngOnDestroy(): void {
-        
+    get email(){
+      return this.form.get('email')!;
+    }
+    get password(){
+      return this.form.get('password')!;
     }
   }
 

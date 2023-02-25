@@ -16,6 +16,7 @@ export class AuthService {
     @InjectModel('User') private userModel: Model<User>
   ) {}
 
+  //create
   async create(user: Partial<User>): Promise<User> {
     const newUser = new this.userModel({UserName: user.UserName, Email: user.Email});
     await newUser.save();
@@ -30,6 +31,7 @@ export class AuthService {
     await identity.save();
   }
 
+  //login
   async generateToken(Email: string, Password: string) : Promise<string>{
     const identity = await this.authmodel.findOne({Email});
     if(!identity || !await compare(Password, identity.hash)){
@@ -44,8 +46,9 @@ export class AuthService {
         else resolve(token);
       })
     });
-  
   }
+
+  //verify key
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
       verify(token, JWT_KEY, (err, payload) => {

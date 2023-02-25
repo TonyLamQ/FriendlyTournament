@@ -1,6 +1,7 @@
 import { ITournament } from "@friendly-tournament/data/models";
 import { Controller, Get, Post } from "@nestjs/common";
-import { Body, Delete, Param, Put } from "@nestjs/common/decorators";
+import { Body, Delete, Param, Put, UseGuards } from "@nestjs/common/decorators";
+import { AuthGuard } from "../auth/auth.guard";
 import { TournamentService } from "./tournament.service";
 
 @Controller('Tournament')
@@ -10,6 +11,7 @@ export class TournamentController{
     }
 
     @Get('findAll')
+    @UseGuards(AuthGuard)
     async findAll() : Promise<ITournament[]>{
         return this.tournamentService.findAll();
     }

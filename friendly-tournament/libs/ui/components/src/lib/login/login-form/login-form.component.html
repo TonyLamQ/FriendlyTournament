@@ -1,1 +1,67 @@
-<h1>test</h1>
+<div class="component">
+    <p>login-form works!</p>
+    <form
+      [formGroup]="form"
+      name="form"
+      (ngSubmit)="form.valid && login()"
+      novalidate
+    >
+      <div class="form-row">
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            formControlName="email"
+            class="form-control"
+            required
+            placeholder="Email"
+          />
+
+          <div
+            *ngIf="email.invalid && email.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="email.errors?.['required']">
+              Email is required.
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            formControlName="password"
+            class="form-control"
+            required
+            placeholder="password"
+          />
+
+          <div
+            *ngIf="password.invalid && password.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="password.errors?.['required']">
+              Password is required.
+            </div>
+          </div>
+        </div>
+  
+        <!-- Submit buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!form.valid"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>

@@ -11,6 +11,7 @@ import { TournamentEditComponent,
 
 import { NgModule } from '@angular/core';
 import { AboutComponent } from './Pages/about/about.component';
+import { RegisterFormComponent } from 'libs/ui/components/src/lib/login/register-form/register-form.component';
 // import { UserComponent } from './objects/user/user.component';
 // {path: 'userRoute', pathMatch:"full", component: UserComponent}
 
@@ -30,7 +31,8 @@ export const appRoutes: Route[] = [  {
       { path: 'groups/:id/edit', pathMatch: 'full', component: GroupEditComponent },
 
       {path:"about", pathMatch:'full', component:AboutComponent},
-      {path:"login", pathMatch:'full', component:LoginFormComponent}
+      {path:"login", pathMatch:'full', component:LoginFormComponent},
+      {path:"register", pathMatch:'full', component:RegisterFormComponent}
     //   { path: 'about', pathMatch: 'full', component: AboutComponent },
     //   {
     //     path: 'users',
