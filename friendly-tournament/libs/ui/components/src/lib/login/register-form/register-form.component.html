@@ -9,12 +9,12 @@
       <div class="form-row">
 
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="email">Email</label>
+          <label for="Email">Email</label>
           <input
-            id="email"
+            id="Email"
             type="email"
-            name="email"
-            formControlName="email"
+            name="Email"
+            formControlName="Email"
             class="form-control"
             required
             placeholder="Email"
@@ -33,15 +33,15 @@
         <br />
 
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="username">Username</label>
+          <label for="UserName">Username</label>
           <input
-            id="username"
+            id="UserName"
             type="text"
-            name="username"
-            formControlName="username"
+            name="UserName"
+            formControlName="UserName"
             class="form-control"
             required
-            placeholder="username"
+            placeholder="UserName"
           />
 
           <div
@@ -57,27 +57,50 @@
         <br />
 
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="password">Password</label>
+          <label for="hash">Password</label>
           <input
-            id="password"
+            id="hash"
             type="password"
-            name="password"
-            formControlName="password"
+            name="hash"
+            formControlName="hash"
             class="form-control"
             required
             placeholder="password"
           />
 
           <div
-            *ngIf="password.invalid && password.touched"
+            *ngIf="hash.invalid && hash.touched"
             class="invalid-feedback"
           >
-            <div *ngIf="password.errors?.['required']">
+            <div *ngIf="hash.errors?.['required']">
                 Password is required.
             </div>
           </div>
         </div>
   
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="BirthDate">Birthdate</label>
+          <input
+            id="BirthDate"
+            type="date"
+            name="BirthDate"
+            formControlName="BirthDate"
+            class="form-control"
+            required
+            placeholder="BirthDate"
+          />
+
+          <div
+            *ngIf="birthdate.invalid && birthdate.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="birthdate.errors?.['required']">
+              Birthdate is required.
+            </div>
+          </div>
+        </div>
         <!-- Submit buttons -->
         <button
           type="submit"

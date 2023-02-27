@@ -11,7 +11,7 @@ export class TournamentController{
     }
 
     @Get('findAll')
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     async findAll() : Promise<ITournament[]>{
         return this.tournamentService.findAll();
     }

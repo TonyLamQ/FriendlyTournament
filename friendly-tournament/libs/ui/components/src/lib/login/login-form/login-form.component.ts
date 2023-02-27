@@ -30,7 +30,8 @@ import { AuthService } from '../auth.service';
 
     login(){
         const values = this.form.value;
-        this.auth.login(values.email, values.password)
+        const newValues= {Email:values.email, hash:values.password}
+        this.auth.login(newValues)
         .subscribe(
           (reply:any)=> {
 

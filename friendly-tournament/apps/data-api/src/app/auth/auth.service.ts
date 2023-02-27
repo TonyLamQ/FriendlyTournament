@@ -18,7 +18,7 @@ export class AuthService {
 
   //create
   async create(user: Partial<User>): Promise<User> {
-    const newUser = new this.userModel({UserName: user.UserName, Email: user.Email});
+    const newUser = new this.userModel({UserName: user.UserName, Email: user.Email, BirthDate: user.BirthDate});
     await newUser.save();
     return newUser.toObject({versionKey: false});
   }

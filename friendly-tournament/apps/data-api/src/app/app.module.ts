@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { RouterModule } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MONGO_CONNECTION } from '../constants';
 
@@ -19,17 +20,24 @@ import { UserModule } from './user/user.module';
     GroupModule,
     AuthModule,
     AuthModule,
-    UserModule
-    ],
+    UserModule,
+  //   RouterModule.register([
+  //     {
+  //       path: 'auth-api',
+  //       module: AuthModule,
+  //     },
+  //   ]),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule{
-  configure(consumer: MiddlewareConsumer) : void {
-      consumer.apply(TokenMiddleware)
-      .forRoutes(
-        GroupController,
-        TournamentController
-      );
-  }
-}
+// export class AppModule implements NestModule{
+//   configure(consumer: MiddlewareConsumer) {
+//       consumer.apply(TokenMiddleware)
+//       .forRoutes(
+//         GroupController,
+//         TournamentController
+//       );
+//   }
+// }
+export class AppModule{}

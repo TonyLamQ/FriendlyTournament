@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IUser } from '@friendly-tournament/data/models';
 import { AuthService } from '../auth.service';
 @Component({
   selector: 'friendly-tournament-register-form',
@@ -22,40 +23,45 @@ import { AuthService } from '../auth.service';
     }
 
     ngOnInit(): void {
+      
       this.form = this.formBuilder.group({
-        email: new FormControl('', [Validators.required]),
-        username: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required])
+        Email: new FormControl('', [Validators.required]),
+        UserName: new FormControl('', [Validators.required]),
+        hash: new FormControl('', [Validators.required]),
+        BirthDate: new FormControl('', [Validators.required])
       })
     }
 
     register(){
       const values = this.form.value;
-      this.auth.register(values.email, values.username, values.password)
+      this.auth.register(values)
       .subscribe(
-        (reply:any)=> {
-
-          localStorage.setItem("authJwtToken", reply.authJwtToken)
-
-          this.location.back()
+        (user:IUser | undefined)=> {
+          if(user){
+            console.log('user = ', user)
+            this.router.navigate(['/'])
+          }
         },
         err => {
-          console.log("Login Failed: ", err);
-          alert('login Failed.');
+          console.log("registered Failed: ", err);
+          alert('registered Failed.');
         }
       );
     }
 
     get email(){
-      return this.form.get('email')!;
+      return this.form.get('Email')!;
     }
-    get password(){
-      return this.form.get('password')!;
+    get hash(){
+      return this.form.get('hash')!;
     }
 
     get username(){
-      return this.form.get('username')!;
+      return this.form.get('UserName')!;
     }
   
+    get birthdate(){
+      return this.form.get('BirthDate')!;
+    }
   }
 

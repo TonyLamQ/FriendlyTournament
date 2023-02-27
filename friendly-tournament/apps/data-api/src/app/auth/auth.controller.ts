@@ -17,7 +17,7 @@ export class AuthController{
                 id: await this.authService.create(credentials),
             };
         } catch (e) {
-            throw new HttpException('Username invalid', HttpStatus.BAD_REQUEST);
+            throw new HttpException(''+e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -25,7 +25,7 @@ export class AuthController{
     async login(@Body() credentials: Partial<Auth>){
         try {
             return {
-                token: await this.authService.generateToken(credentials.UserName, credentials.hash)
+                token: await this.authService.generateToken(credentials.Email, credentials.hash)
             };
         } catch (e) {
             throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
