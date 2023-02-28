@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { UiGroupModule } from './groups/group.module';
 import { UiTournamentModule } from './tournaments/tournament.module';
 import { LoginModule } from './login/login.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   imports: [
@@ -13,21 +14,10 @@ import { LoginModule } from './login/login.module';
     FormsModule,
     UiGroupModule,
     UiTournamentModule,
-    LoginModule
+    LoginModule,
+    ProfileModule
   ],
   declarations: [
   ],
 })
-export class UiComponentsModule implements OnInit {
-
-  constructor(private router:Router){}
-
-  ngOnInit(): void {
-      
-  }
-
-  logout(){
-    localStorage.removeItem('authJwtToken');
-    this.router.navigateByUrl('/login');
-  }
-}
+export class UiComponentsModule {}

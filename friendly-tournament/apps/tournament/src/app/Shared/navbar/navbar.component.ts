@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'friendly-tournament-navbar',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   key: string |null
-  constructor() {
+  constructor(private router:Router) {
   }
 
   ngOnInit(): void {
       this.key = localStorage.getItem('authJwtToken');
+  }
+
+  logout(){
+    localStorage.removeItem('authJwtToken');
+    this.router.navigateByUrl('/login');
   }
 }

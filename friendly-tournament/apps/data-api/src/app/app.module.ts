@@ -31,13 +31,13 @@ import { UserModule } from './user/user.module';
   controllers: [AppController],
   providers: [AppService],
 })
-// export class AppModule implements NestModule{
-//   configure(consumer: MiddlewareConsumer) {
-//       consumer.apply(TokenMiddleware)
-//       .forRoutes(
-//         GroupController,
-//         TournamentController
-//       );
-//   }
-// }
-export class AppModule{}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer) {
+      consumer.apply(TokenMiddleware)
+      .forRoutes(
+        GroupController,
+        TournamentController
+      );
+  }
+}
+// export class AppModule{}

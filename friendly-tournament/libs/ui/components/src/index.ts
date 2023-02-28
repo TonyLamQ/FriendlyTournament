@@ -9,3 +9,6 @@ export * from './lib/groups/group-list/group-list.component'
 export * from './lib/groups/group-edit/group-edit.component'
 
 export * from './lib/login/login-form/login-form.component'
+export * from './lib/login/register-form/register-form.component'
+
+export * from './lib/profile/profile-info/profile-info.component'
