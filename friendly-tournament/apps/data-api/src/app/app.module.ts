@@ -21,12 +21,6 @@ import { UserModule } from './user/user.module';
     AuthModule,
     AuthModule,
     UserModule,
-  //   RouterModule.register([
-  //     {
-  //       path: 'auth-api',
-  //       module: AuthModule,
-  //     },
-  //   ]),
   ],
   controllers: [AppController],
   providers: [AppService],

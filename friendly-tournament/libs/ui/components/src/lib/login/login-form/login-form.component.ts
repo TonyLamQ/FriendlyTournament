@@ -35,8 +35,8 @@ import { AuthService } from '../auth.service';
         .subscribe(
           (reply:any)=> {
 
-            localStorage.setItem("authJwtToken", reply.authJwtToken)
-
+            localStorage.setItem("authJwtToken", reply.token)
+            console.log(reply)
             this.location.back()
           },
           err => {
