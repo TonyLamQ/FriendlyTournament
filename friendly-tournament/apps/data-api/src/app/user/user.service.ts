@@ -21,12 +21,12 @@ export class UserService {
     return user.toObject({versionKey: false});
   }
 
-  async inviteResponse(userId: number, response: boolean, groupId: number) {
+  async inviteResponse(userId: string, response: boolean, groupId: string) {
     const currentGroup = await this.groupModel.findById(groupId)
     const currentUser = await this.userModel.findById(userId)
 
     currentGroup.Invites.forEach(invite => {
-      if(invite.User["_id"] === userId)
+      if(invite.User._id === userId)
         if(response){
           console.log("invite accepted")
           currentGroup.Users.push(currentUser)

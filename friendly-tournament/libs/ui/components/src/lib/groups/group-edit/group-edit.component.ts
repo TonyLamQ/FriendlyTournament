@@ -40,6 +40,7 @@ import { Location } from '@angular/common';
         });
   
       } else {
+        this.group.CreatedDate = new Date();
         this.groupService.createGroup(this.group).subscribe(()=>{
           this.location.back();
         });

@@ -19,6 +19,7 @@ export class GroupService {
     }
 
     createGroup(group: Partial<IGroup>){
+        console.log(group)
         return this.http.post<IGroup>(`/api/Group/create`, group);
     }
 

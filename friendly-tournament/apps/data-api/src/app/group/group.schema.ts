@@ -31,7 +31,7 @@ export class Group {
         sendDate: Date
     }
 
-    @Prop({ required: false, type:[{type:UserSchema}]})
+    @Prop({ required: false, type:UserSchema})
     Users: User[];
 }
 

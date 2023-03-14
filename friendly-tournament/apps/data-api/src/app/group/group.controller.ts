@@ -9,17 +9,15 @@ export class GroupController{
     constructor(private groupService: GroupService){
     }
 
-    @Get()
-    async test(@Headers() header){
-        console.log(header.authorization)
-        
-        const base64Payload = header.authorization.split('.')[1];
-        const payloadBuffer = Buffer.from(base64Payload, 'base64');
-        const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
+    // @Get()
+    // async getIdFromHeader(@Headers() header){
+    //     console.log(header.authorization)
+    //     const base64Payload = header.authorization.split('.')[1];
+    //     const payloadBuffer = Buffer.from(base64Payload, 'base64');
+    //     const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
 
-        console.log(updatedJwtPayload.id)
-    }
-
+    //     console.log(updatedJwtPayload.id)
+    // }
     @Get('findAll')
     async findAll() : Promise<IGroup[]>{
         return this.groupService.findAll();
@@ -31,8 +29,9 @@ export class GroupController{
     }
 
     @Post('create')
-    async create(@Body() group: Partial<IGroup>) : Promise<IGroup>{
-        return this.groupService.create(group);
+    async create(@Body() group: Partial<IGroup>, @Headers() header) : Promise<IGroup>{
+        const userId = this.groupService.getIdFromHeader(header);
+        return this.groupService.create(group, userId);
     }
 
     @Put('edit/:id')
