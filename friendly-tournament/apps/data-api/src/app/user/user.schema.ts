@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { isEmail } from 'class-validator';
+import { Group, GroupSchema } from '../group/group.schema';
 
 export type AuthDocument = HydratedDocument<User>;
 
@@ -22,6 +23,12 @@ export class User{
 
     @Prop({ type: Date, required: true })
     BirthDate: Date;
+
+    @Prop({ required:false, type: GroupSchema})
+    GroupInvites: Group[];
+
+    @Prop({ required:false, type: GroupSchema})
+    CurrentGroup: Group;
 
 }
 
