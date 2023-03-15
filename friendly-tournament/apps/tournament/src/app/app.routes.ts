@@ -7,7 +7,8 @@ import { TournamentEditComponent,
          GroupDetailComponent,
          GroupEditComponent, 
          LoginFormComponent,
-         profileInfoComponent} from '@friendly-tournament/ui/components';
+         profileInfoComponent,
+         UserListComponent} from '@friendly-tournament/ui/components';
 
 
 import { NgModule } from '@angular/core';
@@ -34,7 +35,9 @@ export const appRoutes: Route[] = [  {
       {path:"about", pathMatch:'full', component:AboutComponent},
       {path:"login", pathMatch:'full', component:LoginFormComponent},
       {path:"register", pathMatch:'full', component:RegisterFormComponent},
-      {path:"profile", pathMatch:'full', component:profileInfoComponent}
+
+      {path:"profile", pathMatch:'full', component:profileInfoComponent},
+      {path:'users', pathMatch:'full', component:UserListComponent}
     //   { path: 'about', pathMatch: 'full', component: AboutComponent },
     //   {
     //     path: 'users',

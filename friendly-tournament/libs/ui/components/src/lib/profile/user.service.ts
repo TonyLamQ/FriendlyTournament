@@ -10,6 +10,9 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
+    getList(): Observable<IUser[]> {
+        return this.http.get<IUser[]>(`/api/User/findAll`);
+    }
     getProfile():Observable<IUser> {
         return this.http.get<IUser>(`/api/User/profile`);
     }

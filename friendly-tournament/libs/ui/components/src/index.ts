@@ -12,5 +12,5 @@ export * from './lib/login/login-form/login-form.component'
 export * from './lib/login/register-form/register-form.component'
 
 export * from './lib/profile/profile-info/profile-info.component'
-
+export * from './lib/profile/user-list/user-list.component'
 // export * from './lib/profile/user.service'
