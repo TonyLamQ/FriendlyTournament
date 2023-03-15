@@ -4,12 +4,22 @@ import { IGroup, IInvitation, ITournament, IUser } from '@friendly-tournament/da
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Headers } from '@nestjs/common/decorators';
+import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel('User') private userModel: Model<IUser>,
     @InjectModel('Group') private groupModel: Model<IGroup>) {
+  }
+
+  getIdFromHeader(@Headers() header): any {
+    const base64Payload = header.authorization.split('.')[1];
+    const payloadBuffer = Buffer.from(base64Payload, 'base64');
+    const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
+
+    return (updatedJwtPayload.id)
   }
 
   async findAll(): Promise<IUser[]> {

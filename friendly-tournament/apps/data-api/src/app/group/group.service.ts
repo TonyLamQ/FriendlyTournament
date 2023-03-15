@@ -19,6 +19,7 @@ export class GroupService {
 
     return (updatedJwtPayload.id)
   }
+  
   async findAll(): Promise<IGroup[]> {
     return await this.groupModel.find();
   }
