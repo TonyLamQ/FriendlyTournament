@@ -31,24 +31,27 @@ export class GroupService {
 
   async create(group: Partial<IGroup>, userId: string): Promise<IGroup> {
     const newGroup = new this.groupModel(group);
-    await newGroup.save();
 
     const currentUser = await this.userModel.findById(userId);
     //remove user from old group
     if (currentUser != null) {
       if (currentUser.CurrentGroup != null) {
-        const group = this.groupModel.findById(currentUser.CurrentGroup._id);
-        for (let i = 0; i < (await group).Users.length; i++) {
-          if ((await group).Users[i]._id == currentUser._id) {
-            (await group).Users.splice(i, 1);
+        const group = await this.groupModel.findById(currentUser.CurrentGroup._id);
+        for (let i = 0; i < group.Users.length; i++) {
+          if (group.Users[i]._id == currentUser._id) {
+            group.Users.splice(i, 1);
           }
         }
-        (await group).save();
+        group.save();
       }
-      //add user to new group
+      //add group for user
       currentUser.CurrentGroup = newGroup;
       await currentUser.save();
 
+      //add user to group
+      newGroup.Users.push(currentUser);
+      newGroup.save();
+    
       return newGroup.toObject({ versionKey: false });
     } else {
       throw new NotFoundException(`User with id ${userId} not found`);
@@ -65,13 +68,25 @@ export class GroupService {
     throw new NotFoundException(`Group with id ${id} not found`);
   }
 
-  async delete(id: string): Promise<IGroup> {
+  async delete(id: string, userId: string): Promise<IGroup> {
     const group = await this.groupModel.findById(id);
-    if (group) {
-      await group.delete();
-      return group.toObject({ versionKey: false });
+    const user = await this.userModel.findById(userId);
+    if(user._id.toString() == group.Users[0]._id.toString()){
+      if (group) {
+        //remove group from users
+        for( let i = 0; i < group.Users.length; i++){
+          let gUser = await this.userModel.findById(group.Users[i]._id)
+          gUser.CurrentGroup = null;
+          gUser.save();
+        }
+        await group.delete();
+        return group.toObject({ versionKey: false });
+      } else {
+        throw new NotFoundException(`Group with id ${id} not found`);
+      }
+    } else {
+      throw new NotFoundException(`No permission to delete this group`);
     }
-    throw new NotFoundException(`Group with id ${id} not found`);
   }
 
   //invitations --------------------------------------------

@@ -40,7 +40,8 @@ export class GroupController{
     }
 
     @Delete('delete/:id')
-    async delete(@Param('id') id: string) : Promise<IGroup>{
-        return this.groupService.delete(id);
+    async delete(@Param('id') id: string, @Headers() header) : Promise<IGroup>{
+        const userId = this.groupService.getIdFromHeader(header);
+        return this.groupService.delete(id, userId);
     }
 }
