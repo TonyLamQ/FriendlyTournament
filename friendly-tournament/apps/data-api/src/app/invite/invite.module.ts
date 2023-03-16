@@ -17,5 +17,5 @@ import { inviteService } from "./invite.service";
   controllers: [InviteController],
   providers: [inviteService]
 })
-export class GroupModule {
+export class InviteModule {
 }

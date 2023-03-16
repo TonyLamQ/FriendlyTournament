@@ -9,7 +9,7 @@ export class InviteController{
     constructor(private inviteService: inviteService){
     }
 
-    @Post('invite')
+    @Post()
     async invite(receivingUserId:string, @Headers() header, message:string) : Promise<IGroup>{
         const userId = this.inviteService.getIdFromHeader(header);
         return this.inviteService.invite(receivingUserId, userId, message);

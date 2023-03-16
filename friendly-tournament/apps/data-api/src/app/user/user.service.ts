@@ -31,6 +31,13 @@ export class UserService {
     return user.toObject({versionKey: false});
   }
 
+  async getInvites(id: string): Promise<IInvitation[]> {
+    const user = await this.userModel.findById(id);
+    return user.GroupInvites;
+  }
+
+
+
   async inviteResponse(userId: string, response: boolean, groupId: string) {
     const currentGroup = await this.groupModel.findById(groupId)
     const currentUser = await this.userModel.findById(userId)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IUser } from "@friendly-tournament/data/models";
+import { IInvitation, IUser } from "@friendly-tournament/data/models";
 import { Observable } from "rxjs";
 import { UserService } from "../user.service";
 
@@ -12,6 +12,9 @@ export class profileInfoComponent implements OnInit{
   token: string | null;
   user$: Observable<IUser> | undefined;
 
+  invite$ = new Observable<IInvitation>();
+  invites$ = new Observable<IInvitation[]>();
+
   constructor(private userService: UserService) {
   }
 
@@ -19,6 +22,7 @@ export class profileInfoComponent implements OnInit{
     this.token = localStorage.getItem('authJwtToken');
     
     this.user$ = this.userService.getProfile();
+    this.invites$ = this.userService.getInvites();
   }
 
 }

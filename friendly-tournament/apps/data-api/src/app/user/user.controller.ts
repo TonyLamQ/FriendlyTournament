@@ -26,5 +26,9 @@ export class UserController{
         return this.userService.findById(id);
     }
 
+    @Get('invites')
+    async getInvites(@Headers() header){
+        return this.userService.getInvites(this.userService.getIdFromHeader(header));
+    }
 
 }

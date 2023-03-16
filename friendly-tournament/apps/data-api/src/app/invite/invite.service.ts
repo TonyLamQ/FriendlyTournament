@@ -22,14 +22,15 @@ export class inviteService {
   }
 
   //invitations --------------------------------------------
-  async invite(userId: string, groupId: string, message: string) {
-    const currentGroup = await this.groupModel.findById(groupId);
-    const sendToUser = await this.userModel.findById(userId);
+  async invite(sendToUserId: string, SendId: string, message: string) {
+    const sendUser = await this.userModel.findById(SendId);
+    const currentGroup = await this.groupModel.findById(sendUser.CurrentGroup._id);
+    const sendToUser = await this.userModel.findById(sendToUserId);
     let inviteExists = false;
     if(sendToUser){
 
       for(let groupInvite of sendToUser.GroupInvites){
-        if(groupInvite.Group._id == groupId){
+        if(groupInvite.Group._id == currentGroup._id){
             inviteExists = true;
         }
       }

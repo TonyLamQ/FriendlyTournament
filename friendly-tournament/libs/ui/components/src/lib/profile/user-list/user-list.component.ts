@@ -15,10 +15,17 @@ export class UserListComponent implements OnInit {
 
   user = new IUser();
   user$: Observable<IUser> | undefined;
+
+  message = `you have been invited to join our group`;
+
   constructor(private userService:UserService ) {}
 
   ngOnInit(): void {
     this.users$= this.userService.getList();
+  }
+
+  onInvite(user: IUser) {
+    this.userService.invite(user, this.message);
   }
 
 }
