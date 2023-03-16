@@ -25,26 +25,33 @@ export class inviteService {
   async invite(userId: string, groupId: string, message: string) {
     const currentGroup = await this.groupModel.findById(groupId);
     const sendToUser = await this.userModel.findById(userId);
+    let inviteExists = false;
     if(sendToUser){
 
-      // for(let groupInvite of sendToUser.GroupInvites){
-      //   if(groupInvite._id == groupId){
-      //   }
-      // }
-      const newInvite: IInvitation = {
-        User: sendToUser,
-        Group: currentGroup,
-        Message: message,
-        sendDate: new Date()
-      };
-  
-      currentGroup.Invites.push(newInvite);
-      currentGroup.save();
-  
-      sendToUser.GroupInvites.push(newInvite);
-      sendToUser.save();
-  
-      return currentGroup.toObject({ versionKey: false });  
+      for(let groupInvite of sendToUser.GroupInvites){
+        if(groupInvite.Group._id == groupId){
+            inviteExists = true;
+        }
+      }
+      
+    if(!inviteExists){
+        const newInvite: IInvitation = {
+            User: sendToUser,
+            Group: currentGroup,
+            Message: message,
+            sendDate: new Date()              
+        };
+          
+        currentGroup.Invites.push(newInvite);
+        currentGroup.save();
+          
+        sendToUser.GroupInvites.push(newInvite);
+        sendToUser.save();
+          
+        return currentGroup.toObject({ versionKey: false });
+        } else {
+            throw new BadRequestException("Invite already exists");
+        }
     } else {
       throw new BadRequestException("User not found");
     }
