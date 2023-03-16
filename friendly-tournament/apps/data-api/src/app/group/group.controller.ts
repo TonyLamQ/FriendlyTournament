@@ -9,15 +9,6 @@ export class GroupController{
     constructor(private groupService: GroupService){
     }
 
-    // @Get()
-    // async getIdFromHeader(@Headers() header){
-    //     console.log(header.authorization)
-    //     const base64Payload = header.authorization.split('.')[1];
-    //     const payloadBuffer = Buffer.from(base64Payload, 'base64');
-    //     const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
-
-    //     console.log(updatedJwtPayload.id)
-    // }
     @Get('findAll')
     async findAll() : Promise<IGroup[]>{
         return this.groupService.findAll();

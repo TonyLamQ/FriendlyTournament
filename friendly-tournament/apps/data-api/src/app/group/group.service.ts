@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Headers } from "@nestjs/common/decorators";
 import { JwtPayload } from "jsonwebtoken";
+import { BadRequestException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class GroupService {
@@ -87,27 +88,5 @@ export class GroupService {
     } else {
       throw new NotFoundException(`No permission to delete this group`);
     }
-  }
-
-  //invitations --------------------------------------------
-  async invite(userId: number, groupId: number, message: string) {
-    const currentGroup = await this.groupModel.findById(groupId);
-    const sendToUser = await this.userModel.findById(userId);
-
-    const newInvite: IInvitation = {
-      User: sendToUser,
-      Group: currentGroup,
-      Message: message,
-      sendDate: new Date()
-    };
-
-    currentGroup.Invites.push(newInvite);
-    currentGroup.save();
-
-    sendToUser.GroupInvites.push(newInvite);
-    sendToUser.save();
-
-    return currentGroup.toObject({ versionKey: false });
-
   }
 }

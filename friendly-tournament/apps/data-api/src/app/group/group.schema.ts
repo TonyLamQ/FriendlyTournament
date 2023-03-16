@@ -18,19 +18,6 @@ export class Group {
     @Prop({ required: false, type:[{type:Types.ObjectId, ref:'Tournament'},{Price:Number, EnrollmentDate:Date}]})
     Entries: IEntry[];
 
-    @Prop({ type: {
-        User: {type:Types.ObjectId, ref:'User'},
-        Group: {type:Types.ObjectId, ref:'Group'},
-        Message: String,
-        sendDate: Date
-    }})
-    Invites:{
-        User: User,
-        Group: Group,
-        Message: String,
-        sendDate: Date
-    }
-
     @Prop({ required: false, type:UserSchema})
     Users: User[];
 }
