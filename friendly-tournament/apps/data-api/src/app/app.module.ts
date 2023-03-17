@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { TokenMiddleware } from './auth/token.middleware';
 import { GroupController } from './group/group.controller';
 import { GroupModule } from './group/group.module';
-import { InviteModule } from './invite/invite.module';
+// import { InviteModule } from './invite/invite.module';
 import { TournamentController } from './tournament/tournament.controller';
 import { TournamentModule } from './tournament/tournament.module';
 import { UserModule } from './user/user.module';
@@ -22,7 +22,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     AuthModule,
     UserModule,
-    InviteModule,
+    // InviteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

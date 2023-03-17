@@ -13,7 +13,8 @@ import { GroupService } from "./group.service";
     ]),
   ],
   controllers: [GroupController],
-  providers: [GroupService]
+  providers: [GroupService],
+  exports:[GroupService]
 })
 export class GroupModule {
 }
