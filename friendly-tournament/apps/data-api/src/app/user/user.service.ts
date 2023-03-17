@@ -42,15 +42,15 @@ export class UserService {
     const currentGroup = await this.groupModel.findById(groupId)
     const currentUser = await this.userModel.findById(userId)
 
-    currentGroup.Invites.forEach(invite => {
-      if(invite.User._id === userId)
-        if(response){
-          console.log("invite accepted")
-          currentGroup.Users.push(currentUser)
-          currentGroup.save();
-          return currentGroup.toObject({ versionKey: false });
-        }
-    });
+    // currentGroup.Invites.forEach(invite => {
+    //   if(invite.User._id === userId)
+    //     if(response){
+    //       console.log("invite accepted")
+    //       currentGroup.Users.push(currentUser)
+    //       currentGroup.save();
+    //       return currentGroup.toObject({ versionKey: false });
+    //     }
+    // });
     console.log("invite declined")
     return currentGroup.toObject({ versionKey: false });
   }
