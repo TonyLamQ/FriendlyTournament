@@ -1,34 +1,40 @@
+import { IInvitation } from "@friendly-tournament/data/models";
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import {  Headers } from "@nestjs/common/decorators";
+import { Headers } from "@nestjs/common/decorators";
 import { User } from "./user.schema";
 import { UserService } from "./user.service";
 
 
 @Controller('User')
-export class UserController{
-    constructor(private userService: UserService){
+export class UserController {
+    constructor(private userService: UserService) {
     }
-    
+
 
     @Get('findAll')
-    async findAll(){
+    async findAll() {
         return this.userService.findAll();
     }
 
     @Get('profile')
-    async getProfile(@Headers() header){
+    async getProfile(@Headers() header) {
         const user = this.userService.findById(this.userService.getIdFromHeader(header));
         return user;
     }
 
     @Get(':id')
-    async findById(@Param('id') id:string){
+    async findById(@Param('id') id: string) {
         return this.userService.findById(id);
     }
 
     @Get('invites')
-    async getInvites(@Headers() header){
+    async getInvites(@Headers() header) {
         return this.userService.getInvites(this.userService.getIdFromHeader(header));
+    }
+
+    @Post('inviteResponse')
+    async inviteResponse(@Headers() header, response:boolean, inviteId:string){
+        return this.userService.inviteResponse(this.userService.getIdFromHeader(header), response, inviteId);
     }
 
 }
