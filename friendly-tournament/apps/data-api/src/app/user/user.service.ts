@@ -32,14 +32,6 @@ export class UserService {
     return user.toObject({versionKey: false});
   }
 
-  async getInvites(id: string): Promise<IInvitation[]> {
-    const user = await this.userModel.findById(id);
-    if(user.CurrentGroup != null){
-      throw new ConflictException("User is already in a group");
-    }
-    return user.GroupInvites;
-  }
-
   async inviteResponse(userId: string, response: boolean, inviteId: string) {
     const invite = await this.inviteModel.findById(inviteId);
     const currentGroup = await this.groupModel.findById(invite.Group._id)

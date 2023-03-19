@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IInvitation, IUser } from "@friendly-tournament/data/models";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { UserService } from "../user.service";
 
 @Component({
@@ -22,7 +22,7 @@ export class profileInfoComponent implements OnInit{
     this.token = localStorage.getItem('authJwtToken');
     
     this.user$ = this.userService.getProfile();
-    this.invites$ = this.userService.getInvites();
-  }
+    this.invites$ = this.user$.pipe(map(user => user.GroupInvites));
+  } 
 
 }

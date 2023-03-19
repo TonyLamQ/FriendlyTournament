@@ -19,7 +19,4 @@ export class UserService {
     invite(user: IUser, message: string) {
         return this.http.post(`/api/Invite`, { receivingUserId: user._id, message: message});
     }
-    getInvites(): Observable<IInvitation[]> {
-        return this.http.get<IInvitation[]>(`/api/User/invites`);
-    }
 }
