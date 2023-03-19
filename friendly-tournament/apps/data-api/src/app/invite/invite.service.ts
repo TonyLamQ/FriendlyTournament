@@ -23,6 +23,7 @@ export class inviteService {
 
   //invitations --------------------------------------------
   async invite(sendToUserId: string, SendId: string, message: string) {
+    if(sendToUserId == SendId) throw new BadRequestException("You can't invite yourself");
     const sendUser = await this.userModel.findById(SendId);
     const currentGroup = await this.groupModel.findById(sendUser.CurrentGroup._id);
     const sendToUser = await this.userModel.findById(sendToUserId);

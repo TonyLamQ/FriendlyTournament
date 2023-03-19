@@ -20,9 +20,10 @@ export class profileInfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.token = localStorage.getItem('authJwtToken');
-    
-    this.user$ = this.userService.getProfile();
-    this.invites$ = this.user$.pipe(map(user => user.GroupInvites));
+    if(this.token) {
+      this.user$ = this.userService.getProfile();
+      this.invites$ = this.user$.pipe(map(user => user.GroupInvites));
+    }
   } 
 
 }
