@@ -11,7 +11,8 @@ export class inviteService {
 
   constructor(
     @InjectModel('User') private userModel: Model<IUser>,
-    @InjectModel('Group') private groupModel: Model<IGroup>) { }
+    @InjectModel('Group') private groupModel: Model<IGroup>,
+    @InjectModel('Invite') private inviteModel: Model<IInvitation>) { }
 
   getIdFromHeader(@Headers() header): any {
     const base64Payload = header.authorization.split('.')[1];
@@ -22,35 +23,44 @@ export class inviteService {
   }
 
   //invitations --------------------------------------------
-  async invite(sendToUserId: string, SendId: string, message: string) {
+  async invite(sendToUserId: string, SendId: string, message: string): Promise<IInvitation> {
+
     if(sendToUserId == SendId) throw new BadRequestException("You can't invite yourself");
     const sendUser = await this.userModel.findById(SendId);
-    const currentGroup = await this.groupModel.findById(sendUser.CurrentGroup._id);
-    const sendToUser = await this.userModel.findById(sendToUserId);
-    let inviteExists = false;
-    if(sendToUser){
 
-      for(let groupInvite of sendToUser.GroupInvites){
-        if(groupInvite.Group._id == currentGroup._id){
-            inviteExists = true;
+    if(sendUser.CurrentGroup == null) throw new BadRequestException("You are not in a group");
+    const currentGroup = await this.groupModel.findById(sendUser.CurrentGroup._id);
+
+    const sendToUser = await this.userModel.findById(sendToUserId);
+    if(sendToUser.CurrentGroup != null) throw new BadRequestException("User is already in a group");
+    let inviteExists = false;
+
+    if(sendToUser){
+      if(sendToUser.GroupInvites == null || sendToUser.GroupInvites.length == 0){
+        inviteExists = false
+      } else {
+        for(let groupInvite of sendToUser.GroupInvites){
+          if(groupInvite.Group._id == currentGroup._id){
+              inviteExists = true;
+          }
         }
       }
-      
-    if(!inviteExists){
-        const newInvite: IInvitation = {
-            User: sendToUser,
-            Group: currentGroup,
-            Message: message,
-            sendDate: new Date()              
-        };
-          
+
+    if(!inviteExists){ 
+        const newInvite = await this.inviteModel.create({
+          User: sendToUser,
+          Group: currentGroup,
+          Message: message,
+          sendDate: new Date()  
+        });
+        if(currentGroup.Invites == null) currentGroup.Invites = [];
         currentGroup.Invites.push(newInvite);
         currentGroup.save();
           
         sendToUser.GroupInvites.push(newInvite);
         sendToUser.save();
           
-        return currentGroup.toObject({ versionKey: false });
+        return newInvite.toObject({ versionKey: false });
         } else {
             throw new BadRequestException("Invite already exists");
         }

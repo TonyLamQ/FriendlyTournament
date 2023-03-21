@@ -17,6 +17,8 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     localStorage.removeItem('authJwtToken');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/login').then(() => {
+      window.location.reload();
+    });
   }
 }

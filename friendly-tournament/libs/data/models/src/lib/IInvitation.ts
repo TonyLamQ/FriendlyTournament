@@ -4,8 +4,8 @@ import { IUser } from "./IUser";
 
 export interface IInvitation {
     _id?: string,
-    User: Types.ObjectId | IUser;
-    Group: Types.ObjectId | IGroup;
+    User: IUser;
+    Group: IGroup;
     Message: string;
     sendDate: Date;
 }

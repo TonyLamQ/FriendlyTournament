@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IUser } from '@friendly-tournament/data/models';
+import { IInvitation, IUser } from '@friendly-tournament/data/models';
 import { UserService } from '../user.service';
 
 @Component({
@@ -25,7 +25,21 @@ export class UserListComponent implements OnInit {
   }
 
   onInvite(user: IUser) {
-    this.userService.invite(user, this.message);
-  }
+    const invite = {
+      User: user,
+      Message: this.message,
+    }
+      this.userService.invite(invite)
+      .subscribe(
+        (invite:IInvitation | undefined)=> {
+          if(invite){
+            console.log("invite: ", invite);
+          }
+        },
+        err => {
+          alert("invite failed: " + err.error.message)
+        }
+      );
+    }
 
 }

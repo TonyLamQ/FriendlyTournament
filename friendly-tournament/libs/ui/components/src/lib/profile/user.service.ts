@@ -16,7 +16,7 @@ export class UserService {
     getProfile():Observable<IUser> {
         return this.http.get<IUser>(`/api/User/profile`);
     }
-    invite(user: IUser, message: string) {
-        return this.http.post(`/api/Invite`, { receivingUserId: user._id, message: message});
+    invite(invite: Partial<IInvitation>): Observable<IInvitation>{
+        return this.http.post<IInvitation>(`/api/Invite`, invite);
     }
 }

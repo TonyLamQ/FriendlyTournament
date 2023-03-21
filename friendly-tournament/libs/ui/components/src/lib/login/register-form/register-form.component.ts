@@ -39,7 +39,7 @@ import { AuthService } from '../auth.service';
         (user:IUser | undefined)=> {
           if(user){
             console.log('user = ', user)
-            this.router.navigate(['/'])
+            this.router.navigate(['/login'])
           }
         },
         err => {

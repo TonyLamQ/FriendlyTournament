@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { Headers } from "@nestjs/common/decorators";
-import { IGroup } from "@friendly-tournament/data/models";
+import { IGroup, IInvitation } from "@friendly-tournament/data/models";
 import { JwtPayload } from "jsonwebtoken";
 import { inviteService } from "./invite.service";
 
@@ -10,8 +10,8 @@ export class InviteController{
     }
 
     @Post()
-    async invite(receivingUserId:string, @Headers() header, message:string) : Promise<IGroup>{
+    async invite(@Body() invite:Partial<IInvitation>, @Headers() header) : Promise<IInvitation>{
         const userId = this.inviteService.getIdFromHeader(header);
-        return this.inviteService.invite(receivingUserId, userId, message);
+        return this.inviteService.invite(invite.User._id, userId, invite.Message);
     }
 }

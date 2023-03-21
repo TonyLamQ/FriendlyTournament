@@ -28,7 +28,7 @@ export class UserController {
     }
 
     @Post('inviteResponse')
-    async inviteResponse(@Headers() header, response:boolean, inviteId:string){
+    async inviteResponse(@Headers() header, @Body() response:boolean, @Body() inviteId:string){
         return this.userService.inviteResponse(this.userService.getIdFromHeader(header), response, inviteId);
     }
 

@@ -19,7 +19,6 @@ export class TournamentService {
     }
 
     createTournament(tournament:Partial<ITournament>): Observable<ITournament>{
-        console.log(tournament)
         return this.http.post<ITournament>(`/api/Tournament/create`, tournament);
     }
 
