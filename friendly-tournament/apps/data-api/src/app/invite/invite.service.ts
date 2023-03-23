@@ -48,7 +48,6 @@ export class inviteService {
         }
       }
     if(inviteExists == false){ 
-      console.log(inviteExists)
         const newInvite = await this.inviteModel.create({
           User: sendToUser,
           Group: currentGroup,
