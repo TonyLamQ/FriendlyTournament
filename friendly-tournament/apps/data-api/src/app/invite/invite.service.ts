@@ -36,27 +36,30 @@ export class inviteService {
     let inviteExists = false;
 
     if(sendToUser){
-      if(sendToUser.GroupInvites == null || sendToUser.GroupInvites.length == 0){
+      if(sendToUser.GroupInvites.length == 0 || sendToUser.GroupInvites == null || sendToUser.GroupInvites == undefined){
         inviteExists = false
       } else {
         for(let groupInvite of sendToUser.GroupInvites){
-          if(groupInvite.Group._id == currentGroup._id){
+          for(let invite of currentGroup.Invites){
+            if(groupInvite._id.toString() === invite._id.toString()){
               inviteExists = true;
+            }
           }
         }
       }
-
-    if(!inviteExists){ 
+    if(inviteExists == false){ 
+      console.log(inviteExists)
         const newInvite = await this.inviteModel.create({
           User: sendToUser,
           Group: currentGroup,
           Message: message,
           sendDate: new Date()  
         });
-        if(currentGroup.Invites == null) currentGroup.Invites = [];
+        newInvite.save();
+
         currentGroup.Invites.push(newInvite);
         currentGroup.save();
-          
+
         sendToUser.GroupInvites.push(newInvite);
         sendToUser.save();
           

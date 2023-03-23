@@ -5,7 +5,7 @@
     Group : {{ user.CurrentGroup.Name }}
   </div>
   <div class="h2">Invites :</div>
-  <div *ngIf="(invites$ | async)?.length ==0; else elseblock">
+  <div>
     <div class="col-md-4" *ngFor="let invite of invites$ | async">
       <div class="card mb-4 shadow-sm">
         <svg
@@ -46,7 +46,4 @@
       </div>
     </div>
   </div>
-  <ng-template #elseblock>
-    <div class="h2">No invites</div>
-  </ng-template>
 </div>

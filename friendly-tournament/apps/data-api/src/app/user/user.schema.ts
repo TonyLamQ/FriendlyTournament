@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { isEmail } from 'class-validator';
 import { Group, GroupSchema } from '../group/group.schema';
 import { Invite, InviteSchema } from '../invite/invite.schema';
@@ -25,7 +25,7 @@ export class User{
     @Prop({ type: Date, required: true })
     BirthDate: Date;
 
-    @Prop({ required:false, type: InviteSchema})
+    @Prop({ required:false, type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Invite'}]})
     GroupInvites: Invite[];
 
     @Prop({ required:false, type: GroupSchema})
