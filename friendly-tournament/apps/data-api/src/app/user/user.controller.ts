@@ -1,4 +1,4 @@
-import { IInvitation } from "@friendly-tournament/data/models";
+import { IInvitation, IUser } from "@friendly-tournament/data/models";
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { Headers } from "@nestjs/common/decorators";
 import { User } from "./user.schema";
@@ -27,9 +27,10 @@ export class UserController {
         return this.userService.findById(id);
     }
 
-    @Post('inviteResponse')
-    async inviteResponse(@Headers() header, @Body() response:boolean, @Body() inviteId:string){
-        return this.userService.inviteResponse(this.userService.getIdFromHeader(header), response, inviteId);
+    @Post('leave')
+    async leave(@Headers() header) : Promise<IUser>{
+        const userId = this.userService.getIdFromHeader(header);
+        return this.userService.leave(userId);
     }
 
 }

@@ -20,7 +20,7 @@ export class GroupService {
 
     return (updatedJwtPayload.id)
   }
-  
+
   async findAll(): Promise<IGroup[]> {
     return await this.groupModel.find();
   }
@@ -52,7 +52,7 @@ export class GroupService {
       //add user to group
       newGroup.Users.push(currentUser);
       newGroup.save();
-    
+
       return newGroup.toObject({ versionKey: false });
     } else {
       throw new NotFoundException(`User with id ${userId} not found`);
@@ -72,10 +72,10 @@ export class GroupService {
   async delete(id: string, userId: string): Promise<IGroup> {
     const group = await this.groupModel.findById(id);
     const user = await this.userModel.findById(userId);
-    if(user._id.toString() == group.Users[0]._id.toString()){
+    if (user._id.toString() == group.Users[0]._id.toString()) {
       if (group) {
         //remove group from users
-        for( let i = 0; i < group.Users.length; i++){
+        for (let i = 0; i < group.Users.length; i++) {
           let gUser = await this.userModel.findById(group.Users[i]._id)
           gUser.CurrentGroup = null;
           gUser.save();

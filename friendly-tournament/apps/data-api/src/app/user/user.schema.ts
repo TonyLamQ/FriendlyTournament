@@ -28,7 +28,7 @@ export class User{
     @Prop({ required:false, type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Invite'}]})
     GroupInvites: Invite[];
 
-    @Prop({ required:false, type: GroupSchema})
+    @Prop({ required:false, type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}]})
     CurrentGroup: Group;
 
 }

@@ -9,3 +9,7 @@ export interface IInvitation {
     Message: string;
     sendDate: Date;
 }
+
+export interface IInviteResponse extends IInvitation {
+    response: boolean;
+}

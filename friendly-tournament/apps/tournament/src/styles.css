@@ -13,4 +13,5 @@ body {
 
 .btn:hover{
     background: burlywood;
+    outline: auto;
 }

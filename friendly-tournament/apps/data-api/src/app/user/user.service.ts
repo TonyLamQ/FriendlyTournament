@@ -32,31 +32,22 @@ export class UserService {
     return user.toObject({versionKey: false});
   }
 
-  async inviteResponse(userId: string, response: boolean, inviteId: string) {
-    const invite = await this.inviteModel.findById(inviteId);
-    const currentGroup = await this.groupModel.findById(invite.Group._id)
-    const currentUser = await this.userModel.findById(userId)
+  async leave(userId: string): Promise<IUser> {
+    const user = await this.userModel.findById(userId);
+    if (user) {
+      const group = await this.groupModel.findById(user.CurrentGroup);
+      if(!group) throw new NotFoundException(`Group with id ${user.CurrentGroup} not found`);
 
-    if(currentUser.CurrentGroup != null){
-      throw new ConflictException("User is already in a group");
-    }
-    //is invite for this user?
-      if(invite.User._id === userId)
-      //if true
-        if(response){
-          console.log("invite accepted")
-          currentGroup.Users.push(currentUser)
-          currentGroup.save();
-          return currentGroup.toObject({ versionKey: false });
-        } else {
-          console.log("invite declined")
-          currentUser.GroupInvites.splice(currentUser.GroupInvites.indexOf(invite), 1)
-          currentUser.save();
-          this.inviteModel.findByIdAndDelete(invite._id)
-          return currentGroup.toObject({ versionKey: false });
+      for (let i = 0; i < group.Users.length; i++) {
+        if (group.Users[i]._id.toString() == user._id.toString()) {
+          group.Users.splice(i, 1);
         }
-
-    console.log("invite not for this user");
-    throw new ConflictException("Invite not for this user");
+      }
+      group.save();
+      user.CurrentGroup = null;
+      user.save();
+      return user.toObject({ versionKey: false });
+    }
   }
+
 }

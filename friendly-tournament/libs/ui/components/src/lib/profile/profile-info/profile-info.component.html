@@ -1,8 +1,16 @@
 <div class="d-flex flex-column m-5" *ngIf="user$ | async as user">
   <div class="d-flex justify-content-center h1">Profile</div>
   <div class="h2">Name : {{ user.UserName }}</div>
-  <div class="h2" *ngIf="user.CurrentGroup != null">
-    Group : {{ user.CurrentGroup.Name }}
+  <div class="h2" *ngIf="group != undefined || group != null">
+    Group : {{ group }}
+    <button 
+    class="ms-4 btn btn-danger"
+    (click)="onLeaveGroup()">
+      Leave
+    </button>
+  </div>
+  <div class="h2" *ngIf="group == undefined || group == null">
+    Group : None
   </div>
   <div class="h2">Invites :</div>
   <div>
@@ -28,14 +36,14 @@
               <button
                 type="button"
                 class="btn btn-sm btn-outline-secondary"
-                routerLink="accept"
+                (click)="onInviteResponse(true, invite)"
               >
                 accept
               </button>
               <button
                 type="button"
                 class="btn btn-sm btn-outline-secondary"
-                routerLink="deny"
+                (click)="onInviteResponse(false, invite)"
               >
                 deny
               </button>
