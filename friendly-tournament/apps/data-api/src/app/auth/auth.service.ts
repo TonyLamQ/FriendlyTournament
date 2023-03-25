@@ -7,6 +7,7 @@ import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { JWT_KEY } from '../../constants';
 import { compare, hash } from 'bcrypt';
 import * as bcrypt from 'bcrypt';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class AuthService {
@@ -17,18 +18,19 @@ export class AuthService {
   ) {}
 
   //create
-  async create(user: Partial<User>): Promise<User> {
+  async create(user: Partial<User>): Promise<ObjectId> {
     const newUser = new this.userModel({UserName: user.UserName, Email: user.Email, BirthDate: user.BirthDate});
     await newUser.save();
-    return newUser.toObject({versionKey: false});
+    return newUser._id;
   }
 
-  async register(UserName: string, Password: string, Email: string){
+  async register(UserName: string, Password: string, Email: string) : Promise<Auth>{
     const SALT_ROUNDS = await bcrypt.genSalt();
     const generateHash = await hash(Password, SALT_ROUNDS);
 
     const identity = new this.authmodel({UserName, hash: generateHash, Email});
     await identity.save();
+    return identity.toObject({versionKey: false});
   }
 
   //login
