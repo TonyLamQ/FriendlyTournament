@@ -29,4 +29,8 @@ export class TournamentService {
     deleteTournament(id: string): Observable<void>{
         return this.http.delete<void>(`/api/Tournament/delete/${id}`);
     }
+
+    joinTournament(id: string): Observable<void>{
+        return this.http.post<void>(`/api/Tournament/join/${id}`, {});
+    }
 }

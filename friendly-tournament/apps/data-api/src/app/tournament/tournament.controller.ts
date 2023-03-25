@@ -1,6 +1,6 @@
 import { ITournament } from "@friendly-tournament/data/models";
 import { Controller, Get, Post } from "@nestjs/common";
-import { Body, Delete, Param, Put, UseGuards } from "@nestjs/common/decorators";
+import { Body, Delete, Headers, Param, Put, UseGuards } from "@nestjs/common/decorators";
 import { AuthGuard } from "../auth/auth.guard";
 import { TournamentService } from "./tournament.service";
 
@@ -22,8 +22,15 @@ export class TournamentController{
     }
 
     @Post('create')
-    async create(@Body() tournament: Partial<ITournament>) : Promise<ITournament>{
-        return this.tournamentService.create(tournament);
+    async create(@Body() tournament: Partial<ITournament>, @Headers() header) : Promise<ITournament>{
+        const userId = this.tournamentService.getIdFromHeader(header);
+        return this.tournamentService.create(tournament, userId);
+    }
+
+    @Post('join/:id')
+    async join(@Param('id') id: string, @Headers() header) : Promise<ITournament>{
+        const userId = this.tournamentService.getIdFromHeader(header);
+        return this.tournamentService.join(id, userId);
     }
 
     @Put('edit/:id')
@@ -32,7 +39,8 @@ export class TournamentController{
     }
 
     @Delete('delete/:id')
-    async delete(@Param('id') id: string) : Promise<ITournament>{
-        return this.tournamentService.delete(id);
+    async delete(@Param('id') id: string, @Headers() header) : Promise<ITournament>{
+        const userId = this.tournamentService.getIdFromHeader(header);
+        return this.tournamentService.delete(id, userId);
     }
 }

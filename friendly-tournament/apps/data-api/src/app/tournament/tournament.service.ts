@@ -1,46 +1,90 @@
 import { Observable, of } from 'rxjs';
-import { ITournament } from '@friendly-tournament/data/models';
+import { IGroup, ITournament, IUser } from '@friendly-tournament/data/models';
 import { Tournament, TournamentDocument } from './tournament.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Headers } from '@nestjs/common/decorators';
+import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable()
 export class TournamentService {
-  constructor(@InjectModel('Tournament') private tournamentModel: Model<Tournament>) {
+  constructor(
+    @InjectModel('Tournament') private tournamentModel: Model<Tournament>,
+    @InjectModel('User') private userModel: Model<IUser>,
+    @InjectModel('Group') private groupModel: Model<IGroup>,) {
   }
 
-    async findAll(): Promise<ITournament[]> {
-      return this.tournamentModel.find();
-    }
+  getIdFromHeader(@Headers() header): any {
+    const base64Payload = header.authorization.split('.')[1];
+    const payloadBuffer = Buffer.from(base64Payload, 'base64');
+    const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
 
-    async findById(id: string): Promise<ITournament> {
-      const tournament = await this.tournamentModel.findById(id);
-      return tournament.toObject({versionKey: false});
-    }
+    return (updatedJwtPayload.id)
+  }
 
-    async create(tournamentModel: Partial<ITournament>) : Promise<ITournament> {
-      const newTournament = new this.tournamentModel(tournamentModel);
-      await newTournament.save();
-      return newTournament.toObject({versionKey: false});
-    }
+  async findAll(): Promise<ITournament[]> {
+    return this.tournamentModel.find();
+  }
 
-    async update(id: string, changes: Partial<ITournament>) : Promise<ITournament> {
-      const tournament = await this.tournamentModel.findById(id);
-      if (tournament) {
-        tournament.set(changes);
-        await tournament.save();
-        return tournament.toObject({versionKey: false});
-      }
-      throw new NotFoundException(`Tournament with ${id} not found`);
-    }
+  async findById(id: string): Promise<ITournament> {
+    const tournament = await this.tournamentModel.findById(id);
+    return tournament.toObject({ versionKey: false });
+  }
 
-    async delete(id: string) : Promise<ITournament> {
-      const tournament = await this.tournamentModel.findById(id);
-      if (tournament) {
-        await tournament.remove();
-        return tournament.toObject({versionKey: false});
-      }
-      throw new NotFoundException(`Tournament with ${id} not found`);
+  async create(tournamentModel: Partial<ITournament>, userId: string): Promise<ITournament> {
+    const user = await this.userModel.findById(userId);
+    if(!user) throw new NotFoundException(`User with ${userId} not found`);
+   
+    const tournament = {...tournamentModel, Creator: user};
+    const newTournament = new this.tournamentModel(tournament);
+    await newTournament.save();
+
+    return newTournament.toObject({ versionKey: false });
+  }
+
+  async join(tournamentId: string, userId: string): Promise<ITournament> {
+    const tournament = await this.tournamentModel.findById(tournamentId);
+    if(!tournament) throw new NotFoundException(`Tournament with ${tournamentId} not found`);
+
+    const user = await this.userModel.findById(userId);
+    if(!user) throw new NotFoundException(`User with ${userId} not found`);
+
+    const group = await this.groupModel.findById(user.CurrentGroup);
+    if(!group) throw new NotFoundException(`Group with ${user.CurrentGroup} not found`);
+
+    if(tournament.Groups.includes(group)) throw new NotFoundException(`Group with ${user.CurrentGroup} is already in the tournament`);
+
+    if(group.Users[0]._id.toString() == userId.toString()){
+      tournament.Groups.push(group);
+      await tournament.save();
+      return tournament.toObject({ versionKey: false });
+    } else {
+      throw new NotFoundException(`User with ${userId} is not the owner of the group`);
     }
+  }
+
+  async update(id: string, changes: Partial<ITournament>): Promise<ITournament> {
+    const tournament = await this.tournamentModel.findById(id);
+    if (tournament) {
+      tournament.set(changes);
+      await tournament.save();
+      return tournament.toObject({ versionKey: false });
+    }
+    throw new NotFoundException(`Tournament with ${id} not found`);
+  }
+
+  async delete(id: string, userId:string): Promise<ITournament> {
+    const user = await this.userModel.findById(userId);
+    if(!user) throw new NotFoundException(`User with ${userId} not found`);
+
+    const tournament = await this.tournamentModel.findById(id);
+    if(user != tournament.Creator) throw new NotFoundException(`User with ${userId} is not the creator of the tournament`);
+
+    if (tournament) {
+      await tournament.remove();
+      return tournament.toObject({ versionKey: false });
+    }
+    throw new NotFoundException(`Tournament with ${id} not found`);
+  }
 }

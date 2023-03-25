@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ITournament } from '@friendly-tournament/data/models'
 import { TournamentService } from '../tournament.service';
@@ -14,7 +14,10 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
   tournamentId: string | undefined;
   tournament$: Observable<ITournament> | undefined;
 
-  constructor(private route: ActivatedRoute, private tournamentService: TournamentService) {}
+  constructor(
+      private route: ActivatedRoute,
+      private tournamentService: TournamentService,
+      private router: Router,) {}
 
   ngOnInit(): void {
     this.subscription = this.route.paramMap.subscribe((params) => {
@@ -25,5 +28,17 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+  }
+
+  onDelete(): void {
+    this.tournamentService.deleteTournament(this.tournamentId!).subscribe(()=> {
+      this.router.navigate(['/tournaments'])
+    });
+  }
+
+  onJoin(): void {
+    this.tournamentService.joinTournament(this.tournamentId!).subscribe(()=> {
+      this.router.navigate(['/tournaments'])
+    });
   }
 }

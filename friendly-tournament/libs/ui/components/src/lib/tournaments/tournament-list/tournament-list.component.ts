@@ -25,11 +25,4 @@ export class TournamentListComponent implements OnInit {
   ngOnInit(): void {
     this.tournaments$= this.tournamentService.getTournaments();
   }
-
-  onDelete(tournamentId: string): void {
-    console.log(tournamentId)
-    this.tournamentService.deleteTournament(tournamentId).subscribe(()=> {
-      window.location.reload();
-    });
-  }
 }
