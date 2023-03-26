@@ -31,9 +31,12 @@ export class GroupService {
   }
 
   async create(group: Partial<IGroup>, userId: string): Promise<IGroup> {
-    const newGroup = new this.groupModel(group);
-
     const currentUser = await this.userModel.findById(userId);
+    if(currentUser.CurrentGroup != null){
+      throw new BadRequestException(`User with id ${userId} is already in a group`);
+    }
+    
+    const newGroup = new this.groupModel(group);
     //remove user from old group
     if (currentUser != null) {
       if (currentUser.CurrentGroup != null) {
