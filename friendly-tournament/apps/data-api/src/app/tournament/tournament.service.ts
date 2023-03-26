@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Headers } from '@nestjs/common/decorators';
 import { JwtPayload } from 'jsonwebtoken';
+import { BadRequestException, ConflictException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class TournamentService {
@@ -53,14 +54,19 @@ export class TournamentService {
     const group = await this.groupModel.findById(user.CurrentGroup);
     if(!group) throw new NotFoundException(`Group with ${user.CurrentGroup} not found`);
 
-    if(tournament.Groups.includes(group)) throw new NotFoundException(`Group with ${user.CurrentGroup} is already in the tournament`);
-
+    let includesGroup = false;
+    for(let i = 0; i < tournament.Groups.length; i++){
+      if(tournament.Groups[i].toString() == group._id.toString()){
+        includesGroup = true;
+      }
+    }
+    if(includesGroup) throw new ConflictException(`Group with ${group._id} is already in the tournament`);
     if(group.Users[0]._id.toString() == userId.toString()){
       tournament.Groups.push(group);
       await tournament.save();
       return tournament.toObject({ versionKey: false });
     } else {
-      throw new NotFoundException(`User with ${userId} is not the owner of the group`);
+      throw new BadRequestException(`User with ${userId} is not the creator of the group`);
     }
   }
 
