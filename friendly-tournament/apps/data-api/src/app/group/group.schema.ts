@@ -14,6 +14,9 @@ export class Group {
     @Prop({ type: String, required: true })
     Name: String;
 
+    @Prop({ type: String, required: true })
+    Description: String;
+    
     @Prop({ type: Date, required: true })
     CreatedDate: Date;
 

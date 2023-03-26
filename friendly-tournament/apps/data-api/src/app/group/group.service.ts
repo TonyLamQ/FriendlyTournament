@@ -64,6 +64,9 @@ export class GroupService {
 
   async update(id: string, changes: Partial<IGroup>): Promise<IGroup> {
     const group = await this.groupModel.findById(id);
+    if(group.Name != changes.Name){
+      throw new BadRequestException(`Group names cannot be changed.`);
+    }
     if (group) {
       group.set(changes);
       await group.save();

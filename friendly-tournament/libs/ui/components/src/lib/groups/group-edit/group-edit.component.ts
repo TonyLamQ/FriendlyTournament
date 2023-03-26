@@ -34,10 +34,14 @@ import { Location } from '@angular/common';
     }
 
     onSubmit(){
+
       if(this.groupId != null){
-        this.groupService.updateGroup(this.group._id!, this.group).subscribe(()=> {
-          this.location.back();
-        });
+          this.groupService.updateGroup(this.group._id!, this.group).subscribe(()=> {
+            this.location.back();
+          },
+          err=> {
+            alert(err.error.message)
+          });
   
       } else {
         this.group.CreatedDate = new Date();

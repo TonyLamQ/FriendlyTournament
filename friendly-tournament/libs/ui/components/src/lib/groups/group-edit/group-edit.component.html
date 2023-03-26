@@ -35,14 +35,45 @@
                 Group name is vereist.
             </div>
             <div *ngIf="groupName.errors?.['minlength']">
-              Min name lenght is 3
+              Min name length is 3
             </div>
           </div>
           <!-- end -->
         </div>
         <br />
-        <!-- Release Year -->
-        
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="groupDescription">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="group.Description"
+            name="groupDescription"
+            #groupDescription="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (groupDescription.invalid && groupDescription.touched)
+            }"
+            required
+            minlength="3"
+            id="groupDescription"
+            placeholder="The Description for the group"
+          />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="groupDescription.invalid && groupDescription.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="groupDescription.errors?.['required']">
+                Group description is missing.
+            </div>
+            <div *ngIf="groupDescription.errors?.['minlength']">
+              Min description length is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
   
         <!-- Submit buttons -->
         <button
