@@ -4,7 +4,7 @@ import { isEmail } from 'class-validator';
 import { Group, GroupSchema } from '../group/group.schema';
 import { Invite, InviteSchema } from '../invite/invite.schema';
 
-export type AuthDocument = HydratedDocument<User>;
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User{

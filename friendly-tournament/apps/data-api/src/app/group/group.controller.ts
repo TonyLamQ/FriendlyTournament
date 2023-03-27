@@ -26,8 +26,9 @@ export class GroupController{
     }
 
     @Put('edit/:id')
-    async update(@Param('id') id: string, @Body() changes: Partial<IGroup>) : Promise<IGroup>{
-        return this.groupService.update(id, changes);
+    async update(@Param('id') id: string, @Body() changes: Partial<IGroup>, @Headers() header) : Promise<IGroup>{
+        const userId = this.groupService.getIdFromHeader(header);
+        return this.groupService.update(id, userId, changes);
     }
 
     @Delete('delete/:id')

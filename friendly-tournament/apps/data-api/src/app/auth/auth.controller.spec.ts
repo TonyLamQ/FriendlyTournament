@@ -37,14 +37,6 @@ describe('AuthController', () => {
         let exampleAuthUser: Auth;
 
         beforeEach(() => {
-            // exampleUser = {
-            //     UserName: 'henk',
-            //     Email: 'henk@henk.nl',
-            //     BirthDate: new Date(),
-            //     HasAGroup: false,
-            //     GroupInvites: [],
-            //     CurrentGroup: null,
-            // }
 
             exampleAuthUser = {
                 UserName: 'henk',
@@ -75,7 +67,6 @@ describe('AuthController', () => {
             register = jest.spyOn(authService, 'register')
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 .mockImplementation(async (_u: string, _p: string) => { throw new Error('duplicate user'); });
-
             await expect(authController.register(exampleAuthUser)).rejects.toThrow();
             expect(create).not.toHaveBeenCalled();
         });
@@ -88,7 +79,6 @@ describe('AuthController', () => {
                 hash: 'supersecret123',
                 Email: 'henk@henk.nl',
             };
-            
             const mockedToken: any = {token: 'mockedToken'};
 
             const register = jest.spyOn(authService, 'generateToken')
