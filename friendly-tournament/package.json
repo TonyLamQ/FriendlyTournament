@@ -64,6 +64,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.4",
+    "nest-neo4j": "^0.3.1",
     "ngx-bootstrap": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
