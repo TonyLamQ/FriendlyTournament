@@ -67,6 +67,7 @@
     "mongodb-memory-server": "^8.12.1",
     "mongoose": "^6.8.4",
     "nest-neo4j": "^0.3.1",
+    "ng-mocks": "^14.7.3",
     "ngx-bootstrap": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",

@@ -20,4 +20,4 @@ import { ProfileModule } from './profile/profile.module';
   declarations: [
   ],
 })
-export class UiComponentsModule {}
+export class UiComponentsModule { }
