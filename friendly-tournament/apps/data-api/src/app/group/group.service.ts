@@ -34,14 +34,14 @@ export class GroupService {
     group.CreatedDate = new Date();
     const currentUser = await this.userModel.findById(userId);
 
-    if(currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != null && currentUser.CurrentGroup != undefined){
+    if (currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != null && currentUser.CurrentGroup != undefined) {
       throw new BadRequestException(`User with id ${userId} is already in a group`);
     }
-    
+
     const newGroup = new this.groupModel(group);
     //remove user from old group
     if (currentUser != null) {
-      if(currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != null && currentUser.CurrentGroup != undefined){
+      if (currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != null && currentUser.CurrentGroup != undefined) {
         const group = await this.groupModel.findById(currentUser.CurrentGroup._id);
         for (let i = 0; i < group.Users.length; i++) {
           if (group.Users[i]._id == currentUser._id) {
@@ -56,7 +56,7 @@ export class GroupService {
 
       //add user to group
       newGroup.Users.push(currentUser);
-      try{
+      try {
         newGroup.save();
       } catch (e) {
         throw new BadRequestException(`Group with name ${group.Name} already exists`);
@@ -69,10 +69,10 @@ export class GroupService {
     }
   }
 
-  async update(id: string, userId:string, changes: Partial<IGroup>): Promise<IGroup> {
+  async update(id: string, userId: string, changes: Partial<IGroup>): Promise<IGroup> {
     const group = await this.groupModel.findById(id);
 
-    if(userId == null || userId == undefined){
+    if (userId == null || userId == undefined) {
       throw new BadRequestException(`User not logged in`);
     }
 
@@ -80,7 +80,7 @@ export class GroupService {
       throw new BadRequestException(`User with id ${userId} is not the owner of this group`);
     }
 
-    if(group.Name != changes.Name){
+    if (group.Name != changes.Name) {
       throw new BadRequestException(`Group names cannot be changed.`);
     }
     if (group) {
@@ -94,6 +94,9 @@ export class GroupService {
   async delete(id: string, userId: string): Promise<IGroup> {
     const group = await this.groupModel.findById(id);
     const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
 
     if (user._id.toString() == group.Users[0]._id.toString()) {
       if (group) {
@@ -109,7 +112,7 @@ export class GroupService {
         throw new NotFoundException(`Group with id ${id} not found`);
       }
     } else {
-      throw new NotFoundException(`No permission to delete this group`);
+      throw new BadRequestException(`User with id ${userId} is not the owner of this group`);
     }
   }
 }

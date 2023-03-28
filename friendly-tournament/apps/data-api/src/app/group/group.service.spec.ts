@@ -213,6 +213,10 @@ describe('GroupService', () => {
         let testUser2: IUser;
         let user2, group;
         beforeAll(async () => {
+
+        });
+
+        it('should not delete if user is not the owner', async () => {
             user2 = {
                 UserName: 'Test User2',
                 Email: 'TestUse2@email.nl',
@@ -256,24 +260,14 @@ describe('GroupService', () => {
                     testUser2,
                 ],
             };
-        });
 
-        it('should not delete if user is not the owner', async () => {
             const createdGroup = await groupModel.create(group);
-            const testuser3 = await userModel.create({
-                UserName: 'Test User3',
-                Email: 'testUser3@gmail.com',
-                BirthDate: new Date(),
-            });
-            testuser3.save();
-            createdGroup.Users.push(testuser3);
             createdGroup.save();
-                        //     await service.delete(createdGroup._id.toString(), testUser2._id.toString());
-            // try {
-            //     await service.delete(createdGroup._id.toString(), testUser2._id.toString());
-            // } catch (e) {
-            //     expect(e).toEqual(new BadRequestException('Group names cannot be changed.'));
-            // }
+            try {
+                await service.delete(createdGroup._id.toString(), testUser2._id.toString());
+            } catch (e) {
+                expect(e).toEqual(new BadRequestException('User with id ' + testUser2._id.toString() + ' is not the owner of this group'));
+            }
         });
 
     });
