@@ -1,0 +1,114 @@
+<div class="component">
+    <p>register-form works!</p>
+    <form
+      [formGroup]="form"
+      name="form"
+      (ngSubmit)="form.valid && register()"
+      novalidate
+    >
+      <div class="form-row">
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="Email">Email</label>
+          <input
+            id="Email"
+            type="email"
+            name="Email"
+            formControlName="Email"
+            class="form-control"
+            required
+            placeholder="Email"
+          />
+
+          <div
+            *ngIf="email.invalid && email.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="email.errors?.['required']">
+              Email is required.
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="UserName">Username</label>
+          <input
+            id="UserName"
+            type="text"
+            name="UserName"
+            formControlName="UserName"
+            class="form-control"
+            required
+            placeholder="UserName"
+          />
+
+          <div
+            *ngIf="username.invalid && username.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="username.errors?.['required']">
+              Username is required.
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="hash">Password</label>
+          <input
+            id="hash"
+            type="password"
+            name="hash"
+            formControlName="hash"
+            class="form-control"
+            required
+            placeholder="password"
+          />
+
+          <div
+            *ngIf="hash.invalid && hash.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="hash.errors?.['required']">
+                Password is required.
+            </div>
+          </div>
+        </div>
+  
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="BirthDate">Birthdate</label>
+          <input
+            id="BirthDate"
+            type="date"
+            name="BirthDate"
+            formControlName="BirthDate"
+            class="form-control"
+            required
+            placeholder="BirthDate"
+          />
+
+          <div
+            *ngIf="birthdate.invalid && birthdate.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="birthdate.errors?.['required']">
+              Birthdate is required.
+            </div>
+          </div>
+        </div>
+        <!-- Submit buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!form.valid"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>

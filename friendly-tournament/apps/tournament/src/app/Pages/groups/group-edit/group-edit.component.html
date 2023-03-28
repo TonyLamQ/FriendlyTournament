@@ -1,0 +1,91 @@
+<div class="component">
+    <p>group-edit works!</p>
+    <form
+      #groupEditForm="ngForm"
+      name="form"
+      (ngSubmit)="groupEditForm.form.valid && onSubmit()"
+      novalidate
+    >
+      <div class="form-row">
+        <!-- Movie Title -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="groupName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="group.Name"
+            name="groupName"
+            #groupName="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (groupName.invalid && groupName.touched) ||
+                (existingGroupName$ | async)
+            }"
+            required
+            minlength="3"
+            id="groupName"
+            placeholder="The name of the group"
+          />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="groupName.invalid && groupName.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="groupName.errors?.['required']">
+                Group name is vereist.
+            </div>
+            <div *ngIf="groupName.errors?.['minlength']">
+              Min name length is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="groupDescription">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="group.Description"
+            name="groupDescription"
+            #groupDescription="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (groupDescription.invalid && groupDescription.touched)
+            }"
+            required
+            minlength="3"
+            id="groupDescription"
+            placeholder="The Description for the group"
+          />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="groupDescription.invalid && groupDescription.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="groupDescription.errors?.['required']">
+                Group description is missing.
+            </div>
+            <div *ngIf="groupDescription.errors?.['minlength']">
+              Min description length is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+  
+        <!-- Submit buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!groupEditForm.valid"
+        >
+          Save
+        </button>
+        <button type="submit" class="btn btn-secondary me-1" routerLink="..">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>

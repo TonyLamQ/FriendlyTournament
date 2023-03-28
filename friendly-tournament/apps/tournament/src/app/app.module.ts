@@ -11,8 +11,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AboutComponent } from './Pages/about/about.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UiComponentsModule } from '@friendly-tournament/ui/components';
 import { AuthInterceptor } from 'libs/ui/components/src/lib/login/auth.interceptor';
+import { UiComponentsModule } from './Pages/ui-components.module'
 
 @NgModule({
   declarations: [
@@ -36,4 +36,4 @@ import { AuthInterceptor } from 'libs/ui/components/src/lib/login/auth.intercept
   }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

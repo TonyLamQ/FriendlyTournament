@@ -1,0 +1,147 @@
+<div class="component">
+    <p>tournament-edit works!</p>
+    <form
+      #tournamentEditForm="ngForm"
+      name="form"
+      (ngSubmit)="tournamentEditForm.form.valid && onSubmit()"
+      novalidate
+    >
+      <div class="form-row">
+        <!-- Movie Title -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="Name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="tournament.Name"
+            name="Name"
+            #Name="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (Name.invalid && Name.touched) ||
+                (existingTournamentTitle$ | async)
+            }"
+            required
+            minlength="3"
+            id="Name"
+            placeholder="The name of the tournament"
+          />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="Name.invalid && Name.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="Name.errors?.['required']">
+              Tournament name is vereist.
+            </div>
+            <div *ngIf="Name.errors?.['minlength']">
+              Min name lenght is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Release Year -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="Game">Tournament Game</label>
+          <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="tournament.Game"
+          name="Game"
+          #Game="ngModel"
+          [ngClass]="{
+            'is-invalid':
+              (Game.invalid && Game.touched) ||
+              (existingTournamentTitle$ | async)
+          }"
+          required
+          minlength="3"
+          id="Game"
+          placeholder="The game of the tournament"
+        />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="Game.invalid && Game.touched"
+            class="invalid-feedback"
+          >
+            <div *ngIf="Game.errors?.['required']">
+              Tournament game is vereist.
+            </div>
+            <div *ngIf="Game.errors?.['minlength']">
+              Min name lenght is 3
+            </div>
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Movie Studio -->
+        <div class="form-group col-sm-12 col-lg-4">
+          <label for="RewardPrize">RewardPrize</label>
+          <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="tournament.RewardPrize"
+          name="RewardPrize"
+          #RewardPrize="ngModel"
+          [ngClass]="{
+            'is-invalid':
+              (RewardPrize.invalid && RewardPrize.touched) ||
+              (existingTournamentTitle$ | async)
+          }"
+          required
+          min=10
+          id="RewardPrize"
+          placeholder="The RewardPrize of the tournament"
+        />
+          <!-- Show invalidity message -->
+          <div
+            *ngIf="RewardPrize.invalid && RewardPrize.dirty"
+            class="invalid-feedback"
+          >
+          Minimum is 10.
+          </div>
+          <!-- end -->
+        </div>
+        <br />
+        <!-- Movie Age Category -->
+        <div class="form-group col-sm-12 col-lg-4">
+            <label for="Date">Tournament date</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              [(ngModel)]="tournament.Date"
+              name="Date"
+              #Date="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  (Date.invalid && Date.touched) ||
+                  (existingTournamentTitle$ | async)
+              }"
+              required
+              id="Date"
+              placeholder="The date of the tournament"
+            />
+            <!-- Show invalidity message -->
+            <div
+              *ngIf="Date.invalid && Date.touched"
+              class="invalid-feedback"
+            >
+                <!-- ToDo insert Validation Date is not before today -->
+            </div>
+        </div>
+  
+        <!-- Submit buttons -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!tournamentEditForm.valid"
+        >
+          Save
+        </button>
+        <button type="submit" class="btn btn-secondary me-1" routerLink="..">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
