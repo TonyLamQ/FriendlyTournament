@@ -13,6 +13,7 @@ import { InviteModule } from './invite/invite.module';
 import { TournamentController } from './tournament/tournament.controller';
 import { TournamentModule } from './tournament/tournament.module';
 import { UserModule } from './user/user.module';
+import { Neo4jModule } from 'nest-neo4j';
 
 @Module({
   imports: [
@@ -23,6 +24,13 @@ import { UserModule } from './user/user.module';
     AuthModule,
     UserModule,
     InviteModule,
+    Neo4jModule.forRoot({
+      scheme: 'neo4j+s',
+      host: process.env.NEO4J_URL,
+      port: 7687,
+      username: 'neo4j',
+      password: process.env.NEO4J_PASSWORD
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
