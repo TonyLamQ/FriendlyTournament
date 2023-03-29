@@ -44,8 +44,8 @@ export class TournamentService {
     await newTournament.save();
 
     await this.neoService.write(
-      'CREATE (t:Tournament {_id: $id, name: $name})',
-      { id: newTournament.id.toString(), name: newTournament.Name.toString() }
+      'CREATE (t:Tournament {tournamentId: $id, name: $name})',
+      { id: newTournament.id, name: newTournament.Name }
     )
 
     return newTournament.toObject({ versionKey: false });
@@ -74,11 +74,12 @@ export class TournamentService {
 
       for (let groupMember of group.Users) {
         console.log(groupMember._id)
-        console.log(groupMember)
+        console.log(tournament.id)
+        console.log(tournamentId)
         await this.neoService.write(
-          `MATCH (u:User {_id: $userId}), (t:Tournament {_id: $tournamentId})
+          `MATCH (u:User {userId: $userId}), (t:Tournament {tournamentId: $tournamentId})
            CREATE (u)-[:JOINED]->(t)`,
-          { userId: groupMember._id, tournamentId: tournament.id }
+          { userId: groupMember._id.toString(), tournamentId: tournament.id }
         );
       }
 
@@ -102,6 +103,9 @@ export class TournamentService {
     const user = await this.userModel.findById(userId);
     if (!user) throw new NotFoundException(`User with ${userId} not found`);
 
+    await this.neoService.write(
+      'MATCH (t:Tournament {tournamentId: $id}) DETACH DELETE t',
+      { id: id})
     const tournament = await this.tournamentModel.findById(id);
 
     if (user._id.toString() != tournament.Creator['_id'].toString()) throw new NotFoundException(`User with ${userId} is not the creator of the tournament`);
