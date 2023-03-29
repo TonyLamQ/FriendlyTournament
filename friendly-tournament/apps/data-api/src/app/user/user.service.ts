@@ -15,7 +15,7 @@ export class UserService {
     @InjectModel('Invite') private inviteModel: Model<IInvitation>) {
   }
 
-  getIdFromHeader(@Headers() header): any {
+  getIdFromHeader(@Headers() header): string {
     const base64Payload = header.authorization.split('.')[1];
     const payloadBuffer = Buffer.from(base64Payload, 'base64');
     const updatedJwtPayload: JwtPayload = JSON.parse(payloadBuffer.toString()) as JwtPayload;
@@ -32,6 +32,11 @@ export class UserService {
     return user.toObject({versionKey: false});
   }
 
+  async getFriends(id: string): Promise<IUser[]> {
+    const user = await this.userModel.findById(id);
+    if (!user) throw new NotFoundException(`User with ${id} not found`);
+    return user.Friends;
+  }
   async leave(userId: string): Promise<IUser> {
     const user = await this.userModel.findById(userId);
     if (user) {
@@ -50,4 +55,29 @@ export class UserService {
     }
   }
 
+  async befriend(userId:string, sendToUserId:string) : Promise<IUser>{
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+    const sendToUser = await this.userModel.findById(sendToUserId);
+    if (!sendToUser) throw new NotFoundException(`User with ${sendToUserId} not found`);
+
+    if (user.Friends.includes(sendToUser)) throw new ConflictException(`User with ${sendToUserId} already followed`);
+
+    user.Friends.push(sendToUser);
+    user.save();
+    return user.toObject({ versionKey: false });
+  }
+
+  async unfriend(userId:string, unfriendUserId:string): Promise<IUser>{
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+    const unfriendUser = await this.userModel.findById(unfriendUserId);
+    if (!unfriendUser) throw new NotFoundException(`User with ${unfriendUserId} not found`);
+
+    if (user.Friends.includes(unfriendUser)) {
+      user.Friends.splice(user.Friends.indexOf(unfriendUser), 1);
+    }
+    user.save();
+    return user.toObject({ versionKey: false });
+  }
 }

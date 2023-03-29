@@ -27,10 +27,28 @@ export class UserController {
         return this.userService.findById(id);
     }
 
+    @Post('Friend/Add')
+    async befriend(@Headers() header, @Body() id:string) {
+        const userId = this.userService.getIdFromHeader(header);
+        return this.userService.befriend(userId, id);
+    }
+
+    @Get('Friends')
+    async getFriends(@Headers() header) {
+        const userId = this.userService.getIdFromHeader(header);
+        return this.userService.getFriends(userId);
+    }
+
     @Post('leave')
     async leave(@Headers() header) : Promise<IUser>{
         const userId = this.userService.getIdFromHeader(header);
         return this.userService.leave(userId);
+    }
+
+    @Delete('Friend/Remove')
+    async unfriend(@Headers() header, @Body() id:string) {
+        const userId = this.userService.getIdFromHeader(header);
+        return this.userService.unfriend(userId, id);
     }
 
 }
