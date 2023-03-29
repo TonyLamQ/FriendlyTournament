@@ -1,4 +1,4 @@
-<div class="component">
+<!-- <div class="component">
   <div class="topnav">
     <a class="active" routerLink="">Home</a>
     <a class="nav-link" routerLink="tournaments">Tournaments</a>
@@ -11,5 +11,121 @@
       <a *ngIf="key ===null" class="nav-link" style="float:right" routerLink="register">Register</a>
       <a *ngIf="key !==null" class="nav-link" style="float:right" routerLink="profile">Profile</a>
     </div>
+  </div>
+</div> -->
+<div class="component" data-theme="corporate">
+  <div class="flex flex-wrap place-items-center">
+    <section class="relative mx-auto bg-primary">
+      <!-- navbar -->
+      <nav class="flex justify-between text-white w-screen">
+        <div class="pe-5 ps-4 xl:px-12 py-6 flex w-full items-center">
+          <a
+            class="text-3xl font-bold font-heading cursor-pointer"
+            routerLink=""
+          >
+            <!-- <img class="h-9" src="logo.png" alt="logo"> -->
+            FriendlyTournament
+          </a>
+          <!-- Nav Links -->
+          <ul
+            class="hidden md:flex mx-auto font-semibold font-heading space-x-12"
+          >
+            <li>
+              <a
+                class="hover:text-gray-200 cursor-pointer"
+                routerLink="tournaments"
+                >Tournaments</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-gray-200 cursor-pointer" routerLink="groups"
+                >Groups</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-gray-200 cursor-pointer" routerLink="about" style="padding-right: 290px;"
+                >About</a
+              >
+            </li>
+          </ul>
+          <!-- Header Icons -->
+          <div class="hidden xl:flex items-center space-x-5 items-center">
+            <button class="hover:text-gray-200 cursor-pointer pe-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </button>
+            <!-- Sign In / Register      -->
+            <button
+              id="dropdownNavbarLink"
+              data-dropdown-toggle="dropdownNavbar"
+              class="hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 hover:text-gray-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div
+              id="dropdownNavbar"
+              class="hidden bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44"
+            >
+              <ul class="py-1" aria-labelledby="dropdownLargeButton">
+                <li>
+                  <a
+                    routerLink="profile"
+                    class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    routerLink="profile"
+                    >Profile</a
+                  >
+                </li>
+              </ul>
+              <div class="py-1">
+                <a
+                  *ngIf="key === null"
+                  routerLink="register"
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  >Register</a
+                >
+                <a
+                  *ngIf="key === null"
+                  
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  >Sign in</a
+                >
+                <a
+                  *ngIf="key != null"
+                  (click)="logout()"
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  >Sign out</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </section>
   </div>
 </div>

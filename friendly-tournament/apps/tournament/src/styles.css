@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files
 body {
     margin: 0;
     background-color:darkgrey;
@@ -14,4 +14,7 @@ body {
 .btn:hover{
     background: burlywood;
     outline: auto;
-}
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
