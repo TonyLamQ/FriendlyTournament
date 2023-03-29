@@ -26,18 +26,19 @@ import { Neo4jModule } from 'nest-neo4j';
     InviteModule,
     Neo4jModule.forRoot({
       scheme: 'neo4j+s',
-      host: process.env.NEO4J_URL,
+      host: '996706fc.databases.neo4j.io: 7687',
       port: 7687,
       username: 'neo4j',
-      password: process.env.NEO4J_PASSWORD
+      password: 'iqCon30huY88KdnVjPivwWfnhJpAvD7sQl16E9Lvqsw'
+
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-      consumer.apply(TokenMiddleware)
+    consumer.apply(TokenMiddleware)
       .forRoutes(
         GroupController,
         TournamentController

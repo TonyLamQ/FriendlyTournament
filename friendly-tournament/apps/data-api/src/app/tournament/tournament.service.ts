@@ -7,13 +7,15 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Headers } from '@nestjs/common/decorators';
 import { JwtPayload } from 'jsonwebtoken';
 import { BadRequestException, ConflictException } from '@nestjs/common/exceptions';
+import { Neo4jService } from 'nest-neo4j/dist';
 
 @Injectable()
 export class TournamentService {
   constructor(
     @InjectModel('Tournament') private tournamentModel: Model<Tournament>,
     @InjectModel('User') private userModel: Model<IUser>,
-    @InjectModel('Group') private groupModel: Model<IGroup>,) {
+    @InjectModel('Group') private groupModel: Model<IGroup>,
+    private neoService: Neo4jService,) {
   }
 
   getIdFromHeader(@Headers() header): any {
@@ -35,35 +37,51 @@ export class TournamentService {
 
   async create(tournamentModel: Partial<ITournament>, userId: string): Promise<ITournament> {
     const user = await this.userModel.findById(userId);
-    if(!user) throw new NotFoundException(`User with ${userId} not found`);
-   
-    const tournament = {...tournamentModel, Creator: user};
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+
+    const tournament = { ...tournamentModel, Creator: user };
     const newTournament = new this.tournamentModel(tournament);
     await newTournament.save();
+
+    await this.neoService.write(
+      'CREATE (t:Tournament {id: $id, name: $name})',
+      { id: newTournament.id.toString(), name: newTournament.Name.toString() }
+    )
 
     return newTournament.toObject({ versionKey: false });
   }
 
   async join(tournamentId: string, userId: string): Promise<ITournament> {
     const tournament = await this.tournamentModel.findById(tournamentId);
-    if(!tournament) throw new NotFoundException(`Tournament with ${tournamentId} not found`);
+    if (!tournament) throw new NotFoundException(`Tournament with ${tournamentId} not found`);
 
     const user = await this.userModel.findById(userId);
-    if(!user) throw new NotFoundException(`User with ${userId} not found`);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
 
     const group = await this.groupModel.findById(user.CurrentGroup);
-    if(!group) throw new NotFoundException(`Group with ${user.CurrentGroup} not found`);
+    if (!group) throw new NotFoundException(`Group with ${user.CurrentGroup} not found`);
 
     let includesGroup = false;
-    for(let i = 0; i < tournament.Groups.length; i++){
-      if(tournament.Groups[i].toString() == group._id.toString()){
+    for (let i = 0; i < tournament.Groups.length; i++) {
+      if (tournament.Groups[i].toString() == group._id.toString()) {
         includesGroup = true;
       }
     }
-    if(includesGroup) throw new ConflictException(`Group with ${group._id} is already in the tournament`);
-    if(group.Users[0]._id.toString() == userId.toString()){
+    if (includesGroup) throw new ConflictException(`Group with ${group._id} is already in the tournament`);
+    if (group.Users[0]._id.toString() == userId.toString()) {
       tournament.Groups.push(group);
       await tournament.save();
+
+      for (let groupMember of group.Users) {
+        console.log(groupMember._id)
+        console.log(groupMember)
+        await this.neoService.write(
+          `MATCH (u:User {id: $userId}), (t:Tournament {id: $tournamentId})
+           CREATE (u)-[:JOINED]->(t)`,
+          { userId: groupMember._id, tournamentId: tournament.id }
+        );
+      }
+
       return tournament.toObject({ versionKey: false });
     } else {
       throw new BadRequestException(`User with ${userId} is not the creator of the group`);
@@ -80,12 +98,13 @@ export class TournamentService {
     throw new NotFoundException(`Tournament with ${id} not found`);
   }
 
-  async delete(id: string, userId:string): Promise<ITournament> {
+  async delete(id: string, userId: string): Promise<ITournament> {
     const user = await this.userModel.findById(userId);
-    if(!user) throw new NotFoundException(`User with ${userId} not found`);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
 
     const tournament = await this.tournamentModel.findById(id);
-    if(user != tournament.Creator) throw new NotFoundException(`User with ${userId} is not the creator of the tournament`);
+
+    if (user._id.toString() != tournament.Creator['_id'].toString()) throw new NotFoundException(`User with ${userId} is not the creator of the tournament`);
 
     if (tournament) {
       await tournament.remove();

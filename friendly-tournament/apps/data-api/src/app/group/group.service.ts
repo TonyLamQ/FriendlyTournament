@@ -33,7 +33,6 @@ export class GroupService {
   async create(group: Partial<IGroup>, userId: string): Promise<IGroup> {
     group.CreatedDate = new Date();
     const currentUser = await this.userModel.findById(userId);
-
     if (currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != null && currentUser.CurrentGroup != undefined) {
       throw new BadRequestException(`User with id ${userId} is already in a group`);
     }

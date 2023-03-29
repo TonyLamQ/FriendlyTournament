@@ -8,43 +8,47 @@ import { JWT_KEY } from '../../constants';
 import { compare, hash } from 'bcrypt';
 import * as bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
+import { Neo4jService } from 'nest-neo4j/dist';
+import { IUser } from '@friendly-tournament/data/models';
 
 @Injectable()
 export class AuthService {
 
   constructor(
     @InjectModel('Auth') private authmodel: Model<Auth>,
-    @InjectModel('User') private userModel: Model<User>
-  ) {}
+    @InjectModel('User') private userModel: Model<User>,
+    private neoService: Neo4jService,
+  ) { }
 
   //create
   async create(user: Partial<User>): Promise<ObjectId> {
-    const newUser = new this.userModel({UserName: user.UserName, Email: user.Email, BirthDate: user.BirthDate});
+    const newUser = new this.userModel({ UserName: user.UserName, Email: user.Email, BirthDate: user.BirthDate });
     await newUser.save();
+    await this.neoService.write(`CREATE (u:User {id: "${newUser._id}", username: "${newUser.UserName}", email: "${newUser.Email}"})`);
     return newUser._id;
   }
 
-  async register(UserName: string, Password: string, Email: string) : Promise<Auth>{
+  async register(UserName: string, Password: string, Email: string): Promise<Auth> {
     const SALT_ROUNDS = await bcrypt.genSalt();
     const generateHash = await hash(Password, SALT_ROUNDS);
 
-    const identity = new this.authmodel({UserName, hash: generateHash, Email});
+    const identity = new this.authmodel({ UserName, hash: generateHash, Email });
     await identity.save();
-    return identity.toObject({versionKey: false});
+    return identity.toObject({ versionKey: false });
   }
 
   //login
-  async generateToken(Email: string, Password: string) : Promise<string>{
-    const identity = await this.authmodel.findOne({Email});
-    if(!identity || !await compare(Password, identity.hash)){
+  async generateToken(Email: string, Password: string): Promise<string> {
+    const identity = await this.authmodel.findOne({ Email });
+    if (!identity || !await compare(Password, identity.hash)) {
       throw new NotFoundException('User not found');
     }
 
-    const user = await this.userModel.findOne({Email});
+    const user = await this.userModel.findOne({ Email });
 
     return new Promise((resolve, reject) => {
-      sign({Email, id: user.id}, JWT_KEY, (err: Error, token: string) => {
-        if(err) reject(err);
+      sign({ Email, id: user.id }, JWT_KEY, (err: Error, token: string) => {
+        if (err) reject(err);
         else resolve(token);
       })
     });
@@ -54,7 +58,7 @@ export class AuthService {
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
       verify(token, JWT_KEY, (err, payload) => {
-        if(err){
+        if (err) {
           reject(err);
         } else resolve(payload);
       });
