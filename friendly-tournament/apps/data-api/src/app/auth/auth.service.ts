@@ -24,7 +24,7 @@ export class AuthService {
   async create(user: Partial<User>): Promise<ObjectId> {
     const newUser = new this.userModel({ UserName: user.UserName, Email: user.Email, BirthDate: user.BirthDate });
     await newUser.save();
-    await this.neoService.write(`CREATE (u:User {id: "${newUser._id}", username: "${newUser.UserName}", email: "${newUser.Email}"})`);
+    await this.neoService.write(`CREATE (u:User {_id: "${newUser._id}", username: "${newUser.UserName}", email: "${newUser.Email}"})`);
     return newUser._id;
   }
 

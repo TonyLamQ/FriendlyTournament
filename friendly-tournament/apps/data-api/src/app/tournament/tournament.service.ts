@@ -44,7 +44,7 @@ export class TournamentService {
     await newTournament.save();
 
     await this.neoService.write(
-      'CREATE (t:Tournament {id: $id, name: $name})',
+      'CREATE (t:Tournament {_id: $id, name: $name})',
       { id: newTournament.id.toString(), name: newTournament.Name.toString() }
     )
 
@@ -76,7 +76,7 @@ export class TournamentService {
         console.log(groupMember._id)
         console.log(groupMember)
         await this.neoService.write(
-          `MATCH (u:User {id: $userId}), (t:Tournament {id: $tournamentId})
+          `MATCH (u:User {_id: $userId}), (t:Tournament {_id: $tournamentId})
            CREATE (u)-[:JOINED]->(t)`,
           { userId: groupMember._id, tournamentId: tournament.id }
         );
