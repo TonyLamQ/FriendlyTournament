@@ -6,12 +6,13 @@
     background-position-x: 100%;
   "
 >
-  <div class="flex justify-center items-center pb-64 h-screen w-screen">
+  <div class="flex justify-center items-center pb-80 h-screen w-screen">
     <form
       [formGroup]="form"
       name="form"
       (ngSubmit)="form.valid && login()"
       novalidate
+      class="border-4 border-t-8 border-primary rounded-xl flex justify-center p-5"
     >
       <div class="form-row">
         <div class="form-group col-sm-12 col-lg-4">

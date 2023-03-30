@@ -1,18 +1,27 @@
-<div class="component">
-    <p>tournament-edit works!</p>
+<div
+  class="component h-screen"
+  style="
+    background-image: url('../../../../assets/bg.svg');
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
+<div class="flex flex-col">
+  <div class="flex content-center justify-center mt-20">
     <form
       #tournamentEditForm="ngForm"
       name="form"
       (ngSubmit)="tournamentEditForm.form.valid && onSubmit()"
       novalidate
+      class="border-4 border-secondary rounded-xl p-5 w-96"
     >
       <div class="form-row">
         <!-- Movie Title -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="Name">Name</label>
+          <label for="Name" class="font-bold">Name</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control input input-bordered input-primary rounded-xl"
             [(ngModel)]="tournament.Name"
             name="Name"
             #Name="ngModel"
@@ -43,10 +52,10 @@
         <br />
         <!-- Release Year -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="Game">Tournament Game</label>
+          <label for="Game" class="font-bold">Tournament Game</label>
           <input
           type="text"
-          class="form-control"
+          class="form-control input input-bordered input-primary rounded-xl"
           [(ngModel)]="tournament.Game"
           name="Game"
           #Game="ngModel"
@@ -77,10 +86,10 @@
         <br />
         <!-- Movie Studio -->
         <div class="form-group col-sm-12 col-lg-4">
-          <label for="RewardPrize">RewardPrize</label>
+          <label for="RewardPrize" class="font-bold">RewardPrize</label>
           <input
           type="number"
-          class="form-control"
+          class="form-control input input-bordered input-primary rounded-xl"
           [(ngModel)]="tournament.RewardPrize"
           name="RewardPrize"
           #RewardPrize="ngModel"
@@ -106,10 +115,10 @@
         <br />
         <!-- Movie Age Category -->
         <div class="form-group col-sm-12 col-lg-4">
-            <label for="Date">Tournament date</label>
+            <label for="Date" class="font-bold">Tournament date</label>
             <input
               type="datetime-local"
-              class="form-control"
+              class="form-control flex flex-row input input-bordered input-primary rounded-xl"
               [(ngModel)]="tournament.Date"
               name="Date"
               #Date="ngModel"
@@ -132,16 +141,20 @@
         </div>
   
         <!-- Submit buttons -->
-        <button
+        <div class="mt-5">
+          <button
           type="submit"
-          class="btn btn-primary me-1"
+          class="btn btn-primary me-1 rounded-xl"
           [disabled]="!tournamentEditForm.valid"
         >
           Save
         </button>
-        <button type="submit" class="btn btn-secondary me-1" routerLink="..">
+        <button type="submit" class="btn btn-secondary me-1 rounded-xl" routerLink="..">
           Cancel
         </button>
+        </div>
       </div>
     </form>
+    </div>
+    </div>
   </div>

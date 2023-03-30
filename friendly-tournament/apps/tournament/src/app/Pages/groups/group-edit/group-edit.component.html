@@ -1,91 +1,106 @@
-<div class="component">
-    <p>group-edit works!</p>
-    <form
-      #groupEditForm="ngForm"
-      name="form"
-      (ngSubmit)="groupEditForm.form.valid && onSubmit()"
-      novalidate
-    >
-      <div class="form-row">
-        <!-- Movie Title -->
-        <div class="form-group col-sm-12 col-lg-4">
-          <label for="groupName">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="group.Name"
-            name="groupName"
-            #groupName="ngModel"
-            [ngClass]="{
-              'is-invalid':
-                (groupName.invalid && groupName.touched) ||
-                (existingGroupName$ | async)
-            }"
-            required
-            minlength="3"
-            id="groupName"
-            placeholder="The name of the group"
-          />
-          <!-- Show invalidity message -->
-          <div
-            *ngIf="groupName.invalid && groupName.touched"
-            class="invalid-feedback"
-          >
-            <div *ngIf="groupName.errors?.['required']">
+<div
+  class="component h-screen"
+  style="
+    background-image: url('../../../../assets/bg.svg');
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
+  <div class="flex flex-col">
+    <div class="flex content-center justify-center mt-20">
+      <form
+        #groupEditForm="ngForm"
+        name="form"
+        (ngSubmit)="groupEditForm.form.valid && onSubmit()"
+        novalidate
+        class="border-4 border-secondary rounded-xl p-5 w-96"
+      >
+        <div class="">
+          <!-- Movie Title -->
+          <div class="form-group col-sm-12 col-lg-4">
+            <label for="groupName" class="font-bold">Name</label>
+            <input
+              type="text"
+              class="form-control input input-bordered input-primary rounded-xl"
+              [(ngModel)]="group.Name"
+              name="groupName"
+              #groupName="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  (groupName.invalid && groupName.touched) ||
+                  (existingGroupName$ | async)
+              }"
+              required
+              minlength="3"
+              id="groupName"
+              placeholder="The name of the group"
+            />
+            <!-- Show invalidity message -->
+            <div
+              *ngIf="groupName.invalid && groupName.touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="groupName.errors?.['required']">
                 Group name is vereist.
+              </div>
+              <div *ngIf="groupName.errors?.['minlength']">
+                Min name length is 3
+              </div>
             </div>
-            <div *ngIf="groupName.errors?.['minlength']">
-              Min name length is 3
-            </div>
+            <!-- end -->
           </div>
-          <!-- end -->
-        </div>
-        <br />
+          <br />
 
-        <div class="form-group col-sm-12 col-lg-4">
-          <label for="groupDescription">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="group.Description"
-            name="groupDescription"
-            #groupDescription="ngModel"
-            [ngClass]="{
-              'is-invalid':
-                (groupDescription.invalid && groupDescription.touched)
-            }"
-            required
-            minlength="3"
-            id="groupDescription"
-            placeholder="The Description for the group"
-          />
-          <!-- Show invalidity message -->
-          <div
-            *ngIf="groupDescription.invalid && groupDescription.touched"
-            class="invalid-feedback"
-          >
-            <div *ngIf="groupDescription.errors?.['required']">
+          <div class="form-group col-sm-12 col-lg-4">
+            <label for="groupDescription" class="font-bold">Description</label>
+            <input
+              type="text"
+              class="form-control input input-bordered input-primary rounded-xl"
+              [(ngModel)]="group.Description"
+              name="groupDescription"
+              #groupDescription="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  groupDescription.invalid && groupDescription.touched
+              }"
+              required
+              minlength="3"
+              id="groupDescription"
+              placeholder="The Description for the group"
+            />
+            <!-- Show invalidity message -->
+            <div
+              *ngIf="groupDescription.invalid && groupDescription.touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="groupDescription.errors?.['required']">
                 Group description is missing.
+              </div>
+              <div *ngIf="groupDescription.errors?.['minlength']">
+                Min description length is 3
+              </div>
             </div>
-            <div *ngIf="groupDescription.errors?.['minlength']">
-              Min description length is 3
-            </div>
+            <!-- end -->
           </div>
-          <!-- end -->
+          <br />
+
+          <!-- Submit buttons -->
+          <button
+            type="submit"
+            class="btn btn-primary me-1 rounded-xl"
+            [disabled]="!groupEditForm.valid"
+          >
+            Save
+          </button>
+          <button
+            type="submit"
+            class="btn btn-secondary me-1 rounded-xl"
+            routerLink=".."
+          >
+            Cancel
+          </button>
         </div>
-        <br />
-  
-        <!-- Submit buttons -->
-        <button
-          type="submit"
-          class="btn btn-primary me-1"
-          [disabled]="!groupEditForm.valid"
-        >
-          Save
-        </button>
-        <button type="submit" class="btn btn-secondary me-1" routerLink="..">
-          Cancel
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
+</div>

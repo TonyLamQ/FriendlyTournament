@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { IGroup, IInvitation, IInviteResponse, IUser } from "@friendly-tournament/data/models";
 import { isEmpty, map, Observable } from "rxjs";
 import { GroupService } from "../../groups/group.service";
@@ -16,7 +17,7 @@ export class profileInfoComponent implements OnInit {
   invite$ = new Observable<IInvitation>();
   invites$ = new Observable<IInvitation[]>();
 
-  constructor(private userService: UserService, private groupService: GroupService) {
+  constructor(private userService: UserService, private groupService: GroupService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,9 +36,9 @@ export class profileInfoComponent implements OnInit {
           });
         }
       });
-
       this.invites$ = this.user$.pipe(map(user => user.GroupInvites));
-
+    } else {
+      this.router.navigateByUrl('/about')
     }
   }
 

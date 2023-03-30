@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
   export class LoginFormComponent implements OnInit {
 
     form!:FormGroup
+    token:string | null
   
     constructor(
       private formBuilder:FormBuilder,
@@ -22,6 +23,10 @@ import { AuthService } from '../auth.service';
     }
 
     ngOnInit(): void {
+      this.token = localStorage.getItem('authJwtToken');
+      if(this.token){
+        this.router.navigateByUrl('/about')
+      }
       this.form = this.formBuilder.group({
         email: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])

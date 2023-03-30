@@ -1,37 +1,65 @@
-<div class="component">
-  <p>tournament-detail works!</p>
-  <div class="container">
-    <ul class="list-group" *ngIf="tournament$ | async as tournament">
-      <li class="list-group-item active">Date: {{ tournament.Date }}</li>
-      <li class="list-group-item">
-        Made by: {{ tournament.Creator.UserName }}
-      </li>
-      <li class="list-group-item bg-secondary text-light">
-        Name: {{ tournament.Name }}
-      </li>
-      <li class="list-group-item bg-secondary text-light">
-        Game: {{ tournament.Game }}
-      </li>
-      <li class="list-group-item bg-secondary text-light">
-        RewardPrize: {{ tournament.RewardPrize }}
-      </li>
-      <div *ngFor="let group of this.groups$">
-        <li class="list-group-item">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex align-self-center">
-              Joined Group: {{ group.Name }}
+<div
+  class="component h-screen"
+  style="
+    background-image: url('../../../../assets/bg.svg');
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
+  <div class="flex flex-col">
+    <div class="flex content-center justify-center mt-20">
+      <div class="m-5 p-5 rounded-xl border-secondary border-4 text-xl w-96">
+        <ul class="list-group" *ngIf="tournament$ | async as tournament">
+          <li
+            class="list-group-item bg-primary rounded-t text-white p-2 text-2xl"
+          >
+            Name: {{ tournament.Name }}
+          </li>
+          <li class="list-group-item ms-3">
+            <div class="font-bold mt-4">Made by:</div>
+            {{ tournament.Creator.UserName }}
+          </li>
+          <li class="list-group-item ms-3">
+            <div class="font-bold">Date:</div>
+            {{ tournament.Date }}
+          </li>
+          <li class="list-group-item ms-3">
+            <div class="font-bold">Game:</div>
+            {{ tournament.Game }}
+          </li>
+          <li class="list-group-item ms-3">
+            <div class="font-bold">RewardPrize:</div>
+            €{{ tournament.RewardPrize }}
+          </li>
+
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-self-center">
+                <div class="font-bold ms-3">Joined Groups:</div>
+                <div *ngFor="let group of this.groups$">
+                  <div class="flex flex-row" >
+                    <div class="ms-3 pb-1 self-center">
+                      {{ group.Name }}
+                    </div>
+                    <button
+                      class="btn btn-secondary rounded-xl ms-3"
+                      routerLink="/groups/{{ group._id }}"
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-secondary ms-3" routerLink="/groups/{{group._id}}">View</button>
-          </div>
-        </li>
+          </li>
+        </ul>
       </div>
-    </ul>
-  </div>
-  <div class="d-flex flex-row container justify-content-between mt-2">
-    <button class="btn btn-primary ms-2" (click)="onJoin()">Join</button>
-    <div class="me-2">
-      <!-- <button class="btn btn-primary me-2" routerLink="./edit">Edit</button> -->
-      <button class="btn btn-primary" (click)="onDelete()">Remove</button>
+    </div>
+    <div class="flex justify-center rounded-xl">
+      <button class="btn btn-primary rounded-xl me-20" (click)="onJoin()">Join</button>
+      <div class="me-2">
+        <button *ngIf="tournament!.Creator!._id?.toString() == user!._id!.toString()" class="btn btn-warning rounded-xl ms-20" (click)="onDelete()">Remove</button>
+      </div>
     </div>
   </div>
 </div>

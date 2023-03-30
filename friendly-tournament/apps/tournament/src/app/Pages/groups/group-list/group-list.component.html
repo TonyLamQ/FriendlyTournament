@@ -57,7 +57,7 @@
               </div>
               <div
                 class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
-                *ngIf="group.Users![0]._id?.toString() == user?._id?.toString()"
+                *ngIf="group.Users![0]._id?.toString() == user!._id!.toString()"
                 (click)="onDelete(group._id!)"
               >
                 Delete

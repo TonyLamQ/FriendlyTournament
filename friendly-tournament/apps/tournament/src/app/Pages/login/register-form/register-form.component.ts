@@ -13,6 +13,7 @@ import * as moment from 'moment';
   export class RegisterFormComponent implements OnInit {
 
     form!:FormGroup
+    token:string | null
   
     constructor(
       private formBuilder:FormBuilder,
@@ -24,7 +25,10 @@ import * as moment from 'moment';
     }
 
     ngOnInit(): void {
-      
+      this.token = localStorage.getItem('authJwtToken');
+      if(this.token){
+        this.router.navigateByUrl('/about')
+      }
       this.form = this.formBuilder.group({
         Email: new FormControl('', [Validators.required, Validators.email]),
         UserName: new FormControl('', [Validators.required, Validators.minLength(3)]),

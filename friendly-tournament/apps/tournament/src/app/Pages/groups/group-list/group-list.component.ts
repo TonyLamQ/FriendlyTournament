@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IGroup, IUser } from '@friendly-tournament/data/models';
 import { GroupService } from '../group.service';
 import { UserService } from '../../profile/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'friendly-tournament-group-list',
@@ -35,7 +36,6 @@ export class GroupListComponent implements OnInit {
 
   onDelete(groupId: string): void {
     this.groupService.deleteGroup(groupId).subscribe(()=> {
-      window.location.reload();
     });
   }
 }
