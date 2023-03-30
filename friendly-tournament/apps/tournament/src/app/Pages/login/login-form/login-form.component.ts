@@ -36,14 +36,11 @@ import { AuthService } from '../auth.service';
           (reply:any)=> {
 
             localStorage.setItem("authJwtToken", reply.token)
-            console.log(reply)
-            this.location.back()
-            this.router.navigateByUrl('/about').then(() => {
-            });
+            this.router.navigateByUrl('/about')
           },
           err => {
             console.log("Login Failed: ", err);
-            // alert('login Failed.');
+            alert('login Failed.');
           }
         );
     }
