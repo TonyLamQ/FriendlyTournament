@@ -1,4 +1,11 @@
-<div class="component">
+<div
+  class="component h-screen"
+  style="
+    background-image: url('../../../../assets/bg.svg');
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
   <!-- <p>group-list works!</p>
     <button
       type="submit"
@@ -57,60 +64,62 @@
         </div>
       </div>
     </div> -->
-
-  <div
-    class="focus:outline-none py-8 w-full"
+    <button
+    type="submit"
+    class="btn btn-accent text-light float-right me-5 mt-5 rounded-xl "
+    routerLink="new"
   >
-    <div class="lg:flex items-center justify-center w-full">
-      <div
-        class="focus:outline-none lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-secondary p-6 shadow rounded"
-      >
+    Add New
+  </button>
+  <div class="col-md-4" *ngFor="let group of groups$ | async">
+    <div class="focus:outline-none py-8 w-full">
+      <div class="lg:flex items-center justify-center w-full">
         <div
-          class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-6"
+          class="focus:outline-none lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-secondary p-6 shadow rounded"
         >
-          <img
-            src="https://cdn.tuk.dev/assets/components/misc/doge-coin.png"
-            alt="coin avatar"
-            class="w-12 h-12 rounded-full"
-          />
-          <div class="flex items-start justify-between w-full">
-            <div class="pl-3 w-full">
-              <p
-                
-                class="focus:outline-none text-xl font-medium leading-5 text-gray-800 dark:text-white"
-              >
-                Dogecoin nerds
-              </p>
-              <p
-                
-                class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
-              >
-                36 members
-              </p>
-            </div>
-            <div role="img" aria-label="bookmark">
+          <div
+            class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-6"
+          >
+            <img
+              src="../../../../assets/groupIcon.png"
+              alt="groupicon"
+              class="w-12 h-12 rounded-full"
+            />
+            <div class="flex items-start justify-between w-full">
+              <div class="pl-3 w-full">
+                <p
+                  class="focus:outline-none text-xl font-medium leading-5 text-gray-800 dark:text-white"
+                >
+                  {{ group.Name }}
+                </p>
+                <p
+                  class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
+                >
+                  {{group.Users?.length}} members
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="px-2">
-          <p
-            
-            class="focus:outline-none text-sm leading-5 py-4 text-gray-600 dark:text-gray-200"
-          >
-            A group of people interested in dogecoin, the currency and a bit of
-            side for the meme and dof that we all know and love. These cases are
-            perfectly simple and easy to distinguish.
-          </p>
-          <div  class="focus:outline-none flex">
-            <div
-              class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100"
+          <div class="px-2">
+            <p
+              class="focus:outline-none text-sm leading-5 py-4 text-gray-600 dark:text-gray-200"
             >
-              View
-            </div>
-            <div
-              class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100"
-            >
-              Delete
+              {{ group.Description }}
+            </p>
+            <div class="focus:outline-none flex">
+              <div
+                class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
+                routerLink="{{group._id}}"
+              >
+                View
+              </div>
+              <div
+                class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
+                *ngIf="group.Users![0]._id?.toString() == user?._id?.toString()"
+                (click)="onDelete(group._id!)"
+              >
+                Delete
+              </div>
             </div>
           </div>
         </div>
