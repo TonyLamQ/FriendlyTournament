@@ -30,8 +30,6 @@
             *ngIf="email.invalid &&(email.dirty||email.touched)"
             class="invalid-feedback text-warning"
           >
-            <div *ngIf="email.errors?.['email']">Valid email is required.</div>
-
             <div *ngIf="email.errors?.['required']">Email is required.</div>
           </div>
         </div>
