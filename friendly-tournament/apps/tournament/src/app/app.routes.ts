@@ -1,19 +1,18 @@
 import { RouterModule, Route, Routes } from '@angular/router';
 import { MainLayoutComponent } from './Layouts/main-layout/main-layout.component';
-import { TournamentEditComponent,
-         TournamentListComponent,
-         TournamentDetailComponent,
-         GroupListComponent,
-         GroupDetailComponent,
-         GroupEditComponent, 
-         LoginFormComponent,
-         profileInfoComponent,
-         UserListComponent} from '@friendly-tournament/ui/components';
-
+import { TournamentDetailComponent } from './Pages/tournaments/tournament-detail/tournament-detail.component';
+import { TournamentEditComponent } from './Pages/tournaments/tournament-edit/tournament-edit.component';
+import { TournamentListComponent } from './Pages/tournaments/tournament-list/tournament-list.component';
+import { GroupListComponent } from './Pages/groups/group-list/group-list.component';
+import { GroupDetailComponent } from './Pages/groups/group-detail/group-detail.component';
+import { GroupEditComponent } from './Pages/groups/group-edit/group-edit.component';
+import { LoginFormComponent } from './Pages/login/login-form/login-form.component';
+import { profileInfoComponent } from './Pages/profile/profile-info/profile-info.component';
+import { UserListComponent } from './Pages/profile/user-list/user-list.component';
 
 import { NgModule } from '@angular/core';
 import { AboutComponent } from './Pages/about/about.component';
-import { RegisterFormComponent } from 'libs/ui/components/src/lib/login/register-form/register-form.component';
+import { RegisterFormComponent } from './Pages/login/register-form/register-form.component';
 // import { UserComponent } from './objects/user/user.component';
 // {path: 'userRoute', pathMatch:"full", component: UserComponent}
 

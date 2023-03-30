@@ -93,6 +93,7 @@
               <ul class="py-1" aria-labelledby="dropdownLargeButton">
                 <li>
                   <a
+                  *ngIf="key !==null"
                     routerLink="profile"
                     class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
                     routerLink="profile"
@@ -109,7 +110,7 @@
                 >
                 <a
                   *ngIf="key === null"
-                  
+                  routerLink="login"
                   class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
                   >Sign in</a
                 >
