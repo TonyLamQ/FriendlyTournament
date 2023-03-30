@@ -1,18 +1,35 @@
-<div class="component h-screen"
-  style="background-image: url(../../../../assets/bg.svg); background-position:100%; background-position-x: 100%;">
+<div
+  class="component h-screen"
+  style="
+    background-image: url(../../../../assets/bg.svg);
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
   <div class="flex justify-center">
-    <form class="mt-20"[formGroup]="form" name="form" (ngSubmit)="form.valid && register()" novalidate>
+    <form
+      class="mt-20"
+      [formGroup]="form"
+      name="form"
+      (ngSubmit)="form.valid && register()"
+      novalidate
+    >
       <div class="form-row">
-
         <div class="form-group col-sm-12 col-lg-4">
           <label for="Email" class="font-bold">Email</label>
-          <input id="Email" type="email" name="Email" formControlName="Email" class="form-control input input-bordered input-primary rounded-xl" required
-            placeholder="Email" />
+          <input
+            id="Email"
+            type="email"
+            name="Email"
+            formControlName="Email"
+            class="form-control input input-bordered input-primary rounded-xl"
+            required
+            placeholder="Email"
+          />
 
           <div *ngIf="email.invalid && email.touched" class="invalid-feedback">
-            <div *ngIf="email.errors?.['required']">
-              Email is required.
-            </div>
+            <div *ngIf="email.errors?.['required']">Email is required.</div>
+            <div *ngIf="email.errors?.['email']">Email is not valid.</div>
           </div>
         </div>
 
@@ -20,12 +37,25 @@
 
         <div class="form-group col-sm-12 col-lg-4">
           <label for="UserName" class="font-bold">Username</label>
-          <input id="UserName" type="text" name="UserName" formControlName="UserName" class="form-control input input-bordered input-primary rounded-xl" required
-            placeholder="UserName" />
+          <input
+            id="UserName"
+            type="text"
+            name="UserName"
+            formControlName="UserName"
+            class="form-control input input-bordered input-primary rounded-xl"
+            required
+            placeholder="UserName"
+          />
 
-          <div *ngIf="username.invalid && username.touched" class="invalid-feedback">
+          <div
+            *ngIf="username.invalid && username.touched"
+            class="invalid-feedback"
+          >
             <div *ngIf="username.errors?.['required']">
               Username is required.
+            </div>
+            <div *ngIf="username.errors?.['minlength']">
+              Username must be at least 3 characters long.
             </div>
           </div>
         </div>
@@ -34,12 +64,20 @@
 
         <div class="form-group col-sm-12 col-lg-4">
           <label for="hash" class="font-bold">Password</label>
-          <input id="hash" type="password" name="hash" formControlName="hash" class="form-control input input-bordered input-primary rounded-xl" required
-            placeholder="password" />
+          <input
+            id="hash"
+            type="password"
+            name="hash"
+            formControlName="hash"
+            class="form-control input input-bordered input-primary rounded-xl"
+            required
+            placeholder="password"
+          />
 
           <div *ngIf="hash.invalid && hash.touched" class="invalid-feedback">
-            <div *ngIf="hash.errors?.['required']">
-              Password is required.
+            <div *ngIf="hash.errors?.['required']">Password is required.</div>
+            <div *ngIf="hash.errors?.['minlength']" style="max-width:170px;">
+              Password must be at least 6 characters long.
             </div>
           </div>
         </div>
@@ -48,18 +86,35 @@
 
         <div class="form-group col-sm-12 col-lg-4">
           <label for="BirthDate" class="font-bold">Birthdate</label>
-          <input datepicker id="BirthDate" type="date" name="BirthDate" formControlName="BirthDate" class="form-control flex flex-row input input-bordered input-primary rounded-xl" required
-            placeholder="BirthDate" />
+          <input
+            datepicker
+            id="BirthDate"
+            type="date"
+            name="BirthDate"
+            formControlName="BirthDate"
+            class="form-control flex flex-row input input-bordered input-primary rounded-xl"
+            required
+            placeholder="BirthDate"
+          />
 
-          <div *ngIf="birthdate.invalid && birthdate.touched" class="invalid-feedback">
+          <div
+            *ngIf="birthdate.invalid && birthdate.touched"
+            class="invalid-feedback"
+          >
             <div *ngIf="birthdate.errors?.['required']">
               Birthdate is required.
             </div>
+            <div *ngIf="birthdate.errors?.['invalidDate']">
+              Birthdate can not be in the future.
+            </div>
           </div>
-
         </div>
         <!-- Submit buttons -->
-        <button type="submit" class="btn btn-primary mt-4 rounded-xl" [disabled]="!form.valid">
+        <button
+          type="submit"
+          class="btn btn-primary mt-4 rounded-xl"
+          [disabled]="!form.valid"
+        >
           Register
         </button>
       </div>

@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUser } from '@friendly-tournament/data/models';
 import { AuthService } from '../auth.service';
+import * as moment from 'moment';
 @Component({
   selector: 'friendly-tournament-register-form',
   templateUrl: './register-form.component.html',
@@ -25,11 +26,23 @@ import { AuthService } from '../auth.service';
     ngOnInit(): void {
       
       this.form = this.formBuilder.group({
-        Email: new FormControl('', [Validators.required]),
-        UserName: new FormControl('', [Validators.required]),
-        hash: new FormControl('', [Validators.required]),
-        BirthDate: new FormControl('', [Validators.required])
+        Email: new FormControl('', [Validators.required, Validators.email]),
+        UserName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        hash: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        BirthDate: new FormControl('', [Validators.required, this.dateValidator]),
       })
+    }
+
+    dateValidator(control: FormControl): ValidationErrors | null {
+      if (control.value) {
+        const date = moment(control.value);
+        const today = moment();
+        if (today.isBefore(date)) {
+          console.log('invalid date')
+          return { 'invalidDate': true }
+        }
+      }
+      return null;
     }
 
     register(){
