@@ -27,7 +27,7 @@
           />
 
           <div
-            *ngIf="email.invalid &&(email.dirty||email.touched) "
+            *ngIf="email.invalid &&(email.dirty||email.touched)"
             class="invalid-feedback text-warning"
           >
             <div *ngIf="email.errors?.['email']">Valid email is required.</div>
