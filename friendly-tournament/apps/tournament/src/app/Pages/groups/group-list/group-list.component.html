@@ -7,6 +7,7 @@
   "
 >
     <button
+    *ngIf="this.token != null"
     type="submit"
     class="btn btn-accent text-light float-right me-5 mt-5 rounded-xl "
     routerLink="new"
