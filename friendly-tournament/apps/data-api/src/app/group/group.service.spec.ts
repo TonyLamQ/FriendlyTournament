@@ -64,71 +64,71 @@ describe('GroupService', () => {
 
     describe('Create Group', () => {
 
-        // it('should not be able to create a group when not logged in.', async () => {
-        //     const group = {
-        //         Name: 'Test Group',
-        //         Users: [],
-        //     };
-        //     await expect(service.create(group, null)).rejects.toThrow();
-        // });
+        it('should not be able to create a group when not logged in.', async () => {
+            const group = {
+                Name: 'Test Group',
+                Users: [],
+            };
+            await expect(service.create(group, null)).rejects.toThrow();
+        });
 
-        // it('should be able to create a group when logged in.', async () => {
-        //     const user = {
-        //         UserName: 'Test User',
-        //         Email: 'TestUser@email.nl',
-        //         BirthDate: new Date(),
-        //     };
-        //     const createdUser = await userModel.create(user);
-        //     createdUser.save();
-        //     const group = {
-        //         Name: 'Test Group',
-        //         Description: 'Test Description',
-        //         CreatedDate: new Date(),
-        //     };
-        //     const createdGroup = await service.create(group, createdUser._id.toString());
-        //     expect(createdGroup).toHaveProperty('_id');
-        // });
+        it('should be able to create a group when logged in.', async () => {
+            const user = {
+                UserName: 'Test User',
+                Email: 'TestUser@email.nl',
+                BirthDate: new Date(),
+            };
+            const createdUser = await userModel.create(user);
+            createdUser.save();
+            const group = {
+                Name: 'Test Group',
+                Description: 'Test Description',
+                CreatedDate: new Date(),
+            };
+            const createdGroup = await service.create(group, createdUser._id.toString());
+            expect(createdGroup).toHaveProperty('_id');
+        });
 
-        // it('should set the created user as a group member', async () => {
-        //     const user = {
-        //         UserName: 'Test User',
-        //         Email: 'TestUser@email.nl',
-        //         BirthDate: new Date(),
-        //     };
-        //     const createdUser = await userModel.create(user);
-        //     createdUser.save();
+        it('should set the created user as a group member', async () => {
+            const user = {
+                UserName: 'Test User',
+                Email: 'TestUser@email.nl',
+                BirthDate: new Date(),
+            };
+            const createdUser = await userModel.create(user);
+            createdUser.save();
 
-        //     const group = {
-        //         Name: 'Test Group',
-        //         Description: 'Test Description',
-        //         CreatedDate: new Date(),
-        //     };
-        //     const createdGroup = await service.create(group, createdUser._id.toString());
-        //     expect(createdGroup.Users[0]._id).toEqual(createdUser._id);
-        // });
+            const group = {
+                Name: 'Test Group',
+                Description: 'Test Description',
+                CreatedDate: new Date(),
+            };
+            const createdGroup = await service.create(group, createdUser._id.toString());
+            expect(createdGroup.Users[0]._id).toEqual(createdUser._id);
+        });
 
-        // it('should not create group when user is already in group', async () => {
-        //     const user = {
-        //         UserName: 'Test User',
-        //         Email: 'TestUser@email.nl',
-        //         BirthDate: new Date(),
-        //     };
-        //     const createdUser = await userModel.create(user);
-        //     createdUser.save();
+        it('should not create group when user is already in group', async () => {
+            const user = {
+                UserName: 'Test User',
+                Email: 'TestUser@email.nl',
+                BirthDate: new Date(),
+            };
+            const createdUser = await userModel.create(user);
+            createdUser.save();
 
-        //     const group = {
-        //         Name: 'Test Group',
-        //         Description: 'Test Description',
-        //         CreatedDate: new Date(),
-        //     };
-        //     await service.create(group, createdUser._id.toString());
+            const group = {
+                Name: 'Test Group',
+                Description: 'Test Description',
+                CreatedDate: new Date(),
+            };
+            await service.create(group, createdUser._id.toString());
 
-        //     try {
-        //         await service.create(group, createdUser._id.toString());
-        //     } catch(e) {
-        //         expect(e).toBeInstanceOf(BadRequestException);
-        //     }
-        // });
+            try {
+                await service.create(group, createdUser._id.toString());
+            } catch(e) {
+                expect(e).toBeInstanceOf(BadRequestException);
+            }
+        });
 
     });
 
@@ -149,8 +149,8 @@ describe('GroupService', () => {
             createdUser2.save();
 
             const user = {
-                UserName: 'Test User',
-                Email: 'TestUser@email.nl',
+                UserName: 'Test User1',
+                Email: 'TestUser1@email.nl',
                 BirthDate: new Date(),
             };
             createdUser = await userModel.create(user);
@@ -164,6 +164,7 @@ describe('GroupService', () => {
                 HasAGroup: <boolean>createdUser2.HasAGroup,
                 CurrentGroup: null,
                 GroupInvites: null,
+                Friends:null,
             }
             testUser = {
                 _id: createdUser._id.toString(),
@@ -173,6 +174,7 @@ describe('GroupService', () => {
                 HasAGroup: <boolean>createdUser.HasAGroup,
                 CurrentGroup: null,
                 GroupInvites: null,
+                Friends:null,
             }
             group = {
                 Name: 'Test Group',
@@ -226,8 +228,8 @@ describe('GroupService', () => {
             createdUser2.save();
 
             const user = {
-                UserName: 'Test User',
-                Email: 'TestUser@email.nl',
+                UserName: 'Test User3',
+                Email: 'TestUser3@email.nl',
                 BirthDate: new Date(),
             };
             createdUser = await userModel.create(user);
@@ -241,6 +243,7 @@ describe('GroupService', () => {
                 HasAGroup: <boolean>createdUser2.HasAGroup,
                 CurrentGroup: null,
                 GroupInvites: null,
+                Friends: null,
             }
             testUser = {
                 _id: createdUser._id.toString(),
@@ -250,6 +253,7 @@ describe('GroupService', () => {
                 HasAGroup: <boolean>createdUser.HasAGroup,
                 CurrentGroup: null,
                 GroupInvites: null,
+                Friends: null,
             }
             group = {
                 Name: 'Test Group',

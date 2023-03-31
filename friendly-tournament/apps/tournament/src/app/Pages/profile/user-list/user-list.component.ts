@@ -42,4 +42,7 @@ export class UserListComponent implements OnInit {
       );
     }
 
+  onFollow(user: IUser) {
+  }
+
 }
