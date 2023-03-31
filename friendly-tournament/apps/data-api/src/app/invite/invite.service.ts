@@ -22,6 +22,13 @@ export class inviteService {
     return (updatedJwtPayload.id)
   }
 
+  async getInvites(userId: string): Promise<IInvitation[]> {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+    const invites = await this.inviteModel.find({ User: user._id });
+    return invites;
+  }
+
   //invitations --------------------------------------------
   async invite(sendToUserId: string, SendId: string, message: string): Promise<IInvitation> {
 

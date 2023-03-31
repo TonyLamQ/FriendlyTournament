@@ -33,7 +33,7 @@ export class UserListComponent implements OnInit {
       .subscribe(
         (invite:IInvitation | undefined)=> {
           if(invite){
-            console.log("invite: ", invite);
+            alert("invite sent to " + user.UserName)
           }
         },
         err => {

@@ -14,8 +14,8 @@ export class profileInfoComponent implements OnInit {
   token: string | null;
   user$: Observable<IUser> | undefined;
   group: string | null;
-  invite$ = new Observable<IInvitation>();
   invites$ = new Observable<IInvitation[]>();
+  invites: IInvitation[] = [];
 
   constructor(private userService: UserService, private groupService: GroupService, private router: Router) {
   }
@@ -36,22 +36,26 @@ export class profileInfoComponent implements OnInit {
           });
         }
       });
-      this.invites$ = this.user$.pipe(map(user => user.GroupInvites));
+
+      this.invites$ = this.userService.getInvites();
     } else {
       this.router.navigateByUrl('/about')
     }
   }
 
   onInviteResponse(response: boolean, invite: IInvitation) {
-    const value: Partial<IInviteResponse> = { response, _id: invite.toString() };
-    this.userService.inviteResponse(value).subscribe((x) => {
-      window.location.reload();
-    });
+    console.log(invite)
+    const value: Partial<IInviteResponse> = { response, _id: invite._id?.toString() };
+      this.userService.inviteResponse(value).subscribe((x) => {
+        alert("Invite Responded");
+        this.router.navigateByUrl('/about')
+      });
   }
 
   onLeaveGroup() {
     this.userService.leaveGroup().subscribe((x) => {
-      window.location.reload();
+      alert("Left Group");
+      this.router.navigateByUrl('/about')
     });
   }
 }
