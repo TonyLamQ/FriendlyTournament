@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { IGroup, IInvitation, IInviteResponse, IUser } from "@friendly-tournament/data/models";
+import { IInvitation, IInviteResponse, ITournament, IUser } from "@friendly-tournament/data/models";
 import { isEmpty, map, Observable } from "rxjs";
 import { GroupService } from "../../groups/group.service";
 import { UserService } from "../user.service";
+import { TournamentService } from "../../tournaments/tournament.service";
 
 @Component({
   selector: 'friendly-tournament-profile-info',
@@ -14,10 +15,16 @@ export class profileInfoComponent implements OnInit {
   token: string | null;
   user$: Observable<IUser> | undefined;
   group: string | null;
+
   invites$ = new Observable<IInvitation[]>();
   invites: IInvitation[] = [];
 
-  constructor(private userService: UserService, private groupService: GroupService, private router: Router) {
+  tournaments$: Observable<ITournament[]> | undefined;
+
+  constructor(
+     private userService: UserService, private groupService: GroupService,
+     private router: Router,
+     private tournamentService: TournamentService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +48,11 @@ export class profileInfoComponent implements OnInit {
       });
 
       this.invites$ = this.userService.getInvites();
+
+      this.tournaments$ = this.tournamentService.getRecommendedTournaments();
+      this.tournaments$.subscribe((x) => {
+        console.log(x);
+      });
     } else {
       this.router.navigateByUrl('/about')
     }

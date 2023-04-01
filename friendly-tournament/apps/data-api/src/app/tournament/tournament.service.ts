@@ -51,6 +51,28 @@ export class TournamentService {
     return newTournament.toObject({ versionKey: false });
   }
 
+  async getRecommended(userId: string): Promise<Tournament[]> {
+    const user = this.userModel.findById(userId);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+
+    const getRecommendedTournaments = await this.neoService.read(`
+      MATCH (u:User {userId: $userId})-[:ISFRIENDS]->(f:User)-[:JOINED]->(t:Tournament) 
+      WHERE NOT (u)-[:JOINED]->(t)
+      RETURN t`,
+      { userId: userId}
+    );
+
+    const recommendedTournaments: Tournament[] = [];
+    for (let tournament of getRecommendedTournaments.records) {
+      let targetTournament = await this.tournamentModel.findById(tournament.get(0).properties.tournamentId)
+      if(targetTournament.Creator['_id'].toString() != userId){
+        recommendedTournaments.push(targetTournament);
+      }
+
+    }
+    return recommendedTournaments;
+  }
+
   async join(tournamentId: string, userId: string): Promise<ITournament> {
     const tournament = await this.tournamentModel.findById(tournamentId);
     if (!tournament) throw new NotFoundException(`Tournament with ${tournamentId} not found`);
@@ -59,7 +81,7 @@ export class TournamentService {
     if (!user) throw new NotFoundException(`User with ${userId} not found`);
 
     const group = await this.groupModel.findById(user.CurrentGroup);
-    if (!group) throw new NotFoundException(`Group with ${user.CurrentGroup} not found`);
+    if (!group) throw new NotFoundException(`You are not in a group`);
 
     let includesGroup = false;
     for (let i = 0; i < tournament.Groups.length; i++) {
@@ -105,7 +127,7 @@ export class TournamentService {
 
     await this.neoService.write(
       'MATCH (t:Tournament {tournamentId: $id}) DETACH DELETE t',
-      { id: id})
+      { id: id })
     const tournament = await this.tournamentModel.findById(id);
 
     if (user._id.toString() != tournament.Creator['_id'].toString()) throw new NotFoundException(`User with ${userId} is not the creator of the tournament`);

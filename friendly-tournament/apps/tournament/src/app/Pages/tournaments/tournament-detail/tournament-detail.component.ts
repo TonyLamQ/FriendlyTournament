@@ -73,6 +73,8 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
   onJoin(): void {
     this.tournamentService.joinTournament(this.tournamentId!).subscribe(()=> {
       this.router.navigate(['/tournaments'])
+    }, (err) => {
+      alert(err.error.message)
     });
   }
 }

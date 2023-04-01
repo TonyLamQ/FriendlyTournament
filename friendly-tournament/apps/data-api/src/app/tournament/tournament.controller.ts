@@ -3,6 +3,7 @@ import { Controller, Get, Post } from "@nestjs/common";
 import { Body, Delete, Headers, Param, Put, UseGuards } from "@nestjs/common/decorators";
 import { AuthGuard } from "../auth/auth.guard";
 import { TournamentService } from "./tournament.service";
+import { Tournament } from "./tournament.schema";
 
 @Controller('Tournament')
 export class TournamentController{
@@ -14,6 +15,12 @@ export class TournamentController{
     // @UseGuards(AuthGuard)
     async findAll() : Promise<ITournament[]>{
         return this.tournamentService.findAll();
+    }
+
+    @Get('recommended')
+    async getRecommended(@Headers() header) : Promise<Tournament[]>{
+        const userId = this.tournamentService.getIdFromHeader(header);
+        return this.tournamentService.getRecommended(userId);
     }
 
     @Get(':id')

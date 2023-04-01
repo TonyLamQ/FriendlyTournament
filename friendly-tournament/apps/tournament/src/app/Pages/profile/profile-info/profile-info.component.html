@@ -29,29 +29,6 @@
     <div class="text-3xl flex justify-center">Invites :</div>
     <div>
       <div class="col-md-4" *ngFor="let invite of invites$ | async">
-        <!-- 
-        <div class="card mb-4 shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-            <rect width="100%" height="100%" fill="#55595c"></rect>
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-          </svg>
-          <div class="card-body">
-            <p class="card-text">Group: {{ invite.Group }} <br /></p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="onInviteResponse(true, invite)">
-                  accept
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary"
-                  (click)="onInviteResponse(false, invite)">
-                  deny
-                </button>
-              </div>
-              <small class="text-muted">9 mins</small>
-            </div>
-          </div>
-        </div> -->
         <div class="focus:outline-none py-2 w-full">
           <div class="lg:flex items-center justify-center w-full">
             <div
@@ -106,5 +83,59 @@
         </div>
       </div>
     </div>
+    <div class="text-3xl flex justify-center mt-2">Recommended tournaments:</div>
+    
+    <div>
+      <div class="col-md-4" *ngFor="let tournament of tournaments$ | async">
+        <div class="focus:outline-none py-2 w-full">
+          <div class="lg:flex items-center justify-center w-full">
+            <div
+              class="focus:outline-none lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-secondary p-6 shadow rounded"
+            >
+              <div
+                class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-6"
+              >
+                <img
+                  src="../../../../assets/cup.png"
+                  alt="groupicon"
+                  class="w-12 h-12 rounded-full"
+                />
+                <div class="flex items-start justify-between w-full">
+                  <div class="pl-3 w-full">
+                    <p
+                      class="focus:outline-none text-xl font-medium leading-5 text-gray-800 dark:text-white"
+                    >
+                      {{ tournament.Name }}
+                    </p>
+                    <p
+                      class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
+                    >
+                      Prize: €{{ tournament.RewardPrize }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="px-2">
+                <p
+                  class="focus:outline-none text-sm leading-5 py-4 text-gray-600 dark:text-gray-200"
+                >
+                  The Game of this tournament is:{{ tournament.Game }}
+                </p>
+                <div class="focus:outline-none flex">
+                  <div
+                    class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
+                    routerLink="../tournaments/{{ tournament._id }}"
+                  >
+                    View
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

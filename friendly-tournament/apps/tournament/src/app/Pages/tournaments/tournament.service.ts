@@ -18,6 +18,10 @@ export class TournamentService {
         return this.http.get<ITournament>(`/api/Tournament/${id}`)
     }
 
+    getRecommendedTournaments():Observable<ITournament[]> {
+        return this.http.get<ITournament[]>(`/api/Tournament/recommended`);
+    }
+
     createTournament(tournament:Partial<ITournament>): Observable<ITournament>{
         return this.http.post<ITournament>(`/api/Tournament/create`, tournament);
     }
