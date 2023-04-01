@@ -50,9 +50,6 @@ export class profileInfoComponent implements OnInit {
       this.invites$ = this.userService.getInvites();
 
       this.tournaments$ = this.tournamentService.getRecommendedTournaments();
-      this.tournaments$.subscribe((x) => {
-        console.log(x);
-      });
     } else {
       this.router.navigateByUrl('/about')
     }

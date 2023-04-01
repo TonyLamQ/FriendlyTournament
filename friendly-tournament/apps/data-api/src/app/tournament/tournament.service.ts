@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { IGroup, ITournament, IUser } from '@friendly-tournament/data/models';
+import { IEntry, IGroup, ITournament, IUser } from '@friendly-tournament/data/models';
 import { Tournament, TournamentDocument } from './tournament.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -94,10 +94,18 @@ export class TournamentService {
       tournament.Groups.push(group);
       await tournament.save();
 
+      // let Entry: IEntry = {
+      //   Tournament: {
+      //     ...tournament.toObject({ versionKey: false }),
+      //     _id: tournament._id.toString()
+      //   },
+      //   EnrollmentDate: new Date()
+      // }
+      // console.log(Entry)
+      // group.Entries.push(Entry);
+      // await group.save();
+      
       for (let groupMember of group.Users) {
-        console.log(groupMember._id)
-        console.log(tournament.id)
-        console.log(tournamentId)
         await this.neoService.write(
           `MATCH (u:User {userId: $userId}), (t:Tournament {tournamentId: $tournamentId})
            CREATE (u)-[:JOINED]->(t)`,

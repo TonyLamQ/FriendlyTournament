@@ -11,7 +11,8 @@ export class GroupService {
 
   constructor(
     @InjectModel('User') private userModel: Model<IUser>,
-    @InjectModel('Group') private groupModel: Model<IGroup>) { }
+    @InjectModel('Group') private groupModel: Model<IGroup>,
+    @InjectModel('Invite') private inviteModel: Model<IInvitation>) { }
 
   getIdFromHeader(@Headers() header): any {
     const base64Payload = header.authorization.split('.')[1];
@@ -105,6 +106,12 @@ export class GroupService {
           gUser.CurrentGroup = null;
           gUser.save();
         }
+
+        for(let i = 0; i < group.Invites.length; i++) {
+          let invite = await this.inviteModel.findById(group.Invites[i]._id);
+          invite.delete();
+        }
+
         await group.delete();
         return group.toObject({ versionKey: false });
       } else {
