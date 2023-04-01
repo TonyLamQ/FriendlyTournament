@@ -42,7 +42,12 @@ export class UserListComponent implements OnInit {
       );
     }
 
-  onFollow(user: IUser) {
+  onBefriending(user: IUser) {
+    this.userService.befriend(user).subscribe((x)=>{
+      alert("Befriended: " + user.UserName)
+    }, err => {
+      alert("Befriended failed: " + err.error.message)
+    })
   }
 
 }

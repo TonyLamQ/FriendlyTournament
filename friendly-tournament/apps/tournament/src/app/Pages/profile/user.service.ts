@@ -16,6 +16,7 @@ export class UserService {
     getProfile():Observable<IUser> {
         return this.http.get<IUser>(`/api/User/profile`);
     }
+
     getInvites(): Observable<IInvitation[]>{
         return this.http.get<IInvitation[]>(`/api/Invite/Invites`);
     }
@@ -25,7 +26,18 @@ export class UserService {
     inviteResponse(value: Partial<IInviteResponse>): Observable<IInvitation>{
         return this.http.post<IInvitation>(`/api/Invite/inviteResponse`, value);
     }
+    
     leaveGroup(): Observable<IUser>{
         return this.http.post<IUser>(`/api/User/leave`, {});
+    }
+
+    getFriends(): Observable<IUser[]> {
+        return this.http.get<IUser[]>(`/api/User/Friends`);
+    }
+    befriend(user: Partial<IUser>): Observable<IUser>{
+        return this.http.post<IUser>(`/api/User/Friends/add`, user);
+    }
+    unfriend(user: Partial<IUser>): Observable<IUser>{
+        return this.http.post<IUser>(`/api/User/Friend/Remove`, user);
     }
 }

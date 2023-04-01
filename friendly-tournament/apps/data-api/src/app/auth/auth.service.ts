@@ -26,7 +26,7 @@ export class AuthService {
     await newUser.save();
     await this.neoService.write(
       `CREATE (u:User {userId: $id, name: $UserName, email: $Email})`,
-      {id: newUser.id, UserName: newUser.UserName, Email: newUser.Email});
+      {id: newUser.id.toString(), UserName: newUser.UserName, Email: newUser.Email});
     return newUser._id;
   }
 

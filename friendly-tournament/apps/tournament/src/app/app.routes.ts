@@ -13,6 +13,7 @@ import { UserListComponent } from './Pages/profile/user-list/user-list.component
 import { NgModule } from '@angular/core';
 import { AboutComponent } from './Pages/about/about.component';
 import { RegisterFormComponent } from './Pages/login/register-form/register-form.component';
+import { FriendListComponent } from './Pages/profile/friend-list/friend-list.component';
 // import { UserComponent } from './objects/user/user.component';
 // {path: 'userRoute', pathMatch:"full", component: UserComponent}
 
@@ -36,7 +37,8 @@ export const appRoutes: Route[] = [  {
       {path:"register", pathMatch:'full', component:RegisterFormComponent},
 
       {path:"profile", pathMatch:'full', component:profileInfoComponent},
-      {path:'users', pathMatch:'full', component:UserListComponent}
+      {path:'users', pathMatch:'full', component:UserListComponent},
+      {path:'friends', pathMatch:'full', component:FriendListComponent},
     //   { path: 'about', pathMatch: 'full', component: AboutComponent },
     //   {
     //     path: 'users',

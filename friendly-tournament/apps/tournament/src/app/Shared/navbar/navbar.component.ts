@@ -33,4 +33,13 @@ export class NavbarComponent implements OnInit {
       this.router.navigateByUrl('/about')
     }
   }
+
+  onGetFriends() {
+    this.key = localStorage.getItem('authJwtToken');
+    if (this.key) {
+      this.router.navigateByUrl('/friends');
+    } else {
+      this.router.navigateByUrl('/about')
+    }
+  }
 }

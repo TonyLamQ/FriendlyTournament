@@ -13,11 +13,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from 'libs/ui/components/src/lib/login/auth.interceptor';
 import { UiComponentsModule } from './Pages/ui-components.module'
+import { FriendListComponent } from './Pages/profile/friend-list/friend-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    FriendListComponent,
     MainLayoutComponent,
     AboutComponent,
   ],

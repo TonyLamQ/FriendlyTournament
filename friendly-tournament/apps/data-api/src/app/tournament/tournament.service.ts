@@ -79,7 +79,7 @@ export class TournamentService {
         await this.neoService.write(
           `MATCH (u:User {userId: $userId}), (t:Tournament {tournamentId: $tournamentId})
            CREATE (u)-[:JOINED]->(t)`,
-          { userId: groupMember._id.toString(), tournamentId: tournament.id }
+          { userId: groupMember._id.toString(), tournamentId: tournament.id.toString() }
         );
       }
 

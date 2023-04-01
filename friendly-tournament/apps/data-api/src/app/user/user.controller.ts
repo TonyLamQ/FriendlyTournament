@@ -22,21 +22,22 @@ export class UserController {
         return user;
     }
 
-    @Get(':id')
-    async findById(@Param('id') id: string) {
-        return this.userService.findById(id);
+    @Get('Friends')
+    async getFriends(@Headers() header) : Promise<IUser[]>{
+        const userId = this.userService.getIdFromHeader(header);
+        return this.userService.getFriends(userId);
     }
 
-    @Post('Friend/Add')
+    @Post('Friends/Add')
     async befriend(@Headers() header, @Body() id:string) {
         const userId = this.userService.getIdFromHeader(header);
         return this.userService.befriend(userId, id);
     }
 
-    @Get('Friends')
-    async getFriends(@Headers() header) {
+    @Post('Friend/Remove')
+    async unfriend(@Headers() header, @Body() id:string) {
         const userId = this.userService.getIdFromHeader(header);
-        return this.userService.getFriends(userId);
+        return this.userService.unfriend(userId, id);
     }
 
     @Post('leave')
@@ -45,10 +46,9 @@ export class UserController {
         return this.userService.leave(userId);
     }
 
-    @Delete('Friend/Remove')
-    async unfriend(@Headers() header, @Body() id:string) {
-        const userId = this.userService.getIdFromHeader(header);
-        return this.userService.unfriend(userId, id);
+    @Get(':id')
+    async findById(@Param('id') id: string) {
+        return this.userService.findById(id);
     }
 
 }
