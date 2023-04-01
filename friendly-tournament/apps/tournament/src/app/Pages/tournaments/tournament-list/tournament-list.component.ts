@@ -42,7 +42,8 @@ export class TournamentListComponent implements OnInit {
 
   onDelete(tournamentId: string): void {
     this.tournamentService.deleteTournament(tournamentId).subscribe(()=> {
-      this.router.navigate(['/tournaments'])
+      alert("Tournament Deleted");
+      this.tournaments$= this.tournamentService.getTournaments();
     });
   }
 

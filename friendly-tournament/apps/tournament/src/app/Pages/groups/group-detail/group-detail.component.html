@@ -9,7 +9,7 @@
   <div class="flex flex-col">
     <div class="flex content-center justify-center mt-20">
       <div class="m-5 p-5 rounded-xl border-secondary border-4 text-xl w-96">
-        <ul class="list-group space-y-4" *ngIf="group$ | async as group">
+        <ul class="list-group space-y-4" *ngIf="group$ | async">
           <li class="list-item bg-primary rounded-t text-white p-2 text-2xl">
             Name: {{ group.Name }}
           </li>
@@ -34,7 +34,7 @@
       <button class="btn btn-primary rounded-xl me-20" routerLink="./edit">
         Edit
       </button>
-      <button *ngIf="group!.Users![0]._id?.toString() == user!._id!.toString()" class="btn btn-warning rounded-xl ms-20" (click)="onDelete()">
+      <button *ngIf="ownerId == userId" class="btn btn-warning rounded-xl ms-20" (click)="onDelete()">
         Delete
       </button>
     </div>

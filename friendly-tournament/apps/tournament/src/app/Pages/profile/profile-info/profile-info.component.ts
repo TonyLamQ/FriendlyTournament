@@ -28,12 +28,15 @@ export class profileInfoComponent implements OnInit {
         if (x.CurrentGroup == null) {
           this.group = null;
         } else {
-          if (x.CurrentGroup?.toString().length == 0) {
+          if (x.CurrentGroup== null || x.CurrentGroup?.toString().length == 0) {
             this.group = null;
-          };
-          this.groupService.getGroup(x.CurrentGroup.toString()).subscribe((y) => {
-            this.group = y.Name;
-          });
+          } else {
+            this.groupService.getGroup(x.CurrentGroup.toString()).subscribe((y) => {
+              this.group = y.Name;
+            }, (err) => {
+              this.group = null;
+            });
+          }
         }
       });
 
@@ -48,14 +51,14 @@ export class profileInfoComponent implements OnInit {
     const value: Partial<IInviteResponse> = { response, _id: invite._id?.toString() };
       this.userService.inviteResponse(value).subscribe((x) => {
         alert("Invite Responded");
-        this.router.navigateByUrl('/about')
+        this.invites$ = this.userService.getInvites();
       });
   }
 
   onLeaveGroup() {
     this.userService.leaveGroup().subscribe((x) => {
       alert("Left Group");
-      this.router.navigateByUrl('/about')
+      this.group = null;
     });
   }
 }

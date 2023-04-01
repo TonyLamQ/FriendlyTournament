@@ -11,35 +11,41 @@ import { UserService } from '../../profile/user.service';
   styleUrls: ['./group-detail.component.css'],
 })
 export class GroupDetailComponent implements OnInit, OnDestroy {
+  token: string | null
   subscription?: Subscription;
+
   groupId: string;
   group$: Observable<IGroup> | undefined;
-  group: IGroup | undefined;
+  group: IGroup
+
   createdDate: string;
-  token: string | null
+  ownerId: string | undefined;
 
   user$: Observable<IUser> | undefined;
   user: IUser | undefined;
+  userId: string | undefined;
   constructor(private route: ActivatedRoute, private groupService: GroupService, private userService: UserService, private router:Router) {}
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('authJwtToken');
+
     this.token = localStorage.getItem('authJwtToken');
     if (this.token) {
       this.user$ = this.userService.getProfile();
       this.user$.subscribe((x) => {
         this.user = x;
+        this.userId = x._id?.toString();
       });
     }
 
     this.subscription = this.route.paramMap.subscribe((params) => {
       this.groupId = params.get('id')!.toString();
-      console.log(`This is the tournament ID ${this.groupId}`)
+
       this.group$ = this.groupService.getGroup(this.groupId);
       this.group$.subscribe((group) => {
         const date = new Date(group.CreatedDate!);
         this.createdDate = date.toLocaleDateString();
         this.group = group;
+        this.ownerId = this.group.Users?.at(0)?._id?.toString();
       });
     })
   }

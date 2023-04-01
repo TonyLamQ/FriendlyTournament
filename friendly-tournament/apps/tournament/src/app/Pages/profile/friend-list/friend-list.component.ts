@@ -21,15 +21,15 @@ export class FriendListComponent implements OnInit {
 
   ngOnInit(): void {
     this.users$= this.userService.getFriends();
-    this.users$.subscribe((user) => {
-      console.log(user)
-    })
+    // this.users$.subscribe((user) => {
+    //   console.log(user)
+    // })
   }
 
   onUnfriend(user: IUser) {
     this.userService.unfriend(user).subscribe((x)=>{
       alert("Unfriended: " + user.UserName)
-      
+      this.users$ = this.userService.getFriends();
     }, err => {
       alert("Unfriend failed: " + err.error.message)
     })

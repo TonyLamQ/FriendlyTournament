@@ -12,15 +12,19 @@ import { UserService } from '../../profile/user.service';
   styleUrls: ['./tournament-detail.component.css'],
 })
 export class TournamentDetailComponent implements OnInit, OnDestroy {
+  token: string | null;
   subscription?: Subscription;
+  
   tournamentId: string | undefined;
   tournament$: Observable<ITournament> | undefined;
-  groups$: IGroup[] = [];
   tournament: ITournament | undefined;
-  token: string | null;
+  creatorId: string | undefined;
+
+  groups$: IGroup[] = [];
+
   user$: Observable<IUser> | undefined;
   user: IUser | undefined;
-
+  userId: string | undefined;
 
   constructor(
       private route: ActivatedRoute,
@@ -36,6 +40,7 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
       this.tournament$ = this.tournamentService.getTournament(this.tournamentId!);
       this.tournament$.subscribe((x) => {
         this.tournament = x;
+        this.creatorId = x.Creator._id?.toString();
         if(x.Groups != null){
           for (let i = 0; i < x.Groups.length; i++) {
             this.groupService.getGroup(x.Groups[i].toString()).subscribe((group) => {
@@ -51,6 +56,7 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
       this.user$ = this.userService.getProfile();
       this.user$.subscribe((x) => {
         this.user = x;
+        this.userId = x._id?.toString();
       });
     }
   }

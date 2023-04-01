@@ -20,6 +20,7 @@ export class GroupListComponent implements OnInit {
   group$: Observable<IGroup> | undefined;
   user$: Observable<IUser> | undefined;
   user: IUser | undefined;
+  userId: string | undefined;
   constructor(private groupService:GroupService, private userService: UserService ) {}
 
   ngOnInit(): void {
@@ -30,12 +31,15 @@ export class GroupListComponent implements OnInit {
       this.user$ = this.userService.getProfile();
       this.user$.subscribe((x) => {
         this.user = x;
+        this.userId = x._id?.toString();
       });
     }
   }
 
   onDelete(groupId: string): void {
     this.groupService.deleteGroup(groupId).subscribe(()=> {
+      alert("Group Deleted");
+      this.groups$= this.groupService.getGroups();
     });
   }
 }

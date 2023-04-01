@@ -50,6 +50,9 @@ export class UserService {
           group.Users.splice(i, 1);
         }
       }
+      if(group.Users.length == 0) {
+        await this.groupModel.deleteOne({_id: group._id});
+      }
       group.save();
       user.CurrentGroup = null;
       user.save();
