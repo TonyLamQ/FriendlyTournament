@@ -20,6 +20,8 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
   tournament: ITournament | undefined;
   creatorId: string | undefined;
 
+  createdDate: string | undefined;
+
   groups$: IGroup[] = [];
 
   user$: Observable<IUser> | undefined;
@@ -41,6 +43,9 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
       this.tournament$.subscribe((x) => {
         this.tournament = x;
         this.creatorId = x.Creator._id?.toString();
+
+        const date = new Date(x.Date!);
+        this.createdDate = date.toLocaleDateString();
         if(x.Groups != null){
           for (let i = 0; i < x.Groups.length; i++) {
             this.groupService.getGroup(x.Groups[i].toString()).subscribe((group) => {
