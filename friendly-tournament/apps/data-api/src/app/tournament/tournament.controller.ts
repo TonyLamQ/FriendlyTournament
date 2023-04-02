@@ -34,6 +34,12 @@ export class TournamentController{
         return this.tournamentService.create(tournament, userId);
     }
 
+    @Post('leave/:id')
+    async leave(@Param('id') id:string, @Headers() header) : Promise<ITournament>{
+        const userId = this.tournamentService.getIdFromHeader(header);
+        return this.tournamentService.leave(id, userId);
+    }
+
     @Post('join/:id')
     async join(@Param('id') id: string, @Headers() header) : Promise<ITournament>{
         const userId = this.tournamentService.getIdFromHeader(header);

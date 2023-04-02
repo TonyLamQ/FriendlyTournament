@@ -83,4 +83,13 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
       alert(err.error.message)
     });
   }
+
+  onLeave(): void {
+    this.tournamentService.leaveTournament(this.tournamentId!).subscribe(()=> {
+      alert('You have left the tournament')
+      this.router.navigate(['/tournaments'])
+    }, (err) => {
+      alert(err.error.message)
+    });
+  }
 }

@@ -119,6 +119,39 @@ export class TournamentService {
     }
   }
 
+  async leave(tournamentId, userId: string): Promise<ITournament> {
+    const tournament = await this.tournamentModel.findById(tournamentId);
+    if (!tournament) throw new NotFoundException(`Tournament with ${tournamentId} not found`);
+
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException(`User with ${userId} not found`);
+
+    const group = await this.groupModel.findById(user.CurrentGroup);
+    if (!group) throw new NotFoundException(`You are not in a group`);
+
+    let includesGroup = false;
+    for (let i = 0; i < tournament.Groups.length; i++) {
+      if (tournament.Groups[i].toString() == group._id.toString()) {
+        includesGroup = true;
+      }
+    }
+    if (!includesGroup) throw new ConflictException(`Group with ${group._id} is not in the tournament`);
+    if (group.Users[0]._id.toString() == userId.toString()) {
+      tournament.Groups.splice(tournament.Groups.indexOf(group), 1);
+      await tournament.save();
+
+      for (let groupMember of group.Users) {
+        await this.neoService.write(
+          `MATCH (u:User {userId: $userId})-[r:JOINED]->(t:Tournament {tournamentId: $tournamentId})
+           DELETE r`,
+          { userId: groupMember._id.toString(), tournamentId: tournament.id.toString() }
+        );
+      }
+
+      return tournament.toObject({ versionKey: false });
+    }
+  }
+
   async update(id: string, changes: Partial<ITournament>): Promise<ITournament> {
     const tournament = await this.tournamentModel.findById(id);
     if (tournament) {

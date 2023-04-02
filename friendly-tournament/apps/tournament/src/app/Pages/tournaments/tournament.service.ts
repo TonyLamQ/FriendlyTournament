@@ -37,4 +37,9 @@ export class TournamentService {
     joinTournament(id: string): Observable<void>{
         return this.http.post<void>(`/api/Tournament/join/${id}`, {});
     }
+
+    leaveTournament(id: string): Observable<void>{
+        return this.http.post<void>(`/api/Tournament/leave/${id}`, {});
+    }
+    
 }

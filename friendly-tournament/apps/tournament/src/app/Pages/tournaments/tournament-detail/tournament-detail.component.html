@@ -47,6 +47,13 @@
                     >
                       View
                     </button>
+                    <button
+                    *ngIf="group.Users!.at(0)!._id!.toString() == this.userId!.toString()"
+                    class="btn btn-secondary rounded-xl ms-3"
+                    (click)="onLeave()"
+                  >
+                    Leave
+                  </button>
                   </div>
                 </div>
               </div>
