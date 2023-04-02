@@ -40,12 +40,6 @@ export class UserController {
         return this.userService.unfriend(userId, id);
     }
 
-    @Post('leave')
-    async leave(@Headers() header) : Promise<IUser>{
-        const userId = this.userService.getIdFromHeader(header);
-        return this.userService.leave(userId);
-    }
-
     @Get(':id')
     async findById(@Param('id') id: string) {
         return this.userService.findById(id);

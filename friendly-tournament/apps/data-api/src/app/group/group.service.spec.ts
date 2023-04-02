@@ -10,6 +10,8 @@ import { User, UserSchema, UserDocument } from '../user/user.schema';
 import { Group, GroupDocument, GroupSchema } from './group.schema';
 import { IGroup, IUser } from '@friendly-tournament/data/models';
 import { BadRequestException, HttpException } from '@nestjs/common';
+import { InviteDocument, InviteSchema } from '../invite/invite.schema';
+import { TournamentDocument, TournamentSchema } from '../tournament/tournament.schema';
 
 describe('GroupService', () => {
     let service: GroupService;
@@ -18,6 +20,8 @@ describe('GroupService', () => {
 
     let groupModel: Model<GroupDocument>;
     let userModel: Model<UserDocument>;
+    let inviteModel: Model<InviteDocument>;
+    let tournamentModel: Model<TournamentDocument>;
 
     beforeAll(async () => {
         let uri: string;
@@ -33,6 +37,8 @@ describe('GroupService', () => {
                 }),
                 MongooseModule.forFeature([{ name: 'Group', schema: GroupSchema }]),
                 MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+                MongooseModule.forFeature([{ name: 'Invite', schema: InviteSchema }]),
+                MongooseModule.forFeature([{ name: 'Tournament', schema: TournamentSchema }]),
             ],
             providers: [GroupService],
         }).compile();
@@ -41,11 +47,15 @@ describe('GroupService', () => {
 
         groupModel = app.get<Model<GroupDocument>>(getModelToken('Group'));
         userModel = app.get<Model<UserDocument>>(getModelToken('User'));
+        inviteModel = app.get<Model<InviteDocument>>(getModelToken('Invite'));
+        tournamentModel = app.get<Model<TournamentDocument>>(getModelToken('Tournament'));
 
         // not entirely sure why we need to wait for this...
         // https://github.com/nodkz/mongodb-memory-server/issues/102
         await groupModel.ensureIndexes();
         await userModel.ensureIndexes();
+        await inviteModel.ensureIndexes();
+        await tournamentModel.ensureIndexes();
 
         mongoc = new MongoClient(uri);
         await mongoc.connect();
@@ -54,6 +64,8 @@ describe('GroupService', () => {
     beforeEach(async () => {
         await mongoc.db('test').collection('groups').deleteMany({});
         await mongoc.db('test').collection('users').deleteMany({});
+        await mongoc.db('test').collection('invites').deleteMany({});
+        await mongoc.db('test').collection('tournaments').deleteMany({});
     })
 
     afterAll(async () => {

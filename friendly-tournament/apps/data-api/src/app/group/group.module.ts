@@ -5,13 +5,15 @@ import { GroupController } from "./group.controller";
 import { Group, GroupSchema } from "./group.schema";
 import { GroupService } from "./group.service";
 import { InviteSchema } from "../invite/invite.schema";
+import { TournamentSchema } from "../tournament/tournament.schema";
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: 'Group', schema: GroupSchema },
       { name: 'User', schema: UserSchema },
-      { name: 'Invite', schema: InviteSchema}
+      { name: 'Invite', schema: InviteSchema},
+      { name: 'Tournament', schema: TournamentSchema}
     ]),
   ],
   controllers: [GroupController],

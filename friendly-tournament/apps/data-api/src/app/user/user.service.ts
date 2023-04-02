@@ -39,27 +39,6 @@ export class UserService {
     return user.Friends;
   }
 
-  async leave(userId: string): Promise<IUser> {
-    const user = await this.userModel.findById(userId);
-    if (user) {
-      const group = await this.groupModel.findById(user.CurrentGroup);
-      if (!group) throw new NotFoundException(`Group with id ${user.CurrentGroup} not found`);
-
-      for (let i = 0; i < group.Users.length; i++) {
-        if (group.Users[i]._id.toString() == user._id.toString()) {
-          group.Users.splice(i, 1);
-        }
-      }
-      if(group.Users.length == 0) {
-        await this.groupModel.deleteOne({_id: group._id});
-      }
-      group.save();
-      user.CurrentGroup = null;
-      user.save();
-      return user.toObject({ versionKey: false });
-    }
-  }
-
   async befriend(userId: string, sendToUserId: string): Promise<IUser> {
     const user = await this.userModel.findById(userId);
     if (!user) throw new NotFoundException(`User with ${userId} not found`);

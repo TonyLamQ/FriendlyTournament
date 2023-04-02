@@ -26,6 +26,10 @@ export class GroupService {
         return this.http.put<IGroup>(`/api/Group/edit/${id}`, changes);
     }
 
+    leaveGroup(): Observable<IGroup>{
+        return this.http.post<IGroup>(`/api/Group/leave`, {});
+    }
+
     deleteGroup(id: string){
         return this.http.delete<IGroup>(`/api/Group/delete/${id}`);
     }

@@ -65,9 +65,11 @@ export class profileInfoComponent implements OnInit {
   }
 
   onLeaveGroup() {
-    this.userService.leaveGroup().subscribe((x) => {
+    this.groupService.leaveGroup().subscribe((x) => {
       alert("Left Group");
       this.group = null;
+    }, (err) => {
+      alert("Error: " + err.error.message);
     });
   }
 }

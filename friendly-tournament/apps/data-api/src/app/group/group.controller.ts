@@ -25,6 +25,12 @@ export class GroupController{
         return this.groupService.create(group, userId);
     }
 
+    @Post('leave')
+    async leave(@Headers() header) : Promise<IGroup>{
+        const userId = this.groupService.getIdFromHeader(header);
+        return this.groupService.leave(userId);
+    }
+
     @Put('edit/:id')
     async update(@Param('id') id: string, @Body() changes: Partial<IGroup>, @Headers() header) : Promise<IGroup>{
         const userId = this.groupService.getIdFromHeader(header);

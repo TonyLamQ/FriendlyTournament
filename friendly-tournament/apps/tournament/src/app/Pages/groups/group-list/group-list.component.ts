@@ -40,6 +40,8 @@ export class GroupListComponent implements OnInit {
     this.groupService.deleteGroup(groupId).subscribe(()=> {
       alert("Group Deleted");
       this.groups$= this.groupService.getGroups();
+    }, (error) => {
+      alert("Error: " + error.error.message);
     });
   }
 }

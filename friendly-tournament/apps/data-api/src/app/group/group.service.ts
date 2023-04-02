@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IGroup, IInvitation, IUser } from '@friendly-tournament/data/models';
+import { IGroup, IInvitation, ITournament, IUser } from '@friendly-tournament/data/models';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Headers } from "@nestjs/common/decorators";
@@ -12,7 +12,8 @@ export class GroupService {
   constructor(
     @InjectModel('User') private userModel: Model<IUser>,
     @InjectModel('Group') private groupModel: Model<IGroup>,
-    @InjectModel('Invite') private inviteModel: Model<IInvitation>) { }
+    @InjectModel('Invite') private inviteModel: Model<IInvitation>,
+    @InjectModel('Tournament') private tournamentModel: Model<ITournament>) { }
 
   getIdFromHeader(@Headers() header): any {
     const base64Payload = header.authorization.split('.')[1];
@@ -31,10 +32,45 @@ export class GroupService {
     return Group;
   }
 
+  async leave(userId: string): Promise<IGroup> {
+    const user = await this.userModel.findById(userId);
+    if (user) {
+      const group = await this.groupModel.findById(user.CurrentGroup);
+      if (!group) throw new NotFoundException(`Group with id ${user.CurrentGroup} not found`);
+
+      if (group.Users.length == 1) {
+        const tournaments: ITournament[] = await this.tournamentModel.find();
+        let canLeave = true;
+        for (let i = 0; i < tournaments.length; i++) {
+          for (let j = 0; j < tournaments[i].Groups.length; j++) {
+            if (tournaments[i].Groups[j]._id.toString() == group._id.toString()) {
+              canLeave = false;
+            }
+          }
+        }
+        if (!canLeave) {
+          throw new BadRequestException(`Cannot leave group with id ${group._id} because it is in a tournament`);
+        }
+      }
+      for (let i = 0; i < group.Users.length; i++) {
+        if (group.Users[i]._id.toString() == user._id.toString()) {
+          group.Users.splice(i, 1);
+        }
+      }
+      group.save();
+      if (group.Users.length == 0) {
+        await group.delete();
+      }
+      user.CurrentGroup = null;
+      user.save();
+      return group.toObject({ versionKey: false });
+    }
+  }
+
   async create(group: Partial<IGroup>, userId: string): Promise<IGroup> {
     group.CreatedDate = new Date();
     const currentUser = await this.userModel.findById(userId);
-    if(currentUser.CurrentGroup != null && currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != undefined) {
+    if (currentUser.CurrentGroup != null && currentUser.CurrentGroup[0] != undefined && currentUser.CurrentGroup != undefined) {
       throw new BadRequestException(`User with id ${userId} is already in a group`);
     }
 
@@ -98,6 +134,19 @@ export class GroupService {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
 
+    const tournaments: ITournament[] = await this.tournamentModel.find();
+    let canDelete = true;
+    for (let i = 0; i < tournaments.length; i++) {
+      for (let j = 0; j < tournaments[i].Groups.length; j++) {
+        if (tournaments[i].Groups[j]._id.toString() == group._id.toString()) {
+          canDelete = false;
+        }
+      }
+    }
+    if (!canDelete) {
+      throw new BadRequestException(`Cannot delete group with id ${group._id} because it is in a tournament`);
+    }
+
     if (user._id.toString() == group.Users[0]._id.toString()) {
       if (group) {
         //remove group from users
@@ -107,7 +156,7 @@ export class GroupService {
           gUser.save();
         }
 
-        for(let i = 0; i < group.Invites.length; i++) {
+        for (let i = 0; i < group.Invites.length; i++) {
           let invite = await this.inviteModel.findById(group.Invites[i]._id);
           invite.delete();
         }
