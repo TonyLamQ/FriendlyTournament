@@ -12,12 +12,12 @@ jobs:
     name: Build artifacts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: npm install and build
         run: |
           npm install
           npm run build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: friendly-tournament
           path: './dist/apps/friendly-tournament'
@@ -38,14 +38,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: friendly-tournament
           path: './dist/apps/friendly-tournament'
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v1.2.4
         with:
           publish-dir: './dist/apps/friendly-tournament'
           production-branch: main
