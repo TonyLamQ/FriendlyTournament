@@ -52,10 +52,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: friendly-tournament
-          path: './dist/apps/tournament'
+          path: './friendly-tournament/dist/apps/tournament'
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2.4
-        
         with:
           publish-dir: './friendly-tournament/dist/apps/tournament'
           production-branch: main
