@@ -48,7 +48,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ Email });
 
     return new Promise((resolve, reject) => {
-      sign({ Email, id: user.id }, process.env.JWT_SECRET , (err: Error, token: string) => {
+      sign({ Email, id: user.id }, process.env.JWT_SECRET, (err: Error, token: string) => {
         if (err) reject(err);
         else resolve(token);
       })
@@ -58,7 +58,7 @@ export class AuthService {
   //verify key
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
-      verify(token, process.env.JWT_SECRET , (err, payload) => {
+      verify(token, process.env.JWT_SECRET, (err, payload) => {
         if (err) {
           reject(err);
         } else resolve(payload);

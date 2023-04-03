@@ -27,9 +27,10 @@ export class NavbarComponent implements OnInit {
     if (this.key) {
       localStorage.removeItem('authJwtToken');
       this.router.navigateByUrl('/login').then(() => {
-        window.location.reload();
+        alert('You have been logged out!');
       });
     } else {
+      alert('You are not logged in!');
       this.router.navigateByUrl('/about')
     }
   }
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit {
     if (this.key) {
       this.router.navigateByUrl('/friends');
     } else {
+      alert('You are not logged in!');
       this.router.navigateByUrl('/about')
     }
   }

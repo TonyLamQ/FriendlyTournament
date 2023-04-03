@@ -27,6 +27,7 @@ import * as moment from 'moment';
     ngOnInit(): void {
       this.token = localStorage.getItem('authJwtToken');
       if(this.token){
+        alert('You are logged in!');
         this.router.navigateByUrl('/about')
       }
       this.form = this.formBuilder.group({
@@ -56,6 +57,7 @@ import * as moment from 'moment';
         (user:IUser | undefined)=> {
           if(user){
             console.log('user = ', user)
+            alert('registered successfully.');
             this.router.navigate(['/login'])
           }
         },

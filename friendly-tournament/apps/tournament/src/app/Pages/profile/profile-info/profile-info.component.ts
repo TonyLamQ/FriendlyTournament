@@ -51,6 +51,7 @@ export class profileInfoComponent implements OnInit {
 
       this.tournaments$ = this.tournamentService.getRecommendedTournaments();
     } else {
+      alert('You are not logged in!');
       this.router.navigateByUrl('/about')
     }
   }
@@ -61,6 +62,22 @@ export class profileInfoComponent implements OnInit {
       this.userService.inviteResponse(value).subscribe((x) => {
         alert("Invite Responded");
         this.invites$ = this.userService.getInvites();
+        
+        this.user$!.subscribe((x) => {
+          if (x.CurrentGroup == null) {
+            this.group = null;
+          } else {
+            if (x.CurrentGroup== null || x.CurrentGroup?.toString().length == 0) {
+              this.group = null;
+            } else {
+              this.groupService.getGroup(x.CurrentGroup.toString()).subscribe((y) => {
+                this.group = y.Name;
+              }, (err) => {
+                this.group = null;
+              });
+            }
+          }
+        });
       });
   }
 
