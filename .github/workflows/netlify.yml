@@ -13,7 +13,6 @@ jobs:
       - name: npm install and build the friendly-tournament website
         run: |
           npm install --legacy-peer-deps
-          npm run build --production
       - uses: actions/upload-artifact@v3
         with:
           name: friendly-tournament
