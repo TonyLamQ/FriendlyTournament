@@ -23,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: friendly-tournament
-          path: './dist/apps/friendly-tournament'
+          path: './friendly-tournament/dist/apps/friendly-tournament'
 
   test:
     name: Run tests
@@ -52,12 +52,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: friendly-tournament
-          path: './dist/apps/friendly-tournament'
+          path: './friendly-tournament/dist/apps/friendly-tournament'
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2.4
         
         with:
-          publish-dir: './dist/apps/friendly-tournament'
+          publish-dir: './friendly-tournament/dist/apps/friendly-tournament'
           production-branch: main
           enable-commit-comment: true
         env:
