@@ -74,14 +74,38 @@ describe('GroupService', () => {
         await mongod.stop();
     });
 
+    describe('Get Group', () => {
+
+        it('should be able to get a group by id', async () => {
+            const group = {
+                Name: 'Test Group',
+                Users: [],
+                CreatedDate: new Date(),
+                Description: 'Test Description',
+            };
+            const createdGroup = await groupModel.create(group);
+            createdGroup.save();
+            const foundGroup = await service.findById(createdGroup._id.toString());
+            expect(foundGroup).toHaveProperty('_id');
+        });
+
+        it('should be able to get groups', async () => {
+            const foundGroup = await service.findAll();
+            expect(foundGroup).toBeInstanceOf(Array);
+        });
+    });
+
     describe('Create Group', () => {
 
         it('should not be able to create a group when not logged in.', async () => {
             const group = {
                 Name: 'Test Group',
                 Users: [],
+                CreatedDate: new Date(),
+                Description: 'Test Description',
             };
             await expect(service.create(group, null)).rejects.toThrow();
+            await expect(service.create(group, undefined)).rejects.toBeInstanceOf(BadRequestException);
         });
 
         it('should be able to create a group when logged in.', async () => {

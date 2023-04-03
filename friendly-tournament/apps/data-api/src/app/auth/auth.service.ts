@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Auth } from './auth.schema';
 import { User } from '../user/user.schema';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
-import { JWT_KEY } from '../../constants';
 import { compare, hash } from 'bcrypt';
 import * as bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
@@ -49,7 +48,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ Email });
 
     return new Promise((resolve, reject) => {
-      sign({ Email, id: user.id }, JWT_KEY, (err: Error, token: string) => {
+      sign({ Email, id: user.id }, process.env.JWT_SECRET , (err: Error, token: string) => {
         if (err) reject(err);
         else resolve(token);
       })
@@ -59,7 +58,7 @@ export class AuthService {
   //verify key
   async verifyToken(token: string): Promise<string | JwtPayload> {
     return new Promise((resolve, reject) => {
-      verify(token, JWT_KEY, (err, payload) => {
+      verify(token, process.env.JWT_SECRET , (err, payload) => {
         if (err) {
           reject(err);
         } else resolve(payload);

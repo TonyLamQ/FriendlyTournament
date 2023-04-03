@@ -17,7 +17,7 @@ import { Neo4jModule } from 'nest-neo4j';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(MONGO_CONNECTION),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION),
     TournamentModule,
     GroupModule,
     AuthModule,
@@ -26,10 +26,10 @@ import { Neo4jModule } from 'nest-neo4j';
     InviteModule,
     Neo4jModule.forRoot({
       scheme: 'neo4j+s',
-      host: '996706fc.databases.neo4j.io: 7687',
+      host: process.env.NEO4J_HOST,
       port: 7687,
       username: 'neo4j',
-      password: 'iqCon30huY88KdnVjPivwWfnhJpAvD7sQl16E9Lvqsw'
+      password: process.env.NEO4J_PASSWORD,
 
     }),
   ],
