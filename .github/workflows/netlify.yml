@@ -28,6 +28,9 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./friendly-tournament
     needs: build
     steps:
       - uses: actions/checkout@v3
@@ -39,6 +42,9 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./friendly-tournament
     needs: test
     steps:
       - uses: actions/checkout@v3
