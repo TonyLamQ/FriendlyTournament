@@ -8,9 +8,9 @@ jobs:
   build-artifacts:
     name: "Build Artifacts"
     runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./dist/apps/friendly-tournament
+    defaults:
+      run:
+        working-directory: ./dist/apps/friendly-tournament
     steps:
       - uses: actions/checkout@v3
       - name: npm install and build the friendly-tournament website
