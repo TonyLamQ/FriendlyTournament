@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./dist/apps/friendly-tournament
+        working-directory: ../friendly-tournament
     steps:
       - uses: actions/checkout@v3
       - name: npm install and build the friendly-tournament website
