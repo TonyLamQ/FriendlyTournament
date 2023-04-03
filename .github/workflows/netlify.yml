@@ -11,6 +11,9 @@ jobs:
   build:
     name: Build artifacts
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./friendly-tournament
     steps:
       - uses: actions/checkout@v3
       - name: npm install and build
@@ -46,6 +49,7 @@ jobs:
           path: './dist/apps/friendly-tournament'
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2.4
+        
         with:
           publish-dir: './dist/apps/friendly-tournament'
           production-branch: main
