@@ -1,13 +1,12 @@
 import { getGreeting } from '../support/app.po';
 
 describe('tournament', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => {
+    cy.visit('/');
+  });
 
+  // basic test, just to make sure the app is running
   it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
-
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome tournament');
+    getGreeting().contains('FriendlyTournament');
   });
 });

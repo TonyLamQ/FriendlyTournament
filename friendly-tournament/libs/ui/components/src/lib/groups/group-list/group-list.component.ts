@@ -23,7 +23,7 @@ export class GroupListComponent implements OnInit {
 
   onDelete(groupId: string): void {
     this.groupService.deleteGroup(groupId).subscribe(()=> {
-      window.location.reload();
+      this.groups$ = this.groupService.getGroups();
     });
   }
 }
