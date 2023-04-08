@@ -56,14 +56,12 @@ import * as moment from 'moment';
       .subscribe(
         (user:IUser | undefined)=> {
           if(user){
-            console.log('user = ', user)
             alert('registered successfully.');
             this.router.navigate(['/login'])
           }
         },
-        err => {
-          console.log("registered Failed: ", err);
-          alert('registered Failed.');
+        (error) => {
+          alert('registered Failed.' + error.error.message);
         }
       );
     }

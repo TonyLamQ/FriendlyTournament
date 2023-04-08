@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Auth } from './auth.schema';
@@ -34,7 +34,11 @@ export class AuthService {
     const generateHash = await hash(Password, SALT_ROUNDS);
 
     const identity = new this.authmodel({ UserName, hash: generateHash, Email });
-    await identity.save();
+    try {
+      await identity.save();
+    } catch (err) {
+      throw new BadRequestException('User already exists');
+    }
     return identity.toObject({ versionKey: false });
   }
 

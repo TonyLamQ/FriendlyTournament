@@ -52,14 +52,17 @@ export class GroupService {
           throw new BadRequestException(`Cannot leave group with id ${group._id} because it is in a tournament`);
         }
       }
+      
       for (let i = 0; i < group.Users.length; i++) {
         if (group.Users[i]._id.toString() == user._id.toString()) {
           group.Users.splice(i, 1);
         }
       }
-      group.save();
+
       if (group.Users.length == 0) {
         await group.delete();
+      } else {
+        group.save();
       }
       user.CurrentGroup = null;
       user.save();
