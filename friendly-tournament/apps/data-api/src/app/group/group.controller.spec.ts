@@ -82,32 +82,5 @@ describe('GroupController', () => {
             await expect(groupController.create(exampleGroup, exampleId)).rejects.toThrow();
         });
 
-        
-        // it('should not call create on failed register (duplicate username)', async () => {
-        //     register = jest.spyOn(authService, 'register')
-        //         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        //         .mockImplementation(async (_u: string, _p: string) => { throw new Error('duplicate user'); });
-        //     await expect(authController.register(exampleAuthUser)).rejects.toThrow();
-        //     expect(create).not.toHaveBeenCalled();
-        // });
     });
-
-    // describe('login', () => {
-    //     it('should call the generateToken method of the auth service', async () => {
-    //         const exampleAuthUser = {
-    //             UserName: 'henk',
-    //             hash: 'supersecret123',
-    //             Email: 'henk@henk.nl',
-    //         };
-    //         const mockedToken: any = {token: 'mockedToken'};
-
-    //         const register = jest.spyOn(authService, 'generateToken')
-    //             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //             .mockImplementation(async (_u: string, _p: string) => { return mockedToken.token; });
-
-    //         expect(await authController.login(exampleAuthUser)).toStrictEqual(mockedToken);
-
-    //         expect(register).toHaveBeenCalledWith(exampleAuthUser.Email, exampleAuthUser.hash);
-    //     });
-    // });
 });
