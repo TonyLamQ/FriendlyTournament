@@ -31,9 +31,9 @@ export class UserService {
         return this.http.get<IUser[]>(`/api/User/Friends`);
     }
     befriend(user: Partial<IUser>): Observable<IUser>{
-        return this.http.post<IUser>(`/api/User/Friends/add`, user);
+        return this.http.post<IUser>(`/api/User/Friends/add/`+user._id, {});
     }
     unfriend(user: Partial<IUser>): Observable<IUser>{
-        return this.http.post<IUser>(`/api/User/Friend/Remove`, user);
+        return this.http.post<IUser>(`/api/User/Friend/Remove/`+user._id, {});
     }
 }

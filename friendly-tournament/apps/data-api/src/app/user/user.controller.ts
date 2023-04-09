@@ -28,14 +28,15 @@ export class UserController {
         return this.userService.getFriends(userId);
     }
 
-    @Post('Friends/Add')
-    async befriend(@Headers() header, @Body() id:string) {
+    @Post('Friends/Add/:id')
+    async befriend(@Headers() header, @Param('id') id:string) {
         const userId = this.userService.getIdFromHeader(header);
+        console.log(id)
         return this.userService.befriend(userId, id);
     }
 
-    @Post('Friend/Remove')
-    async unfriend(@Headers() header, @Body() id:string) {
+    @Post('Friend/Remove/:id')
+    async unfriend(@Headers() header, @Param('id') id:string) {
         const userId = this.userService.getIdFromHeader(header);
         return this.userService.unfriend(userId, id);
     }
