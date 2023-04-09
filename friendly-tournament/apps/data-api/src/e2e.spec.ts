@@ -19,7 +19,10 @@ import { TournamentModule } from './app/tournament/tournament.module';
 import { UserModule } from './app/user/user.module';
 import { InviteModule } from './app/invite/invite.module';
 import { Neo4jModule, Neo4jService } from 'nest-neo4j/dist';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GroupController } from './app/group/group.controller';
+import { TournamentController } from './app/tournament/tournament.controller';
+import { IGroup } from '@friendly-tournament/data/models';
 
 let mongod: MongoMemoryServer;
 let uri: string;
@@ -27,7 +30,7 @@ let uri: string;
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: '.env',
+            envFilePath:"./apps/data-api/.env",
         }),
           Neo4jModule.forRoot({
             scheme: "neo4j",
@@ -56,7 +59,10 @@ export class TestAppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(TokenMiddleware)
-            .forRoutes('data-api')
+            .forRoutes(
+                GroupController,
+                TournamentController
+            )
     }
 }
 
@@ -130,18 +136,40 @@ describe('end-to-end tests of data API', () => {
                 .send(user);
             console.log(login.body)
             expect(login.status).toBe(201);
-            expect(login.body).toHaveProperty('info', { version: '1.0', type: 'object', count: 1 });
-            expect(login.body).toHaveProperty('results.token');
+            expect(login.body).toHaveProperty('token');
+            const token = login.body.token;
+        });
 
-            const token = login.body.results.token;
+        it('should create a group', async () => {
+            const register = await request(server)
+                .post('/auth/register')
+                .send(credentials);
+            expect(register.status).toBe(201);
+            expect(register.body).toHaveProperty('id');
 
-              const meetups = await request(server)
-                .get('/data-api/meetup')
-                .set('authorization', token);
+            const login = await request(server)
+                .post('/auth/login')
+                .send(user);
+            expect(login.status).toBe(201);
+            expect(login.body).toHaveProperty('token');
+            const token = login.body.token;
 
-              expect(meetups.status).toBe(200);
-              expect(meetups.body).toHaveProperty('info', {version: '1.0', type: 'list', count: 0});
-              expect(meetups.body).toHaveProperty('results', []);
+            const group : IGroup = {
+                Name: 'testgroup',
+                Description: 'testgroup',
+                CreatedDate: new Date(),
+                Users: [],
+                Entries: [],
+                Invites: [],
+            };
+
+            const createGroup = await request(server)
+                .post('/group/create')
+                .set('Authorization', token)
+
+                .send(group);
+            expect(createGroup.status).toBe(201);
+            expect(createGroup.body).toHaveProperty('_id');
         });
 
         //     it('user registers, logs in, sets tutor and pupil topic, topics are found, removes topics, topics are found, looks up own account info', async () => {
