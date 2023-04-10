@@ -50,19 +50,19 @@
               {{ group.Description }}
             </p>
             <div class="focus:outline-none flex">
-              <div
+              <button
                 class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
                 routerLink="{{group._id}}"
               >
                 View
-              </div>
-              <div
+              </button>
+              <button
                 class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
                 *ngIf="group.Users![0]._id?.toString() == userId"
                 (click)="onDelete(group._id!)"
               >
                 Delete
-              </div>
+              </button>
             </div>
           </div>
         </div>
