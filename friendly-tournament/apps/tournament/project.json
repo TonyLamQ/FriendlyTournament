@@ -16,7 +16,8 @@
         "tsConfig": "apps/tournament/tsconfig.app.json",
         "assets": [
           "apps/tournament/src/favicon.ico",
-          "apps/tournament/src/assets"
+          "apps/tournament/src/assets",
+          "apps/tournament/src/_redirects"
         ],
         "styles": ["apps/tournament/src/styles.css"],
         "scripts": []
