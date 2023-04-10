@@ -24,8 +24,8 @@ jobs:
         with:
           name: friendly-tournament
           path: |
-            './friendly-tournament/dist/apps/tournament'
-            './friendly-tournament/_redirects'
+            './dist/apps/tournament'
+            './_redirects'
 
   test:
     name: Run tests
