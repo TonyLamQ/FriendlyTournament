@@ -2,10 +2,11 @@
   from = "/api/*"
   to = "/https://friendlytournament-production.up.railway.app/api/:splat"
   status = 200
-
+  force = true
+  
 [[redirects]]
   from ="/*"
-  to = "index.html"
+  to = "/index.html"
   status= 200
 
   
