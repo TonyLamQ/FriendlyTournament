@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "/https://friendlytournament-production.up.railway.app/api/:splat"
+  to = "https://friendlytournament-production.up.railway.app/api/:splat"
   status = 200
   force = true
 
