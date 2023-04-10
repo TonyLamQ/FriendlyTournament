@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "https://friendlytournament-production.up.railway.app/",
+      "target": "http://localhost:3333",
       "secure": false
     }
   }
