@@ -59,7 +59,7 @@
       "configurations": {
         "production": {
           "browserTarget": "tournament:build:production",
-          "proxyConfig": "apps/tournament/proxy.prod.conf.json"
+          "proxyConfig": "apps/tournament/proxy.conf.prod.json"
         },
         "development": {
           "browserTarget": "tournament:build:development",
