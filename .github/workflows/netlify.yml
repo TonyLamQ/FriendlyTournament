@@ -23,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: friendly-tournament
-          path: './dist/apps/tournament'
+          path: './friendly-tournament/dist/apps/tournament'
 
   test:
     name: Run tests
