@@ -68,4 +68,14 @@ describe('Group Schema', () => {
         expect(model.Invites).toEqual([]);
     });
 
+    it('has a empty list of Users', () => {
+        const model = new groupModel({ Name: 'henk', Description: 'test desc', CreatedDate: new Date() });
+        expect(model.Users).toEqual([]);
+    });
+
+    it('should make a valid group id', () => {
+        const model = new groupModel({ Name: 'henk', Description: 'test desc', CreatedDate: new Date() });
+        expect(model._id).toBeTruthy();
+    });
+
 });
