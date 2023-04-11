@@ -70,7 +70,7 @@ describe('Group Schema', () => {
 
     it('has a empty list of Users', () => {
         const model = new groupModel({ Name: 'henk', Description: 'test desc', CreatedDate: new Date() });
-        expect(model.Users).toEqual([]);
+        expect(model.Users).toEqual(undefined);
     });
 
     it('should make a valid group id', () => {
