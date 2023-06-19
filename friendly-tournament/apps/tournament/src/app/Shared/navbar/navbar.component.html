@@ -41,14 +41,20 @@
               >
             </li>
             <li>
+              <a class="hover:text-gray-200 cursor-pointer" routerLink="users"
+                >Users</a
+              >
+            </li>
+            <li>
               <a class="hover:text-gray-200 cursor-pointer" routerLink="about" style="padding-right: 290px;"
                 >About</a
               >
             </li>
           </ul>
           <!-- Header Icons -->
-          <div class="xl:flex items-center space-x-5 items-center">
-            <button class="hover:text-gray-200 cursor-pointer pe-3">
+          <div class="flex space-x-5 items-center">
+            <button class="hover:text-gray-200 cursor-pointer pe-3"
+            (click)="onGetFriends()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -93,9 +99,9 @@
               <ul class="py-1" aria-labelledby="dropdownLargeButton">
                 <li>
                   <a
-                  *ngIf="key !==null"
+            
                     routerLink="profile"
-                    class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 cursor-pointer"
                     routerLink="profile"
                     >Profile</a
                   >
@@ -103,21 +109,21 @@
               </ul>
               <div class="py-1">
                 <a
-                  *ngIf="key === null"
+          
                   routerLink="register"
-                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 cursor-pointer"
                   >Register</a
                 >
                 <a
-                  *ngIf="key === null"
+        
                   routerLink="login"
-                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 cursor-pointer"
                   >Sign in</a
                 >
                 <a
-                  *ngIf="key != null"
+             
                   (click)="logout()"
-                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                  class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 cursor-pointer"
                   >Sign out</a
                 >
               </div>

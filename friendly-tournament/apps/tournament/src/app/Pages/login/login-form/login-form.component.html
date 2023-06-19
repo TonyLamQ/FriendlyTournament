@@ -1,17 +1,40 @@
-<div class="h-screen flex" style="background-image: url(../../../../assets/bg.svg); background-position:100%; background-position-x: 100%;">
-  <div class="container flex justify-center items-center pb-64 h-screen">
-    <form [formGroup]="form" name="form" (ngSubmit)="form.valid && login()" novalidate>
+<div
+  class="h-screen"
+  style="
+    background-image: url(../../../../assets/bg.svg);
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
+  <div class="flex flex-col justify-center items-center pb-96 h-screen w-screen">
+    <div class="font-bold text-3xl mb-5 text-secondary">
+      LOGIN
+    </div>
+    <form
+      [formGroup]="form"
+      name="form"
+      (ngSubmit)="form.valid && login()"
+      novalidate
+      class="border-4 border-t-8 border-primary rounded-xl flex justify-center p-5"
+    >
       <div class="form-row">
-
         <div class="form-group col-sm-12 col-lg-4">
           <label for="email" class="font-bold">Email</label>
-          <input id="email" type="email" name="email" formControlName="email" class="form-control input input-bordered input-primary rounded-xl" required
-            placeholder="Email" />
+          <input
+            id="email"
+            type="email"
+            name="email"
+            formControlName="email"
+            class="form-control input input-bordered input-primary rounded-xl"
+            required
+            placeholder="Email"
+          />
 
-          <div *ngIf="email.invalid && email.touched" class="invalid-feedback text-warning">
-            <div *ngIf="email.errors?.['required']">
-              Email is required.
-            </div>
+          <div
+            *ngIf="email.invalid &&(email.dirty||email.touched)"
+            class="invalid-feedback text-warning"
+          >
+            <div *ngIf="email.errors?.['required']">Email is required.</div>
           </div>
         </div>
 
@@ -19,10 +42,20 @@
 
         <div class="form-group col-sm-12 col-lg-4">
           <label for="password" class="font-bold">Password</label>
-          <input id="password" type="password" name="password" formControlName="password" class="form-control input input-primary rounded-xl" required
-            placeholder="password" />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            formControlName="password"
+            class="form-control input input-primary rounded-xl"
+            required
+            placeholder="password"
+          />
 
-          <div *ngIf="password.invalid && password.touched" class="invalid-feedback text-warning">
+          <div
+            *ngIf="password.invalid && password.touched"
+            class="invalid-feedback text-warning"
+          >
             <div *ngIf="password.errors?.['required']">
               Password is required.
             </div>
@@ -30,7 +63,11 @@
         </div>
 
         <!-- Submit buttons -->
-        <button type="submit" class="btn btn-primary rounded-xl mt-4" [disabled]="!form.valid">
+        <button
+          type="submit"
+          class="btn btn-primary rounded-xl mt-4"
+          [disabled]="!form.valid"
+        >
           Login
         </button>
       </div>

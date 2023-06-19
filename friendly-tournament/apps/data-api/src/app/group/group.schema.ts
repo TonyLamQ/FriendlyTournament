@@ -20,7 +20,7 @@ export class Group {
     @Prop({ type: Date, required: true })
     CreatedDate: Date;
 
-    @Prop({ required: false, type:[{type:Types.ObjectId, ref:'Tournament'},{Price:Number, EnrollmentDate:Date}]})
+    @Prop({ required: false, type:[{type:Types.ObjectId, ref:'Tournament'}, {type:Date}]})
     Entries: IEntry[];
     
     @Prop({ required: false, type: [{ type: Types.ObjectId, ref: 'Invite' }] })

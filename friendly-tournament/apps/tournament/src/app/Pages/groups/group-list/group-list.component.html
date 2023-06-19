@@ -1,63 +1,67 @@
-<div class="component">
-    <p>group-list works!</p>
+<div
+  class="component h-screen"
+  style="
+    background-image: url('../../../../assets/bg.svg');
+    background-position: 100%;
+    background-position-x: 100%;
+  "
+>
     <button
-      type="submit"
-      class="btn btn-second text-light float-end me-1"
-      routerLink="new"
-    >
-      Add New
-    </button>
-  
-    <div class="album py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4" *ngFor="let group of groups$ | async">
-            <div class="card mb-4 shadow-sm">
-              <svg
-                class="bd-placeholder-img card-img-top"
-                width="100%"
-                height="225"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="xMidYMid slice"
-                focusable="false"
-                role="img"
-                aria-label="Placeholder: Thumbnail"
-              >
-                <rect width="100%" height="100%" fill="#55595c"></rect>
-                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-              </svg>
-              <div class="card-body">
-                <p class="card-text">
-                  Name: {{ group.Name }} <br>
+    *ngIf="this.token != null"
+    type="submit"
+    class="btn btn-accent text-light float-right me-5 mt-5 rounded-xl "
+    routerLink="new"
+  >
+    Add New
+  </button>
+  <div class="col-md-4" *ngFor="let group of groups$ | async">
+    <div class="focus:outline-none py-2 w-full">
+      <div class="lg:flex items-center justify-center w-full">
+        <div
+          class="focus:outline-none lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-secondary p-6 shadow rounded"
+        >
+          <div
+            class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-6"
+          >
+            <img
+              src="../../../../assets/groupIcon.png"
+              alt="groupicon"
+              class="w-12 h-12 rounded-full"
+            />
+            <div class="flex items-start justify-between w-full">
+              <div class="pl-3 w-full">
+                <p
+                  class="focus:outline-none text-xl font-medium leading-5 text-gray-800 dark:text-white"
+                >
+                  {{ group.Name }}
                 </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                      routerLink="{{group._id}}"
-                    >
-                      View
-                    </button>
-                    
-                    <!-- <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                      routerLink="./{{ group._id }}/edit"
-                    >
-                      Edit
-                    </button> -->
-                    <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    (click)="onDelete(group._id!)"
-                    >
-                    
-                      Delete
-                    </button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
+                <p
+                  class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
+                >
+                  {{group.Users?.length}} members
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="px-2">
+            <p
+              class="focus:outline-none text-sm leading-5 py-4 text-gray-600 dark:text-gray-200"
+            >
+              {{ group.Description }}
+            </p>
+            <div class="focus:outline-none flex">
+              <div
+                class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
+                routerLink="{{group._id}}"
+              >
+                View
+              </div>
+              <div
+                class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
+                *ngIf="group.Users![0]._id?.toString() == userId"
+                (click)="onDelete(group._id!)"
+              >
+                Delete
               </div>
             </div>
           </div>
@@ -65,3 +69,4 @@
       </div>
     </div>
   </div>
+</div>

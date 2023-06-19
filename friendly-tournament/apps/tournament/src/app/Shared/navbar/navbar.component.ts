@@ -7,12 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  key: string |null
-  constructor(private router:Router, private elementRef: ElementRef) {
+  key: string | null
+  constructor(private router: Router, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
-      this.key = localStorage.getItem('authJwtToken');
+    this.key = localStorage.getItem('authJwtToken');
   }
 
   ngAfterViewInit(): void {
@@ -22,10 +22,26 @@ export class NavbarComponent implements OnInit {
     this.elementRef.nativeElement.appendChild(s);
   }
 
-  logout(){
-    localStorage.removeItem('authJwtToken');
-    this.router.navigateByUrl('/login').then(() => {
-      window.location.reload();
-    });
+  logout() {
+    this.key = localStorage.getItem('authJwtToken');
+    if (this.key) {
+      localStorage.removeItem('authJwtToken');
+      this.router.navigateByUrl('/login').then(() => {
+        alert('You have been logged out!');
+      });
+    } else {
+      alert('You are not logged in!');
+      this.router.navigateByUrl('/about')
+    }
+  }
+
+  onGetFriends() {
+    this.key = localStorage.getItem('authJwtToken');
+    if (this.key) {
+      this.router.navigateByUrl('/friends');
+    } else {
+      alert('You are not logged in!');
+      this.router.navigateByUrl('/about')
+    }
   }
 }

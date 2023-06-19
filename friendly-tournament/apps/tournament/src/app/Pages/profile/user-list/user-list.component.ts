@@ -33,7 +33,7 @@ export class UserListComponent implements OnInit {
       .subscribe(
         (invite:IInvitation | undefined)=> {
           if(invite){
-            console.log("invite: ", invite);
+            alert("invite sent to " + user.UserName)
           }
         },
         err => {
@@ -41,5 +41,13 @@ export class UserListComponent implements OnInit {
         }
       );
     }
+
+  onBefriending(user: IUser) {
+    this.userService.befriend(user).subscribe((x)=>{
+      alert("Befriended: " + user.UserName)
+    }, err => {
+      alert("Befriended failed: " + err.error.message)
+    })
+  }
 
 }

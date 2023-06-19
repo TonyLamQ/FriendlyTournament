@@ -44,13 +44,13 @@ export class profileInfoComponent implements OnInit {
   onInviteResponse(response: boolean, invite: IInvitation) {
     const value: Partial<IInviteResponse> = { response, _id: invite.toString() };
     this.userService.inviteResponse(value).subscribe((x) => {
-      window.location.reload();
+      this.invites$ = this.user$!.pipe(map(user => user.GroupInvites));
     });
   }
 
   onLeaveGroup() {
     this.userService.leaveGroup().subscribe((x) => {
-      window.location.reload();
+      this.group = null;
     });
   }
 }

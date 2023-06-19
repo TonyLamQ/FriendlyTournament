@@ -29,7 +29,7 @@
                     {{ user.UserName }}
                   </p>
                   <p
-                    class="focus:outline-none text-base leading-normal pt-2 text-gray-500 dark:text-gray-200"
+                    class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
                   >
                     {{ user.Email }}
                   </p>
@@ -38,22 +38,16 @@
             </div>
             <div class="px-2">
               <p
-                class="focus:outline-none text-base leading-5 py-4 text-gray-600 dark:text-gray-200"
+                class="focus:outline-none text-sm leading-5 py-4 text-gray-600 dark:text-gray-200"
               >
                 <!-- {{ user.Description }} -->
               </p>
               <div class="focus:outline-none flex">
                 <div
-                  class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
-                  (click)="onInvite(user)"
-                >
-                  Invite
-                </div>
-                <div
                 class="py-2 px-4 ml-3 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 cursor-pointer"
-                (click)="onBefriending(user)"
+                (click)="onUnfriend(user)"
               >
-                Follow
+                Unfollow
               </div>
               </div>
             </div>

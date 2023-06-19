@@ -9,8 +9,7 @@ export class AuthGuard implements CanActivate{
         const host = context.switchToHttp(),
             request = host.getRequest();
 
-        const user = request["user"];
-
+        const user = request.headers['authorization'];
         if(!user){
             console.log('User not authenticated, denying access.')
             throw new UnauthorizedException();
