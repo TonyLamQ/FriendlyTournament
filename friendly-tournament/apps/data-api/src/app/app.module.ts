@@ -26,10 +26,10 @@ import { Neo4jModule } from 'nest-neo4j';
     InviteModule,
     Neo4jModule.forRoot({
       scheme: 'neo4j+s',
-      host: '996706fc.databases.neo4j.io: 7687',
+      host: '10ecf8be.databases.neo4j.io:7687',
       port: 7687,
       username: 'neo4j',
-      password: 'iqCon30huY88KdnVjPivwWfnhJpAvD7sQl16E9Lvqsw'
+      password: 'XZqSyEKrbTw9R_WWmZmNMrxUB7pwkNgkQtPj5c_tFL8'
 
     }),
   ],
